@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FFCD00">
+<title>CorreosTest — Preparación oposición Correos 2026</title>
+<meta name="description" content="App de preparación para la oposición a Correos. Banco oficial de preguntas, simulacros como el examen real, predicción de aprobado. Funciona sin conexión.">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<style>
+  /* Override de colores corporativos a paleta Correos (amarillo y azul) */
+  :root {
+    --brand-primary: #003366;
+    --brand-accent: #FFCD00;
+  }
+  .app-header { background: #003366 !important; color: #FFCD00 !important; }
+  .app-header .brand-logo { background: #FFCD00 !important; color: #003366 !important; }
+  .app-header .brand { color: #FFCD00 !important; }
+  .app-header .nav-item { color: #fff !important; }
+  .app-header .nav-item.active { color: #FFCD00 !important; }
+  .btn-primary { background: #003366 !important; color: #FFCD00 !important; }
+  .btn-primary:hover { background: #002344 !important; }
+
+  /* Selector de puesto */
+  .puesto-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+  .puesto-row {
+    display: flex; gap: 12px; align-items: center;
+    padding: 14px 16px; border: 2px solid #e5e7eb; border-radius: 10px;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .puesto-row:hover { border-color: #003366; }
+  .puesto-row.puesto-selected { border-color: #003366; background: #f0f4f8; }
+  .puesto-row input[type="radio"] { width: 18px; height: 18px; accent-color: #003366; }
+  .puesto-info { flex: 1; }
+  .puesto-nombre { font-weight: 600; color: #0f172a; }
+
+  /* Banner del puesto en Home */
+  .puesto-banner {
+    background: linear-gradient(135deg, #003366 0%, #004488 100%);
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .puesto-banner .puesto-banner-name { font-weight: 600; }
+  .puesto-banner .puesto-banner-name span { color: #FFCD00; }
+  .puesto-banner .puesto-banner-link {
+    color: #FFCD00;
+    text-decoration: underline;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="app-header-inner">
+    <button class="brand" onclick="IIAPP.UI.show('home')">
+      <span class="brand-logo">CT</span>
+      <span>CorreosTest</span>
+    </button>
+    <nav class="app-nav">
+      <button class="nav-item" data-nav="home" onclick="IIAPP.UI.show('home')">Inicio</button>
+      <button class="nav-item" data-nav="study" onclick="IIAPP.UI.show('study')">Estudiar</button>
+      <button class="nav-item" data-nav="history" onclick="IIAPP.UI.show('history')">Historial</button>
+      <button class="nav-item" data-nav="planes" onclick="IIAPP.UI.show('planes')">Planes</button>
+      <button class="nav-item" data-nav="cuenta" onclick="IIAPP.UI.show('cuenta')">Cuenta</button>
+      <button class="nav-item" data-nav="settings" onclick="IIAPP.UI.show('settings')">Ajustes</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="screen-home" class="screen"></section>
+  <section id="screen-study" class="screen hidden"></section>
+  <section id="screen-test" class="screen hidden"></section>
+  <section id="screen-result" class="screen hidden"></section>
+  <section id="screen-history" class="screen hidden"></section>
+  <section id="screen-planes" class="screen hidden"></section>
+  <section id="screen-cuenta" class="screen hidden"></section>
+  <section id="screen-settings" class="screen hidden"></section>
+  <!-- Placeholder vacío para compat router (no enlazadas en nav) -->
+  <section id="screen-temario" class="screen hidden"></section>
+  <section id="screen-tribunal" class="screen hidden"></section>
+</main>
+
+<!-- Datos -->
+<script src="data/temario.js"></script>
+<script src="data/questions.js"></script>
+
+<!-- Lógica -->
+<script src="js/storage.js"></script>
+<script src="js/srs.js"></script>
+<script src="js/stats.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

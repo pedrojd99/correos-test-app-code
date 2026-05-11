@@ -1,0 +1,27 @@
+{
+  "name": "CorreosTest — Oposición Correos 2026",
+  "short_name": "CorreosTest",
+  "description": "App de preparación para la oposición a Correos. Banco oficial, simulacros y predicción de aprobado.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8fafc",
+  "theme_color": "#FFCD00",
+  "lang": "es",
+  "categories": ["education"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
