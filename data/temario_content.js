@@ -570,6 +570,35 @@ window.CORREOS.TEMARIO_CONTENT = {
 
 <p>Las oficinas de Correos disponen de sistemas de videovigilancia, alarma y sistemas anti-robo. El empleado debe conocer los protocolos de seguridad (activación de alarma, procedimiento en caso de robo).</p>
 
+<h3>9. Tabla resumen de herramientas</h3>
+<table>
+  <tr><th>Herramienta</th><th>Usado por</th><th>Función principal</th></tr>
+  <tr><td><strong>IRIS</strong></td><td>Empleados de oficina</td><td>Admisión, venta, cobro, gestión de turnos</td></tr>
+  <tr><td><strong>SGIE</strong></td><td>Todos los niveles</td><td>Trazabilidad de envíos (seguimiento, incidencias)</td></tr>
+  <tr><td><strong>PDA</strong></td><td>Cartero</td><td>Registro de entrega/aviso, firma digital, GPS</td></tr>
+  <tr><td><strong>Minerva</strong></td><td>Centros de tratamiento</td><td>Control de clasificadoras automáticas, asignación a rutas</td></tr>
+  <tr><td><strong>SEDI</strong></td><td>Unidades de reparto</td><td>Itinerarios, asignación envíos a cartero, pendientes</td></tr>
+  <tr><td><strong>SIGUA</strong></td><td>Gestión comercial</td><td>Contratos, acuerdos tarifarios, condiciones de clientes</td></tr>
+  <tr><td><strong>CRM</strong></td><td>Equipo comercial</td><td>Historial de cliente, segmentación, seguimiento ventas</td></tr>
+</table>
+
+<h4>Proceso de entrega con PDA: paso a paso</h4>
+<ol>
+  <li>El cartero lee el código de barras del envío con la PDA.</li>
+  <li>Aparece en pantalla el nombre del destinatario y el tipo de envío.</li>
+  <li>Si requiere firma: el destinatario firma directamente en la pantalla táctil de la PDA.</li>
+  <li>Si requiere identificación (DNI): el cartero registra el número del documento.</li>
+  <li>La PDA envía en tiempo real el evento de entrega al SGIE.</li>
+  <li>Si no hay nadie: el cartero selecciona "aviso depositado" y la PDA genera el evento automáticamente.</li>
+</ol>
+
+<h4>Mnemotécnico: herramientas por fase</h4>
+<p style="background:#eef6ff;border-left:4px solid #003366;padding:12px 16px;border-radius:0 8px 8px 0;font-size:14px;line-height:1.8">
+  <strong>Admisión → IRIS · Trazabilidad → SGIE · Reparto → PDA</strong><br>
+  Estas 3 son las más testadas. Las 4 restantes:<br>
+  <strong>Clasificación → Minerva · Rutas → SEDI · Contratos → SIGUA · Clientes → CRM</strong>
+</p>
+
 <p><em>Puntos clave para el examen: IRIS = gestión de oficina (admisión, ventas). SGIE = trazabilidad de envíos. PDA = herramienta del cartero, firma digital del destinatario. Minerva = clasificación en CTA. SEDI = gestión de reparto. SIGUA = contratos clientes. CRM = gestión de relaciones comerciales.</em></p>`,
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -1082,6 +1111,40 @@ window.CORREOS.TEMARIO_CONTENT = {
   <li><strong>Gestión de incidentes</strong>: cualquier incidente de seguridad (pérdida de dispositivo, acceso no autorizado) debe comunicarse al responsable de seguridad inmediatamente.</li>
 </ul>
 
-<p><em>Puntos clave para el examen: Art. 18.3 CE = secreto postal. RGPD derechos: acceso, rectificación, supresión, oposición, portabilidad. Identificación PBC > 1.000€. Conservar documentos PBC 10 años. SEPBLAC = organismo antiblaqueo. Canal ético = denuncias confidenciales. ENS = seguridad información sector público.</em></p>`
+<h3>5. Sanciones del RGPD</h3>
+<table>
+  <tr><th>Nivel</th><th>Infracciones</th><th>Sanción máxima</th></tr>
+  <tr><td>Máximo</td><td>Vulnerar principios básicos, derechos de los interesados, transferencias internacionales ilegales</td><td>20 millones € o 4% facturación anual mundial</td></tr>
+  <tr><td>Moderado</td><td>Incumplir obligaciones del responsable, del encargado, bases de legitimación incorrectas</td><td>10 millones € o 2% facturación anual mundial</td></tr>
+</table>
+<p>La <strong>AEPD</strong> puede también imponer amonestaciones, órdenes de suspensión del tratamiento o prohibición temporal de actividades.</p>
+
+<h3>6. Canal ético (canal de denuncias)</h3>
+<p>Regulado por la <strong>Ley 2/2023, de 20 de febrero, reguladora de la protección de las personas que informen sobre infracciones normativas</strong> (transposición de la Directiva UE 2019/1937 "Whistleblower Directive"):</p>
+<ul>
+  <li>Obligatorio para empresas con más de 50 trabajadores.</li>
+  <li>Las denuncias pueden ser <strong>anónimas o identificadas</strong>.</li>
+  <li>Está <strong>prohibido tomar represalias</strong> contra el denunciante.</li>
+  <li>El responsable del canal tiene <strong>7 días</strong> para confirmar la recepción de la denuncia.</li>
+  <li>Plazo máximo de resolución: <strong>3 meses</strong> (ampliable a 6 en casos complejos).</li>
+</ul>
+
+<h3>7. Esquema Nacional de Seguridad (ENS)</h3>
+<p>Real Decreto 311/2022 — tres categorías de seguridad para los sistemas de información:</p>
+<table>
+  <tr><th>Categoría ENS</th><th>Impacto en caso de incidente</th><th>Medidas</th></tr>
+  <tr><td><strong>BÁSICA</strong></td><td>Perjuicio limitado a la organización</td><td>Mínimas obligatorias del ENS</td></tr>
+  <tr><td><strong>MEDIA</strong></td><td>Perjuicio grave a la organización o limitado a terceros</td><td>Medidas reforzadas</td></tr>
+  <tr><td><strong>ALTA</strong></td><td>Perjuicio muy grave (infraestructuras críticas, datos sensibles)</td><td>Medidas de máxima protección</td></tr>
+</table>
+
+<h4>Mnemotécnico: derechos ARCO+</h4>
+<p style="background:#eef6ff;border-left:4px solid #003366;padding:12px 16px;border-radius:0 8px 8px 0;font-size:14px;line-height:1.8">
+  <strong>ARCO-PL</strong> (se pronuncia "Arco-Pi-El")<br>
+  <strong>A</strong>cceso · <strong>R</strong>ectificación · <strong>C</strong>ancelación/Supresión · <strong>O</strong>posición<br>
+  + <strong>P</strong>ortabilidad · <strong>L</strong>imitación del tratamiento
+</p>
+
+<p><em>Puntos clave para el examen: Art. 18.3 CE = secreto postal. RGPD derechos ARCO-PL: acceso, rectificación, supresión, oposición, portabilidad, limitación. Identificación PBC > 1.000€. Conservar documentos PBC 10 años. SEPBLAC = organismo antiblaqueo. Canal ético obligatorio con ≥ 50 trabajadores. Ley 2/2023 protege al denunciante. Sanciones RGPD hasta 20M€ o 4% facturación.</em></p>`
 
 };
