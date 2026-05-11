@@ -85,7 +85,45 @@ window.CORREOS.TEMARIO_CONTENT = {
   <li>Sostenibilidad: electrificación de la flota, emisiones cero.</li>
 </ul>
 
-<p><em>Puntos clave para el examen: La Ley 43/2010 liberalizó totalmente el mercado. La CNMC supervisa al operador designado. La UPU rige el correo internacional. Correos es sociedad anónima con capital público, dependiente de SEPI. El RD 437/2024 es el reglamento postal vigente desde agosto 2024.</em></p>`,
+<h3>5. Definiciones clave de la Ley 43/2010 (art. 3)</h3>
+<table>
+  <tr><th>Término</th><th>Definición legal</th></tr>
+  <tr><td><strong>Servicio postal</strong></td><td>Consistente en la recogida, admisión, clasificación, transporte, distribución y entrega de envíos postales.</td></tr>
+  <tr><td><strong>Envío postal</strong></td><td>Todo envío con dirección en la forma definitiva en que debe ser transportado por el prestador del servicio postal.</td></tr>
+  <tr><td><strong>Red postal</strong></td><td>Organización de medios y personal del operador designado para la prestación del SPU.</td></tr>
+  <tr><td><strong>Operador designado</strong></td><td>El que garantiza la prestación del SPU en todo el territorio nacional. En España: Correos.</td></tr>
+  <tr><td><strong>Servicio reservado</strong></td><td>Sector de mercado reservado exclusivamente al operador designado (en España ya no existe desde la Ley 43/2010).</td></tr>
+</table>
+
+<h4>Estructura de la Ley 43/2010</h4>
+<ul>
+  <li><strong>Título Preliminar</strong>: objeto, ámbito y definiciones.</li>
+  <li><strong>Título I</strong>: el Servicio Postal Universal — contenido, prestación, financiación.</li>
+  <li><strong>Título II</strong>: operadores postales — autorización, condiciones, registro.</li>
+  <li><strong>Título III</strong>: derechos de los usuarios — secreto postal, reclamaciones, garantías.</li>
+  <li><strong>Título IV</strong>: supervisión y control del mercado postal.</li>
+  <li><strong>Título V</strong>: régimen sancionador.</li>
+</ul>
+
+<h4>Funciones de la CNMC en el sector postal</h4>
+<ul>
+  <li>Supervisar el cumplimiento de las obligaciones del operador designado (SPU).</li>
+  <li>Resolver controversias entre operadores sobre acceso a la red postal.</li>
+  <li>Establecer condiciones de acceso a elementos de la red postal (buzones, oficinas).</li>
+  <li>Informar sobre los costes del SPU y las tarifas del operador designado.</li>
+  <li>Controlar la contabilidad analítica separada de Correos (servicios SPU vs. comerciales).</li>
+</ul>
+
+<h4>Mnemotécnico: liberalización postal europea</h4>
+<p style="background:#eef6ff;border-left:4px solid #003366;padding:12px 16px;border-radius:0 8px 8px 0;font-size:14px;line-height:1.6">
+  <strong>97 · 02 · 08 → ESR</strong><br>
+  <strong>E</strong>stablecer el mercado postal europeo (Directiva 97/67/CE)<br>
+  <strong>S</strong>ometer a apertura progresiva (Directiva 2002/39/CE)<br>
+  <strong>R</strong>etirar todas las reservas / liberalización total (Directiva 2008/6/CE)<br>
+  <em style="background:none;padding:0;color:#475569;font-style:italic;font-size:13px;font-weight:normal">Transpuesta en España por la Ley 43/2010</em>
+</p>
+
+<p><em>Puntos clave para el examen: La Ley 43/2010 liberalizó totalmente el mercado (Directiva 2008/6/CE). La CNMC supervisa al operador designado. La UPU rige el correo internacional. Correos es sociedad anónima con capital público, dependiente de SEPI. El RD 437/2024 es el reglamento postal vigente desde agosto 2024. Mnemotécnico: 97·02·08 = ESR.</em></p>`,
 
 // ══════════════════════════════════════════════════════════════════════════════
 2: `<h2>Tema 2: Gestión de personas. Diversidad e inclusión. Prevención de riesgos. Sostenibilidad</h2>
@@ -436,14 +474,18 @@ window.CORREOS.TEMARIO_CONTENT = {
 
 <p>La <strong>admisión</strong> es el proceso por el que Correos acepta un envío postal del remitente para su tratamiento y distribución. Se regula en el <strong>Título III del RD 437/2024</strong>.</p>
 
-<h4>Tipos de admisión</h4>
-<ul>
-  <li><strong>Admisión en ventanilla</strong>: el remitente lleva el envío a la oficina. Requiere identificación para determinados servicios.</li>
-  <li><strong>Admisión masiva o preregistrada</strong>: grandes clientes que preparan y franquean sus envíos con medios propios y los depositan en bulk en centros de admisión masiva.</li>
-  <li><strong>Admisión domiciliaria</strong>: el cartero recoge el envío en el domicilio del cliente (servicio de recogida).</li>
-  <li><strong>Admisión rural</strong>: el cartero rural admite envíos en ruta desde su PDA.</li>
-  <li><strong>Admisión en Citypaq o puntos de conveniencia</strong>: el cliente deposita el paquete en una taquilla o punto de recogida.</li>
-</ul>
+<h4>Las 7 vías de admisión (según PreparaCorreos)</h4>
+<ol>
+  <li><strong>Depósito en oficinas</strong>: el remitente lleva el envío a la oficina.</li>
+  <li><strong>Oficinas auxiliares o cartero rural</strong>: admisión por el cartero rural vía PDA (<strong>sistema HERA</strong>).</li>
+  <li><strong>Clientes contratados — centros de admisión masiva</strong>: grandes empresas depositan en bulk usando albarán de depósito.</li>
+  <li><strong>Buzones postales públicos</strong>: depósito en buzón de la calle.</li>
+  <li><strong>Recogida en domicilio del cliente contratado</strong>: con restricciones de peso, dimensiones y franqueo.</li>
+  <li><strong>Admisión online — Mi Oficina</strong>: preregistro web sin ir a la oficina.</li>
+  <li><strong>Admisión en Citypaq</strong>: taquilla automatizada 24/7, sin colas.</li>
+</ol>
+<p><strong>Dato de examen</strong>: las <strong>bandejas azules</strong> están reservadas <em>exclusivamente</em> para correo IPC (internacional). Está prohibido usarlas para correo de origen nacional.</p>
+<p>El sistema <strong>Quenda</strong> gestiona los turnos en oficina. El <strong>servicio sin espera</strong> (Quenda turnos) permite preregistrar y acceder con turno prioritario.</p>
 
 <h3>2. Requisitos de admisión (art. 16 RD 437/2024)</h3>
 
@@ -510,13 +552,28 @@ window.CORREOS.TEMARIO_CONTENT = {
 
 <p>Una vez admitido el envío, pasa por la red de <strong>Centros de Tratamiento</strong> de Correos antes de llegar a la unidad de reparto del destinatario.</p>
 
-<h4>Tipos de centros</h4>
+<h4>Los 6 tipos de centros de tratamiento</h4>
 <ul>
-  <li><strong>CTA (Centro de Tratamiento Automatizado)</strong>: grandes instalaciones con maquinaria de clasificación automática. Tratan la mayor parte del volumen nacional. Los dos principales son Madrid (Barajas) y Barcelona (Sant Boi).</li>
-  <li><strong>CT (Centro de Tratamiento)</strong>: instalaciones provinciales que tratan el correo provincial y de la zona. Combinan tratamiento manual y automatizado.</li>
-  <li><strong>CDA (Centro de Distribución y Admisión)</strong>: centros urbanos que reciben el correo clasificado y lo preparan para el reparto local.</li>
-  <li><strong>CIEX (Centro de Intercambio Internacional)</strong>: gestiona los envíos internacionales de entrada y salida. Ubicados en Madrid (Barajas), Barcelona (El Prat) y Bilbao.</li>
+  <li><strong>CTI (Centro de Tratamiento Internacional)</strong>: gestiona envíos internacionales entrada/salida. Sede: Madrid Barajas, Barcelona El Prat.</li>
+  <li><strong>CAM (Centro de Admisión Masiva)</strong>: procesa depósitos bulk de clientes contratados. Madrid tiene dos CAM.</li>
+  <li><strong>CTA (Centro de Tratamiento Automatizado)</strong>: clasificación automática de gran volumen. Los dos principales: Madrid CTA y Barcelona (Sant Cugat + Colón). El CTA Madrid usa el sistema <strong>SCG que clasifica 7.000-8.000 envíos por hora</strong>.</li>
+  <li><strong>CTP (Centro de Tratamiento Provincial)</strong>: clasifica el correo a nivel provincial.</li>
+  <li><strong>CTL (Centro de Tratamiento Local)</strong>: conecta oficinas locales con el CTP de referencia.</li>
+  <li><strong>CT (Centro de Tratamiento nodal para paquetería)</strong>: centros especializados en paquetes.</li>
 </ul>
+<h4>División interna de cada centro</h4>
+<ul>
+  <li><strong>UPO (Unidad de Productos Ordinarios)</strong>: clasificación automática y manual de correo ordinario (sin trazabilidad).</li>
+  <li><strong>UPR (Unidad de Productos Registrados)</strong>: clasificación + registro en SGIE de envíos con trazabilidad.</li>
+  <li><strong>Zona Logística</strong>: entrada y salida de todos los productos para tratamiento.</li>
+</ul>
+<h4>Red de transporte postal: 4 niveles</h4>
+<ol>
+  <li><strong>Interzona</strong>: conecta los 7 territorios (NW, N, NE, E, Centro, S, Insular) desde Madrid (en estrella) y Barcelona (en abanico).</li>
+  <li><strong>Zonal</strong>: entre CTAs de la misma área territorial.</li>
+  <li><strong>Provincial</strong>: ida y vuelta entre oficinas y su CTA de referencia.</li>
+  <li><strong>Local</strong>: recogida de buzones, grandes clientes y dentro del municipio.</li>
+</ol>
 
 <h3>2. Proceso de clasificación automática</h3>
 
@@ -571,12 +628,24 @@ window.CORREOS.TEMARIO_CONTENT = {
 
 <h3>1. Unidades de reparto</h3>
 
-<p>La <strong>unidad de reparto</strong> es la instalación donde el cartero recibe, organiza y prepara su ruta diaria. Pueden ser:</p>
+<p>La <strong>unidad de reparto</strong> es la instalación donde el cartero recibe, organiza y prepara su ruta diaria. Hay <strong>tres tipos especializados</strong>:</p>
 <ul>
-  <li><strong>Unidad de Reparto Urbana (URU)</strong>: cubre zonas urbanas de alta densidad.</li>
-  <li><strong>Unidad de Reparto Rural (URR)</strong>: cubre municipios rurales y de baja densidad.</li>
-  <li><strong>Unidad de Reparto Mixta</strong>: combina zonas urbanas y rurales.</li>
+  <li><strong>URO (Unidad de Reparto Ordinario)</strong>: dividida en secciones. Cada sección tiene asignadas calles o zonas a un ACR (Auxiliar de Cartería y Reparto).</li>
+  <li><strong>USE (Unidad de Servicios Especiales)</strong>: gestiona paquetes de mayor volumen y tiene capacidad de concentración de avisos por la tarde.</li>
+  <li><strong>URP (Unidad de Reparto de Paquetes)</strong>: operaciones especializadas de distribución de paquetería.</li>
 </ul>
+
+<h4>Clasificación de los servicios rurales</h4>
+<p>Según el tipo de transporte y jornada, los servicios rurales se clasifican por códigos:</p>
+<ul>
+  <li><strong>EAM</strong>: enlace motorizado, jornada completa.</li>
+  <li><strong>EAP</strong>: enlace a pie, jornada completa.</li>
+  <li><strong>EBM</strong>: enlace motorizado, jornada reducida.</li>
+  <li><strong>EBP</strong>: enlace a pie, jornada reducida.</li>
+  <li><strong>OAM/OBM</strong>: oficina auxiliar motorizada (completa/reducida).</li>
+  <li><strong>OAP/OBP</strong>: oficina auxiliar a pie (completa/reducida).</li>
+</ul>
+<p>Tipos de transporte rural: <strong>AU</strong> (automóvil, el más común), <strong>MO</strong> (motocicleta), <strong>CI</strong> (ciclomotor &lt;50 cc), <strong>BI</strong> (bicicleta, uso cada vez menor), <strong>PI</strong> (a pie).</p>
 
 <h3>2. Itinerarios y preparación de la ruta</h3>
 
@@ -641,7 +710,32 @@ window.CORREOS.TEMARIO_CONTENT = {
 // ══════════════════════════════════════════════════════════════════════════════
 10: `<h2>Tema 10: El cliente — Atención, calidad y protocolos de ventas</h2>
 
-<h3>1. Modelo de atención al cliente de Correos</h3>
+<h3>1. Sistema de gestión de calidad de Correos</h3>
+
+<h4>Modelos de calidad</h4>
+<ul>
+  <li><strong>EFQM (European Foundation for Quality Management)</strong>: modelo de excelencia empresarial adoptado por Correos.</li>
+  <li><strong>ISO 9001:2015</strong>: "Requisitos de los sistemas de gestión de la calidad". Todas las oficinas de Correos están certificadas.</li>
+</ul>
+
+<h4>Los 5 subsistemas de calidad de Correos</h4>
+<ol>
+  <li>Oficinas (Productos y Servicios).</li>
+  <li>Centros de Tratamiento.</li>
+  <li>Centros de Intercambio Internacional.</li>
+  <li>Atención al Cliente.</li>
+  <li>Correos Frío.</li>
+</ol>
+
+<h4>Herramientas de medición</h4>
+<ul>
+  <li><strong>NPS (Net Promoter Score)</strong>: índice neto de recomendación. Mide si el cliente recomendaría Correos.</li>
+  <li><strong>LEAN</strong>: filosofía de mejora continua que elimina procesos sin valor añadido.</li>
+  <li><strong>KPIs SMART</strong>: indicadores específicos, medibles, alcanzables, relevantes y con límite temporal.</li>
+  <li><strong>Sistema RFID</strong>: identificación de envíos en tiempo real.</li>
+</ul>
+
+<h3>2. Modelo de atención al cliente de Correos</h3>
 
 <h4>Principios de atención</h4>
 <ul>
@@ -651,6 +745,13 @@ window.CORREOS.TEMARIO_CONTENT = {
   <li><strong>Resolución</strong>: dar respuesta efectiva, no dilatar soluciones.</li>
   <li><strong>Amabilidad y respeto</strong>: independientemente del comportamiento del cliente.</li>
 </ul>
+
+<h4>Estructura del equipo comercial</h4>
+<ol>
+  <li>Jefe comercial.</li>
+  <li>Coordinadores.</li>
+  <li>Gestores comerciales.</li>
+</ol>
 
 <h4>Canales de atención al cliente</h4>
 <ul>

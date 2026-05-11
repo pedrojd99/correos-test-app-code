@@ -72,8 +72,7 @@ window.IIAPP = window.IIAPP || {};
     if (screen === 'home') await renderHome();
     if (screen === 'study') await renderStudy();
     if (screen === 'history') await renderHistory();
-    // 'temario' y 'tribunal' eran pantallas IIPP-específicas; en Correos no aplican igual
-    if (screen === 'temario' && typeof renderTemario === 'function') await renderTemario();
+    if (screen === 'temario') await renderTemario();
     if (screen === 'tribunal' && typeof renderTribunal === 'function') await renderTribunal();
     if (screen === 'planes') await renderPlanes();
     if (screen === 'cuenta') await renderCuenta();
@@ -726,6 +725,33 @@ window.IIAPP = window.IIAPP || {};
             }).join('')}
           </div>
         </div>
+
+        ${(() => {
+          const wrongs = answers.filter(a => !a.isCorrect);
+          if (!wrongs.length) return '';
+          const items = wrongs.slice(0, 25).map(a => {
+            const q = window.IIAPP.QUESTION_BY_ID[a.questionId];
+            if (!q) return '';
+            const mod = TEMARIO.modules.find(m => m.number === q.module);
+            const correctOpt = q.options ? q.options.find(o => o.letter === q.correct) : null;
+            const correctText = correctOpt ? correctOpt.text : q.correct;
+            return `
+              <div class="wrong-item">
+                <div class="wrong-q">${q.text}</div>
+                <div class="wrong-correct">Correcta: ${q.correct}) ${correctText}</div>
+                ${mod ? `<button class="btn-tema-link" onclick="IIAPP.UI.showTema(${mod.number})">Estudiar → Tema ${mod.number}: ${mod.shortName}</button>` : ''}
+              </div>`;
+          }).join('');
+          const extra = wrongs.length > 25 ? `<p class="text-muted" style="padding:8px 16px;font-size:13px">+ ${wrongs.length - 25} fallos más</p>` : '';
+          return `
+          <div class="card">
+            <div class="card-header">
+              <h3>Preguntas falladas (${wrongs.length})</h3>
+              <p class="text-muted" style="font-size:13px;margin:4px 0 0">Estudia el tema para cada fallo y vuelve a repasar</p>
+            </div>
+            <div class="wrong-list">${items}${extra}</div>
+          </div>`;
+        })()}
 
         <div class="actions-row">
           <button class="btn btn-secondary" onclick="IIAPP.UI.show('home')">Volver al inicio</button>
