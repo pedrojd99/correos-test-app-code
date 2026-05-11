@@ -802,6 +802,43 @@ window.IIAPP = window.IIAPP || {};
     `;
   }
 
+  // ========== PANTALLA: TEMARIO ==========
+
+  let _temaActivo = 1;
+
+  async function renderTemario() {
+    const target = $('#screen-temario');
+    const CONTENT = window.CORREOS.TEMARIO_CONTENT || {};
+    const modulos = TEMARIO.modules;
+
+    const navBtns = modulos.map(m => `
+      <button class="tema-btn ${m.number === _temaActivo ? 'active' : ''}"
+        onclick="IIAPP.UI.showTema(${m.number})">
+        T${m.number}: ${m.shortName}
+      </button>
+    `).join('');
+
+    const modulo = modulos.find(m => m.number === _temaActivo);
+    const contenido = CONTENT[_temaActivo] || '<p class="text-muted">Contenido pendiente de cargar.</p>';
+
+    const legislacionBadges = (modulo?.legislacion || []).map(l =>
+      `<span class="legislacion-badge">📋 ${l}</span>`
+    ).join('');
+
+    target.innerHTML = `
+      <div class="container">
+        <h1 class="page-title">Temario oficial</h1>
+        <p class="page-subtitle">12 temas · Basado en la convocatoria oficial y la legislación vigente</p>
+
+        <div class="temario-nav">${navBtns}</div>
+
+        ${legislacionBadges ? `<div style="margin-bottom: 16px;">${legislacionBadges}</div>` : ''}
+
+        <div class="tema-content">${contenido}</div>
+      </div>
+    `;
+  }
+
   // ========== PANTALLA: PLANES ==========
 
   const PLAN_CATALOG = {
@@ -1600,6 +1637,11 @@ window.IIAPP = window.IIAPP || {};
     async setPuesto(puestoId) {
       await Storage.setProfile('puesto', puestoId);
       show('cuenta');
+    },
+
+    showTema(num) {
+      _temaActivo = num;
+      renderTemario();
     },
 
     async onboardingSelectPuesto(puestoId) {

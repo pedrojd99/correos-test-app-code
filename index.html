@@ -12,11 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 <style>
-  /* Override de colores corporativos a paleta Correos (amarillo y azul) */
-  :root {
-    --brand-primary: #003366;
-    --brand-accent: #FFCD00;
-  }
+  :root { --brand-primary: #003366; --brand-accent: #FFCD00; }
   .app-header { background: #003366 !important; color: #FFCD00 !important; }
   .app-header .brand-logo { background: #FFCD00 !important; color: #003366 !important; }
   .app-header .brand { color: #FFCD00 !important; }
@@ -27,11 +23,7 @@
 
   /* Selector de puesto */
   .puesto-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
-  .puesto-row {
-    display: flex; gap: 12px; align-items: center;
-    padding: 14px 16px; border: 2px solid #e5e7eb; border-radius: 10px;
-    cursor: pointer; transition: all 0.15s;
-  }
+  .puesto-row { display: flex; gap: 12px; align-items: center; padding: 14px 16px; border: 2px solid #e5e7eb; border-radius: 10px; cursor: pointer; transition: all 0.15s; }
   .puesto-row:hover { border-color: #003366; }
   .puesto-row.puesto-selected { border-color: #003366; background: #f0f4f8; }
   .puesto-row input[type="radio"] { width: 18px; height: 18px; accent-color: #003366; }
@@ -39,29 +31,28 @@
   .puesto-nombre { font-weight: 600; color: #0f172a; }
 
   /* Banner del puesto en Home */
-  .puesto-banner {
-    background: linear-gradient(135deg, #003366 0%, #004488 100%);
-    color: #fff;
-    padding: 12px 18px;
-    border-radius: 10px;
-    margin-bottom: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
+  .puesto-banner { background: linear-gradient(135deg, #003366 0%, #004488 100%); color: #fff; padding: 12px 18px; border-radius: 10px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
   .puesto-banner .puesto-banner-name { font-weight: 600; }
   .puesto-banner .puesto-banner-name span { color: #FFCD00; }
-  .puesto-banner .puesto-banner-link {
-    color: #FFCD00;
-    text-decoration: underline;
-    background: none;
-    border: 0;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 14px;
-  }
+  .puesto-banner .puesto-banner-link { color: #FFCD00; text-decoration: underline; background: none; border: 0; cursor: pointer; font-family: inherit; font-size: 14px; }
+
+  /* Pantalla de temario */
+  .temario-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .tema-btn { padding: 8px 14px; border: 2px solid #e5e7eb; border-radius: 8px; background: #fff; cursor: pointer; font-size: 13px; font-weight: 500; font-family: inherit; transition: all 0.15s; }
+  .tema-btn:hover { border-color: #003366; color: #003366; }
+  .tema-btn.active { background: #003366; color: #FFCD00; border-color: #003366; }
+  .tema-content { background: #fff; border-radius: 12px; padding: 28px; border: 1px solid #e5e7eb; line-height: 1.7; font-size: 15px; }
+  .tema-content h2 { font-size: 18px; color: #003366; margin: 0 0 16px; line-height: 1.3; }
+  .tema-content h3 { font-size: 16px; margin: 20px 0 8px; color: #0f172a; }
+  .tema-content h4 { font-size: 14px; font-weight: 600; margin: 14px 0 6px; color: #334155; }
+  .tema-content ul, .tema-content ol { padding-left: 20px; margin: 8px 0; }
+  .tema-content li { margin-bottom: 4px; }
+  .tema-content table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  .tema-content th { background: #003366; color: #fff; padding: 8px 10px; text-align: left; }
+  .tema-content td { padding: 7px 10px; border-bottom: 1px solid #e5e7eb; }
+  .tema-content tr:nth-child(even) td { background: #f8fafc; }
+  .tema-content em { display: block; background: #FFCD00; padding: 12px 16px; border-radius: 8px; font-style: normal; font-size: 13px; margin-top: 20px; color: #003366; font-weight: 500; }
+  .legislacion-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; padding: 3px 8px; margin: 2px; color: #475569; }
 </style>
 </head>
 <body>
@@ -75,6 +66,7 @@
     <nav class="app-nav">
       <button class="nav-item" data-nav="home" onclick="IIAPP.UI.show('home')">Inicio</button>
       <button class="nav-item" data-nav="study" onclick="IIAPP.UI.show('study')">Estudiar</button>
+      <button class="nav-item" data-nav="temario" onclick="IIAPP.UI.show('temario')">Temario</button>
       <button class="nav-item" data-nav="history" onclick="IIAPP.UI.show('history')">Historial</button>
       <button class="nav-item" data-nav="planes" onclick="IIAPP.UI.show('planes')">Planes</button>
       <button class="nav-item" data-nav="cuenta" onclick="IIAPP.UI.show('cuenta')">Cuenta</button>
@@ -86,19 +78,19 @@
 <main>
   <section id="screen-home" class="screen"></section>
   <section id="screen-study" class="screen hidden"></section>
+  <section id="screen-temario" class="screen hidden"></section>
   <section id="screen-test" class="screen hidden"></section>
   <section id="screen-result" class="screen hidden"></section>
   <section id="screen-history" class="screen hidden"></section>
   <section id="screen-planes" class="screen hidden"></section>
   <section id="screen-cuenta" class="screen hidden"></section>
   <section id="screen-settings" class="screen hidden"></section>
-  <!-- Placeholder vacío para compat router (no enlazadas en nav) -->
-  <section id="screen-temario" class="screen hidden"></section>
   <section id="screen-tribunal" class="screen hidden"></section>
 </main>
 
 <!-- Datos -->
 <script src="data/temario.js"></script>
+<script src="data/temario_content.js"></script>
 <script src="data/questions.js"></script>
 
 <!-- Lógica -->

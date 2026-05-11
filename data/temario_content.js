@@ -1,0 +1,848 @@
+// Contenido del temario CorreosTest — 12 temas oficiales
+// Generado a partir de:
+//   - Ley 43/2010 del Servicio Postal Universal (BOE-A-2010-20139)
+//   - Real Decreto 437/2024 Reglamento de servicios postales (BOE-A-2024-10010)
+//   - Ley 31/1995 de Prevención de Riesgos Laborales
+//   - Contenido enriquecido con datos de academias: PreparaCorreos.com, OpositaTest, Opostal
+//   - LO 3/2018 LOPD-GDD y Reglamento UE 2016/679 RGPD
+//   - Ley 10/2010 prevención de blanqueo de capitales
+//   - Documentación pública de Correos y Telégrafos
+
+window.CORREOS = window.CORREOS || {};
+window.IIAPP = window.CORREOS;
+
+window.CORREOS.TEMARIO_CONTENT = {
+
+// ══════════════════════════════════════════════════════════════════════════════
+1: `<h2>Tema 1: Marco normativo postal. Organismos reguladores. Organización del Grupo Correos</h2>
+
+<h3>1. Marco normativo postal y naturaleza jurídica de Correos</h3>
+
+<p>El marco normativo que regula el sector postal en España está encabezado por la <strong>Ley 43/2010, de 30 de diciembre, del Servicio Postal Universal, de los derechos de los usuarios y del mercado postal</strong> (BOE-A-2010-20139), que transpuso la Directiva 2008/6/CE y liberalizó completamente el mercado postal español.</p>
+
+<p>El desarrollo reglamentario más reciente corresponde al <strong>Real Decreto 437/2024, de 30 de abril</strong>, que aprueba el Reglamento de los servicios postales, sustituyendo al anterior RD 1829/1999. Entró en vigor el 18 de agosto de 2024.</p>
+
+<h4>Evolución legislativa clave</h4>
+<ul>
+  <li><strong>Directiva 97/67/CE</strong> → primera liberalización parcial del mercado postal.</li>
+  <li><strong>Ley 24/1998</strong> → primera ley española de servicio postal universal.</li>
+  <li><strong>Directiva 2002/39/CE</strong> → apertura progresiva del mercado.</li>
+  <li><strong>Directiva 2008/6/CE</strong> → liberalización total (todos los envíos de correspondencia).</li>
+  <li><strong>Ley 43/2010</strong> → marco vigente; liberaliza completamente el mercado y designa a Correos como operador del SPU.</li>
+  <li><strong>RD 437/2024</strong> → reglamento postal vigente, deroga el RD 1829/1999.</li>
+</ul>
+
+<h4>Naturaleza jurídica de Correos</h4>
+<p>La <strong>Sociedad Estatal Correos y Telégrafos, S.A., S.M.E.</strong> (Correos) es una sociedad anónima de capital íntegramente público, cuyo accionista único es la <strong>SEPI</strong> (Sociedad Estatal de Participaciones Industriales). Opera bajo derecho privado aunque cumple obligaciones de servicio público como operador designado del SPU.</p>
+
+<p>Correos gestiona el <strong>Servicio Postal Universal (SPU)</strong>, que comprende la obligación de recoger, admitir, clasificar, transportar y distribuir envíos en todo el territorio nacional con criterios de universalidad, continuidad, accesibilidad, calidad y asequibilidad.</p>
+
+<h3>2. Organismos reguladores nacionales e internacionales</h3>
+
+<h4>Nacionales</h4>
+<ul>
+  <li><strong>CNMC (Comisión Nacional de los Mercados y la Competencia)</strong>: supervisa el cumplimiento del operador designado, establece las condiciones de acceso a la red postal y resuelve controversias entre operadores. Creada por la Ley 3/2013.</li>
+  <li><strong>Ministerio de Transportes, Movilidad y Agenda Urbana</strong>: ejerce la titularidad del SPU, designa al operador y establece las condiciones de prestación.</li>
+  <li><strong>Agencia Española de Protección de Datos (AEPD)</strong>: supervisa el cumplimiento del RGPD y la LOPD en todas las actividades postales que traten datos personales.</li>
+</ul>
+
+<h4>Internacionales</h4>
+<ul>
+  <li><strong>Unión Postal Universal (UPU)</strong>: organismo especializado de la ONU fundado en 1874 con sede en Berna. Establece las reglas del intercambio postal internacional entre los 192 países miembros. El <em>Acuerdo sobre Paquetes</em> y el <em>Convenio Postal Universal</em> son sus instrumentos principales.</li>
+  <li><strong>PostEurop</strong>: asociación de operadores postales públicos europeos. Coordina estándares de calidad, interoperabilidad y digitalización.</li>
+  <li><strong>Comisión Reguladora Postal Europea (CERP)</strong>: coordina a los organismos reguladores postales nacionales de la UE.</li>
+  <li><strong>IPC (International Post Corporation)</strong>: cooperativa de 24 operadores postales que coordina la calidad del tráfico internacional de paquetes.</li>
+</ul>
+
+<h3>3. Organización del Grupo Correos</h3>
+
+<h4>Estructura del Grupo</h4>
+<p>El Grupo Correos está formado por la sociedad matriz y tres filiales principales:</p>
+<ul>
+  <li><strong>Correos</strong> (sociedad matriz): gestiona el SPU, la red de oficinas, el reparto y los servicios financieros y digitales.</li>
+  <li><strong>Correos Express</strong>: filial para la mensajería urgente y paquetería nacional e internacional.</li>
+  <li><strong>Correos Nexea</strong>: especializada en gestión documental, impresión y mailing masivo.</li>
+  <li><strong>Correos Telecom</strong>: infraestructura de telecomunicaciones (red propia de fibra y espectro radioeléctrico).</li>
+</ul>
+
+<h4>Presencia territorial</h4>
+<p>Correos cuenta con <strong>más de 2.300 oficinas</strong> en toda España, incluyendo oficinas propias y puntos de atención en estafetas rurales. Su red de distribución cubre todos los municipios del territorio nacional, incluyendo los de menor población.</p>
+
+<h4>Gobierno corporativo</h4>
+<p>La gobernanza de Correos recae en el <strong>Consejo de Administración</strong> presidido por el Presidente-CEO, y en la Dirección General. Los órganos de control incluyen la Comisión de Auditoría y el Comité de Cumplimiento.</p>
+
+<h3>4. Correos y su adaptación a los cambios del mercado</h3>
+
+<h4>Evolución del mercado postal</h4>
+<p>El volumen de <strong>cartas y envíos de correspondencia ha caído más de un 70 %</strong> en las últimas dos décadas, como consecuencia de la digitalización. Sin embargo, el mercado de <strong>paquetería y e-commerce ha crecido exponencialmente</strong>, especialmente desde 2020.</p>
+
+<h4>Estrategia de Correos</h4>
+<ul>
+  <li>Refuerzo de la paquetería y logística de última milla.</li>
+  <li>Digitalización de servicios: Correos ID, Buzón Digital, notificaciones electrónicas.</li>
+  <li>Diversificación: Correos Frío, Correos Logística, servicios financieros.</li>
+  <li>Red de Citypaq (taquillas automatizadas) para entregas fuera de horario.</li>
+  <li>Sostenibilidad: electrificación de la flota, emisiones cero.</li>
+</ul>
+
+<p><em>Puntos clave para el examen: La Ley 43/2010 liberalizó totalmente el mercado. La CNMC supervisa al operador designado. La UPU rige el correo internacional. Correos es sociedad anónima con capital público, dependiente de SEPI. El RD 437/2024 es el reglamento postal vigente desde agosto 2024.</em></p>`,
+
+// ══════════════════════════════════════════════════════════════════════════════
+2: `<h2>Tema 2: Gestión de personas. Diversidad e inclusión. Prevención de riesgos. Sostenibilidad</h2>
+
+<h3>1. Gestión de personas en Correos</h3>
+
+<p>Correos cuenta con más de <strong>50.000 empleados</strong>, lo que lo convierte en una de las mayores empresas de España por número de trabajadores. La gestión de personas se articula en torno a la atracción del talento, el desarrollo profesional, el bienestar y la cultura corporativa.</p>
+
+<h4>Clasificación del personal</h4>
+<p>El personal de Correos se clasifica en <strong>Grupos Profesionales</strong> del I al IV. El Grupo Profesional IV —al que pertenece el puesto de cartero, agente de clasificación y atención al cliente— es el más numeroso y corresponde a operaciones postales básicas. Requiere titulación de ESO o equivalente.</p>
+
+<h3>2. Diversidad, inclusión e igualdad</h3>
+
+<h4>Marco legal</h4>
+<ul>
+  <li><strong>LO 3/2007, de 22 de marzo, para la igualdad efectiva de mujeres y hombres</strong>: obliga a las empresas de más de 250 trabajadores a elaborar un Plan de Igualdad.</li>
+  <li><strong>Real Decreto-ley 6/2019</strong>: rebajó el umbral a 50 trabajadores y estableció la obligación de registro retributivo.</li>
+  <li><strong>LO 10/2022 de garantía integral de la libertad sexual</strong>: refuerza las medidas contra el acoso sexual en el ámbito laboral.</li>
+</ul>
+
+<h4>Plan de Igualdad de Correos</h4>
+<p>Correos tiene aprobado y registrado su <strong>Plan de Igualdad</strong>, que incluye medidas en materia de selección, retribución, conciliación, formación y prevención del acoso. La comisión paritaria de igualdad supervisa su aplicación.</p>
+
+<h4>Tipos de acoso en el ámbito laboral</h4>
+<ul>
+  <li><strong>Acoso laboral (mobbing)</strong>: conducta hostil, sistemática y reiterada dirigida a una persona que busca dañar su dignidad, crear un entorno intimidatorio o excluirla. Requiere reiteración — un hecho aislado no constituye acoso.</li>
+  <li><strong>Acoso sexual</strong>: comportamiento verbal o físico de naturaleza sexual no deseado.</li>
+  <li><strong>Acoso por razón de sexo</strong>: comportamiento relacionado con el sexo de una persona con propósito de atentar contra su dignidad.</li>
+</ul>
+
+<h3>3. Prevención de riesgos laborales en Correos</h3>
+
+<h4>Marco legal</h4>
+<p>La <strong>Ley 31/1995, de 8 de noviembre, de Prevención de Riesgos Laborales (LPRL)</strong> establece el marco general de seguridad y salud en el trabajo. Se desarrolla reglamentariamente por numerosos RD, entre ellos:</p>
+<ul>
+  <li><strong>RD 486/1997</strong>: condiciones de los lugares de trabajo.</li>
+  <li><strong>RD 773/1997</strong>: equipos de protección individual (EPI).</li>
+  <li><strong>RD 487/1997</strong>: manipulación manual de cargas.</li>
+</ul>
+
+<h4>Principios básicos de PRL (art. 15 LPRL)</h4>
+<ol>
+  <li>Evitar los riesgos en origen.</li>
+  <li>Evaluar los riesgos que no puedan evitarse.</li>
+  <li>Sustituir lo peligroso por lo que no lo es.</li>
+  <li>Planificar la prevención.</li>
+  <li>Dar preferencia a la protección colectiva sobre la individual.</li>
+</ol>
+
+<h4>Riesgos específicos de los puestos del Grupo IV</h4>
+<ul>
+  <li><strong>Cartero motorizado</strong>: accidentes de tráfico, posturas forzadas al cargar bolsas, condiciones meteorológicas adversas.</li>
+  <li><strong>Cartero a pie</strong>: sobrecarga musculoesquelética (bolsa de reparto), caídas, mordeduras de animales.</li>
+  <li><strong>Agente de clasificación</strong>: posturas repetitivas, ruido en centros automatizados, manejo de cargas.</li>
+  <li><strong>Atención al cliente</strong>: riesgos psicosociales (atención al público), posturas estáticas prolongadas.</li>
+</ul>
+
+<h4>Manipulación manual de cargas (RD 487/1997)</h4>
+<p>El límite general recomendado para la manipulación manual de cargas es <strong>25 kg</strong> para condiciones óptimas, reduciéndose a <strong>15 kg</strong> para condiciones no ideales. Para mujeres y trabajadores jóvenes se aplican límites menores.</p>
+
+<h4>Equipos de Protección Individual (EPI)</h4>
+<p>Los EPI son <strong>obligatorios</strong> cuando los riesgos no pueden eliminarse ni controlarse con medidas organizativas. Ejemplos en Correos: casco para motocicleta, calzado de seguridad, guantes de protección, ropa de alta visibilidad.</p>
+
+<h3>4. Responsabilidad Social Corporativa y Sostenibilidad</h3>
+
+<h4>ODS y Agenda 2030</h4>
+<p>Correos alinea su estrategia con los <strong>Objetivos de Desarrollo Sostenible (ODS)</strong> de la ONU, especialmente los ODS 8 (Trabajo decente), 13 (Acción por el clima), 11 (Ciudades sostenibles) y 17 (Alianzas).</p>
+
+<h4>Ejes de sostenibilidad de Correos</h4>
+<ul>
+  <li><strong>Medioambiental</strong>: electrificación de la flota de reparto, objetivo de neutralidad en carbono, gestión de residuos.</li>
+  <li><strong>Social</strong>: empleo estable, cobertura rural, accesibilidad para personas con discapacidad, voluntariado corporativo.</li>
+  <li><strong>Gobernanza</strong>: transparencia, buen gobierno, cumplimiento, canal ético.</li>
+</ul>
+
+<p><em>Puntos clave para el examen: Ley 31/1995 es la LPRL. Los EPI son obligatorios cuando los riesgos no se pueden evitar. 25 kg límite general de carga manual. El Plan de Igualdad es obligatorio. El acoso laboral requiere sistematicidad y reiteración.</em></p>`,
+
+// ══════════════════════════════════════════════════════════════════════════════
+3: `<h2>Tema 3: Productos y servicios — Comunicación, paquetería, e-commerce</h2>
+
+<h3>1. Carta ordinaria y certificada</h3>
+
+<p>Reguladas por la <strong>Ley 43/2010</strong> y el <strong>RD 437/2024</strong> (art. 2 y 12-23).</p>
+
+<h4>Carta ordinaria</h4>
+<ul>
+  <li><strong>Peso máximo</strong>: 2 kg.</li>
+  <li><strong>Dimensiones máximas</strong>: longitud + anchura + altura ≤ 90 cm, ningún lado superior a 60 cm.</li>
+  <li><strong>Dimensiones mínimas</strong>: 10 × 7 cm (formato mínimo de sobre).</li>
+  <li>Sin prueba de entrega. No se puede rastrear.</li>
+  <li>Parte del <strong>Servicio Postal Universal (SPU)</strong>.</li>
+</ul>
+
+<h4>Carta certificada</h4>
+<ul>
+  <li>Incluye <strong>número de seguimiento</strong> y <strong>entrega bajo firma</strong> del destinatario.</li>
+  <li>Tiene un único intento de entrega domiciliaria. Si el destinatario no está, se deja aviso y debe recogerlo en oficina.</li>
+  <li>Genera un recibo (RC) como prueba de admisión.</li>
+  <li>Art. 20 RD 437/2024: <em>"Los envíos certificados sólo podrán entregarse, previa firma, a los respectivos destinatarios"</em>.</li>
+</ul>
+
+<h4>Servicios adicionales de la carta</h4>
+<ul>
+  <li><strong>Aviso de recibo (AR)</strong>: tarjeta firmada por el destinatario que se devuelve al remitente.</li>
+  <li><strong>Valor declarado</strong>: seguro por una cantidad declarada. Indemnización en caso de pérdida o deterioro.</li>
+  <li><strong>Reembolso</strong>: el cartero cobra al destinatario el importe especificado por el remitente.</li>
+  <li><strong>Entrega en propia mano</strong>: solo entrega al destinatario (no a terceros).</li>
+</ul>
+
+<h3>2. Correo urgente y burofax</h3>
+<ul>
+  <li><strong>Correo Urgente</strong>: carta con compromiso de entrega al día siguiente laborable.</li>
+  <li><strong>Burofax</strong>: comunicación con plena validez jurídica y fehaciente. Con o sin certificación de contenido. Muy usado en notificaciones legales.</li>
+  <li><strong>Notificaciones postales</strong>: usadas por Administraciones Públicas para notificar actos administrativos. La Ley 39/2015 permite notificación electrónica como preferente.</li>
+</ul>
+
+<h3>3. Publicidad directa y marketing postal</h3>
+<ul>
+  <li><strong>Publicorreo Óptimo</strong>: envíos de publicidad con dirección y nombre del destinatario. Tarifa especial con requisito de volumen mínimo.</li>
+  <li><strong>Publicorreo Premium</strong>: mismo servicio con prestaciones adicionales (seguimiento, personalización).</li>
+  <li><strong>Publibuzón</strong>: envíos publicitarios sin datos de destinatario (reparto masivo sin dirección).</li>
+  <li><strong>Marketing Directo</strong>: envíos con datos personales; exige cumplimiento del RGPD.</li>
+</ul>
+
+<h3>4. Paquetería</h3>
+
+<h4>Gama de paquetes de Correos</h4>
+<table>
+  <tr><th>Producto</th><th>Plazo</th><th>Peso máximo</th><th>Seguimiento</th></tr>
+  <tr><td><strong>Paq24</strong></td><td>Día siguiente laborable</td><td>30 kg</td><td>Sí</td></tr>
+  <tr><td><strong>Paq48</strong></td><td>2 días laborables</td><td>30 kg</td><td>Sí</td></tr>
+  <tr><td><strong>Paq72</strong></td><td>3 días laborables</td><td>30 kg</td><td>Sí</td></tr>
+  <tr><td><strong>Paq Estándar</strong></td><td>Sin compromiso</td><td>30 kg</td><td>Sí</td></tr>
+  <tr><td><strong>Paq Premium</strong></td><td>Variable</td><td>30 kg</td><td>Sí + seguro</td></tr>
+</table>
+
+<p>Los plazos cuentan desde el <strong>día laborable siguiente a la admisión</strong>.</p>
+
+<h3>5. E-commerce y soluciones logísticas</h3>
+
+<h4>Citypaq</h4>
+<p>Red de <strong>taquillas automatizadas</strong> disponibles 24 horas al día, 7 días a la semana. El destinatario recibe un código por SMS/email para recoger su paquete. Ubicadas en zonas de alta afluencia (centros comerciales, estaciones, gasolineras).</p>
+
+<h4>Soluciones e-commerce</h4>
+<ul>
+  <li><strong>Crossborder</strong>: solución logística internacional para tiendas online. Cobertura mundial.</li>
+  <li><strong>Marketplace</strong>: integración con Amazon, Ebay y otros marketplaces.</li>
+  <li><strong>Tienda online</strong>: Correos ofrece creación de tienda online integrada con su red de distribución.</li>
+</ul>
+
+<h4>Correos Express</h4>
+<p>Filial de mensajería urgente con red propia de distribución. Especializada en envíos B2B (empresa a empresa) y e-commerce con necesidad de entrega rápida. Diferente a la gama Paq de la matriz Correos.</p>
+
+<p><em>Puntos clave para el examen: Carta ordinaria hasta 2 kg. Certificada entrega bajo firma, 1 intento. Paq24 = día siguiente. Paq72 = 3 días laborables. Burofax tiene plena validez jurídica. Citypaq = taquillas 24h. Art. 20 RD 437/2024 para certificadas.</em></p>`,
+
+// ══════════════════════════════════════════════════════════════════════════════
+4: `<h2>Tema 4: Productos en oficinas. Servicios financieros. Soluciones digitales. Filatelia</h2>
+
+<h3>1. Servicios en oficina</h3>
+
+<p>Las oficinas de Correos son puntos de admisión, venta y atención al cliente. Además de la admisión de envíos, ofrecen una gama amplia de servicios:</p>
+<ul>
+  <li>Giros postales nacionales e internacionales.</li>
+  <li>Reembolsos: cobro al destinatario en el momento de la entrega.</li>
+  <li>Venta de material postal: sobres, cajas, film burbuja.</li>
+  <li>Venta de sellos y productos de filatelia.</li>
+  <li>Contratación de productos financieros.</li>
+  <li>Servicios de la Administración (empadronamiento en algunos municipios).</li>
+</ul>
+
+<h3>2. Servicios financieros</h3>
+
+<h4>Western Union</h4>
+<p>Correos tiene acuerdo con <strong>Western Union</strong> para la realización de <strong>envíos de dinero internacionales</strong>. Los clientes pueden enviar y recibir dinero en efectivo en las oficinas. El receptor puede cobrar en efectivo en cualquier punto Western Union del mundo.</p>
+
+<h4>Correos Cash</h4>
+<p>Servicio de envío de dinero nacional. Permite enviar efectivo a otra persona que lo recoge en una oficina de Correos, sin necesidad de cuenta bancaria.</p>
+
+<h4>Correos Prepago (Tarjeta Correos Prepago)</h4>
+<p>Tarjeta de <strong>débito prepago</strong> de la red Visa, recargable, disponible para cualquier persona sin necesidad de cuenta bancaria ni nómina. Permite realizar pagos online, en comercios y sacar dinero en cajeros. Comercializada en las oficinas de Correos.</p>
+
+<h4>Correos Pay</h4>
+<p>Plataforma de pago digital de Correos que permite a los ecommerce integrar medios de pago en sus tiendas online.</p>
+
+<h4>Obligaciones de PBC en servicios financieros</h4>
+<p>Los servicios financieros de Correos están sujetos a la <strong>Ley 10/2010 de prevención del blanqueo de capitales y de la financiación del terrorismo</strong>. Las oficinas deben:</p>
+<ul>
+  <li>Identificar al cliente (DNI, pasaporte, NIE) en operaciones superiores a 1.000 €.</li>
+  <li>Conservar la documentación durante 10 años.</li>
+  <li>Comunicar operaciones sospechosas al SEPBLAC.</li>
+  <li>Aplicar diligencia debida reforzada en operaciones de alto riesgo.</li>
+</ul>
+
+<h3>3. Soluciones digitales</h3>
+
+<h4>Correos ID</h4>
+<p>Identidad digital del ciudadano vinculada a Correos. Permite autenticarse y firmar electrónicamente. Utilizada para acceder a servicios de la Administración Pública de forma segura.</p>
+
+<h4>Buzón Digital (Dirección Electrónica Habilitada - DEH)</h4>
+<p>Las <strong>notificaciones administrativas electrónicas</strong> de organismos públicos se entregan en la <strong>Dirección Electrónica Habilitada (DEH)</strong> o en la Carpeta Ciudadana del Portal Tu-Sede. Correos gestiona este servicio para la Administración General del Estado. Tienen <strong>plena validez legal</strong> (art. 41-43 Ley 39/2015).</p>
+
+<h4>Notificación electrónica vs. postal</h4>
+<ul>
+  <li>La Ley 39/2015 establece la notificación electrónica como <strong>preferente para personas jurídicas</strong> y profesionales.</li>
+  <li>Las personas físicas pueden elegir el medio de notificación, salvo que la Administración haya establecido la electrónica como obligatoria.</li>
+</ul>
+
+<h3>4. Filatelia</h3>
+
+<p>Correos es el emisor de los sellos de correos españoles. El área de filatelia incluye:</p>
+<ul>
+  <li>Emisiones anuales de sellos conmemorativos y de uso corriente.</li>
+  <li>Series especiales y láminas de lujo para coleccionistas.</li>
+  <li>Matasellos especiales de primer día.</li>
+  <li>Venta online a través de la tienda filatélica de correos.es.</li>
+  <li>Suscripciones filatelicas: el coleccionista recibe automáticamente las novedades.</li>
+</ul>
+
+<p><em>Puntos clave para el examen: Tarjeta Correos Prepago no necesita cuenta bancaria. Western Union = envío de dinero internacional en efectivo. DEH = dirección electrónica habilitada, notificaciones con validez legal. Ley 10/2010 regula la prevención del blanqueo. Identificación obligatoria en operaciones > 1.000€.</em></p>`,
+
+// ══════════════════════════════════════════════════════════════════════════════
+5: `<h2>Tema 5: Nuevas líneas de negocio — Correos Logística, Correos Frío, otros</h2>
+
+<h3>1. Diversificación del negocio de Correos</h3>
+
+<p>Ante el declive estructural del correo tradicional, Correos ha desarrollado nuevas líneas de negocio que aprovechan su red de distribución, su presencia en todo el territorio nacional y su capacidad logística.</p>
+
+<h3>2. Correos Logística</h3>
+
+<p>División especializada en <strong>logística integral para empresas</strong>:</p>
+<ul>
+  <li><strong>Fulfillment</strong>: almacenaje de mercancía, preparación de pedidos (picking y packing) y envío al cliente final.</li>
+  <li><strong>Distribución B2B</strong>: reparto a empresas, con entregas en plataformas logísticas y almacenes.</li>
+  <li><strong>Logística inversa</strong>: gestión de devoluciones de ecommerce.</li>
+  <li><strong>Última milla</strong>: distribución local en áreas urbanas y periurbanas.</li>
+</ul>
+
+<h3>3. Correos Frío</h3>
+
+<p>Servicio especializado en <strong>cadena de frío</strong>: transporte y distribución de productos que requieren temperatura controlada:</p>
+<ul>
+  <li>Productos farmacéuticos y sanitarios (vacunas, insulina, reactivos de laboratorio).</li>
+  <li>Productos alimentarios perecederos (frescos, congelados).</li>
+  <li>Rango de temperatura configurable: refrigerado (2-8°C), fresco (0-4°C), congelado (-18°C).</li>
+  <li>Trazabilidad completa con sensores de temperatura durante todo el transporte.</li>
+</ul>
+
+<h3>4. Correos Telecom</h3>
+
+<p>Filial de telecomunicaciones que gestiona:</p>
+<ul>
+  <li>Red propia de <strong>fibra óptica oscura</strong> (no iluminada, alquilada a operadores).</li>
+  <li>Espectro radioeléctrico propio.</li>
+  <li>Servicios de conectividad para organismos públicos y empresas.</li>
+</ul>
+
+<h3>5. Correos Nexea</h3>
+
+<p>Especializada en <strong>gestión documental y comunicaciones masivas</strong>:</p>
+<ul>
+  <li>Impresión y ensobrado masivo (facturas, recibos, notificaciones).</li>
+  <li>Gestión de comunicaciones para bancos, aseguradoras y AAPP.</li>
+  <li>Digitalización documental.</li>
+</ul>
+
+<h3>6. CorreosLabs (innovación)</h3>
+
+<p>Unidad de innovación interna que desarrolla nuevos servicios y tecnologías:</p>
+<ul>
+  <li>Drones para reparto en zonas rurales aisladas (proyectos piloto).</li>
+  <li>Inteligencia artificial para optimización de rutas.</li>
+  <li>Realidad aumentada en almacenes logísticos.</li>
+</ul>
+
+<p><em>Puntos clave para el examen: Correos Frío = cadena de frío, temperatura controlada. Correos Logística = almacenaje + fulfillment + última milla. Correos Nexea = impresión y documentación masiva. Correos Telecom = fibra óptica y espectro. CorreosLabs = innovación y drones.</em></p>`,
+
+// ══════════════════════════════════════════════════════════════════════════════
+6: `<h2>Tema 6: Herramientas — IRIS, SGIE, PDA, Minerva, SEDI, CRM</h2>
+
+<h3>1. IRIS: Sistema de Gestión de Oficinas</h3>
+
+<p><strong>IRIS</strong> (Integrated Retail Information System) es la <strong>aplicación informática principal de las oficinas de Correos</strong>. Gestiona todas las operaciones de ventanilla:</p>
+<ul>
+  <li>Admisión de cartas, paquetes, giros, reembolsos.</li>
+  <li>Venta de sellos, material postal y productos financieros.</li>
+  <li>Registro de envíos y generación de recibos.</li>
+  <li>Gestión de contratos con clientes.</li>
+  <li>Cobro: efectivo, tarjeta y medios electrónicos.</li>
+  <li>Gestión del turno (sistema de citas previas).</li>
+</ul>
+<p>Cada empleado de oficina accede a IRIS con sus credenciales personales. Genera un ticket de cada operación para el cliente.</p>
+
+<h3>2. SGIE: Sistema de Gestión Integral de Envíos</h3>
+
+<p><strong>SGIE</strong> es el sistema de trazabilidad y gestión de todos los envíos en la red de Correos. Funciones principales:</p>
+<ul>
+  <li>Seguimiento en tiempo real del estado de cada envío.</li>
+  <li>Gestión de incidencias y reclamaciones.</li>
+  <li>Control de calidad del servicio.</li>
+  <li>Interfaz con los sistemas de los clientes corporativos.</li>
+</ul>
+
+<h3>3. PDA: Dispositivo Portátil del Cartero</h3>
+
+<p>La <strong>PDA</strong> (Personal Digital Assistant) es la herramienta digital que usa el cartero durante el reparto:</p>
+<ul>
+  <li>Registro de entregas: confirma la entrega con la firma digital del destinatario en pantalla.</li>
+  <li>Captura de datos del receptor (nombre, DNI para envíos que lo requieran).</li>
+  <li>Actualización en tiempo real del estado del envío en los sistemas centrales.</li>
+  <li>Lectura del código de barras o QR de cada envío.</li>
+  <li>Admisión en ruta (servicios rurales): puede admitir solicitudes de voto electoral, entre otros.</li>
+  <li>GPS integrado para optimización de ruta.</li>
+</ul>
+<p>Cada acción registrada en la PDA tiene valor probatorio y queda registrada en SGIE.</p>
+
+<h3>4. Minerva</h3>
+
+<p>Sistema de <strong>clasificación y gestión en los Centros de Tratamiento</strong>. Controla las máquinas clasificadoras automáticas (OCR, lectores de código de barras) y la asignación de envíos a rutas de reparto. Gestiona el carro de reparto de cada cartero.</p>
+
+<h3>5. SEDI: Sistema de Distribución</h3>
+
+<p><strong>SEDI</strong> gestiona los procesos de la unidad de reparto: itinerarios, asignación de envíos a carteros, liquidación de ruta, control de pendientes.</p>
+
+<h3>6. SIGUA: Sistema de Gestión de Unidades y Acuerdos</h3>
+
+<p>Gestiona los contratos y acuerdos con clientes corporativos. Permite configurar tarifas, volúmenes y condiciones de servicio.</p>
+
+<h3>7. CRM (Customer Relationship Management)</h3>
+
+<p>Herramienta de gestión de relaciones con clientes. Permite:</p>
+<ul>
+  <li>Registro del histórico de cada cliente (compras, reclamaciones, preferencias).</li>
+  <li>Segmentación de clientes para campañas comerciales.</li>
+  <li>Seguimiento de propuestas comerciales.</li>
+  <li>Coordinación entre los equipos de ventas y las oficinas.</li>
+</ul>
+
+<h3>8. Sistemas de seguridad y videovigilancia</h3>
+
+<p>Las oficinas de Correos disponen de sistemas de videovigilancia, alarma y sistemas anti-robo. El empleado debe conocer los protocolos de seguridad (activación de alarma, procedimiento en caso de robo).</p>
+
+<p><em>Puntos clave para el examen: IRIS = gestión de oficina (admisión, ventas). SGIE = trazabilidad de envíos. PDA = herramienta del cartero, firma digital del destinatario. Minerva = clasificación en CTA. SEDI = gestión de reparto. SIGUA = contratos clientes. CRM = gestión de relaciones comerciales.</em></p>`,
+
+// ══════════════════════════════════════════════════════════════════════════════
+7: `<h2>Tema 7: Procesos operativos I — Admisión</h2>
+
+<h3>1. Concepto y tipos de admisión</h3>
+
+<p>La <strong>admisión</strong> es el proceso por el que Correos acepta un envío postal del remitente para su tratamiento y distribución. Se regula en el <strong>Título III del RD 437/2024</strong>.</p>
+
+<h4>Tipos de admisión</h4>
+<ul>
+  <li><strong>Admisión en ventanilla</strong>: el remitente lleva el envío a la oficina. Requiere identificación para determinados servicios.</li>
+  <li><strong>Admisión masiva o preregistrada</strong>: grandes clientes que preparan y franquean sus envíos con medios propios y los depositan en bulk en centros de admisión masiva.</li>
+  <li><strong>Admisión domiciliaria</strong>: el cartero recoge el envío en el domicilio del cliente (servicio de recogida).</li>
+  <li><strong>Admisión rural</strong>: el cartero rural admite envíos en ruta desde su PDA.</li>
+  <li><strong>Admisión en Citypaq o puntos de conveniencia</strong>: el cliente deposita el paquete en una taquilla o punto de recogida.</li>
+</ul>
+
+<h3>2. Requisitos de admisión (art. 16 RD 437/2024)</h3>
+
+<ul>
+  <li>El envío debe estar <strong>correctamente acondicionado y embalado</strong>.</li>
+  <li>Debe indicar la <strong>dirección completa del destinatario</strong> (nombre, dirección, código postal, municipio, país).</li>
+  <li>La dirección del <strong>remitente debe figurar</strong> en el dorso o en la solapa del sobre.</li>
+  <li>El franqueo debe estar pagado o concertado contractualmente.</li>
+</ul>
+
+<h3>3. Identificación del remitente</h3>
+
+<p>Para ciertos servicios (valor declarado > 1.000 €, prevención de blanqueo) el remitente debe identificarse con documento oficial válido:</p>
+<ul>
+  <li>Documento Nacional de Identidad (DNI).</li>
+  <li>Pasaporte.</li>
+  <li>NIE (para extranjeros).</li>
+  <li>Permiso de conducir (como excepción en algunos casos).</li>
+  <li><strong>No válida</strong>: tarjeta sanitaria, tarjeta de estudiante, carné de biblioteca.</li>
+</ul>
+
+<h3>4. Objetos prohibidos (art. 24 RD 437/2024)</h3>
+
+<p>Están prohibidos en los envíos postales:</p>
+<ul>
+  <li>Estupefacientes y sustancias psicotrópicas.</li>
+  <li>Armas y explosivos.</li>
+  <li>Materiales peligrosos (sustancias inflamables, radioactivas, infecciosas).</li>
+  <li>Animales vivos (salvo excepciones UPU para insectos y animales de laboratorio).</li>
+  <li>Dinero en efectivo (excepto valores declarados y con seguro).</li>
+  <li>Objetos cuyo tráfico sea delito (productos falsificados, piratería).</li>
+  <li>Mercancías prohibidas en el país de destino (envíos internacionales).</li>
+</ul>
+
+<h3>5. Franqueo y tarifas</h3>
+
+<ul>
+  <li><strong>Franqueo insuficiente</strong>: si un envío llega con franqueo insuficiente, el destinatario debe abonar la diferencia antes de recibirlo (si acepta).</li>
+  <li><strong>Franqueo mecánico</strong>: usado por grandes clientes, impreso directamente en el sobre.</li>
+  <li><strong>Sello postal</strong>: estampilla adhesiva emitida por Correos.</li>
+  <li><strong>Sobre prefranqueado</strong>: sobre con franqueo ya pagado e impreso, vendido en oficinas.</li>
+</ul>
+
+<h3>6. Admisión de voto por correo</h3>
+
+<p>Durante períodos electorales, Correos gestiona las <strong>solicitudes de voto por correo</strong>:</p>
+<ul>
+  <li>El elector solicita el voto por correo mediante solicitud a la Junta Electoral de Zona.</li>
+  <li>Correos envía al domicilio la documentación electoral.</li>
+  <li>El elector devuelve el sobre con su voto a la Delegación Provincial de la Oficina del Censo Electoral.</li>
+  <li>El personal de reparto rural puede admitir estas solicitudes desde su PDA cuando esté en vigor una campaña electoral.</li>
+</ul>
+
+<h3>7. Mercancías peligrosas</h3>
+
+<p>El transporte postal de mercancías peligrosas se rige por la normativa internacional. Los envíos de productos sujetos a restricciones (baterías de litio, perfumes, pinturas) deben cumplir las normas de embalaje y etiquetado. El empleado debe rechazar envíos que no cumplan los requisitos.</p>
+
+<p><em>Puntos clave para el examen: Identificación con DNI/pasaporte/NIE. Tarjeta sanitaria NO vale. Art. 16 RD 437/2024 = condiciones de admisión. Art. 24 = objetos prohibidos. La admisión rural se hace con PDA. El voto por correo solo cuando hay campaña activa.</em></p>`,
+
+// ══════════════════════════════════════════════════════════════════════════════
+8: `<h2>Tema 8: Procesos operativos II — Tratamiento y Transporte</h2>
+
+<h3>1. Red de tratamiento postal</h3>
+
+<p>Una vez admitido el envío, pasa por la red de <strong>Centros de Tratamiento</strong> de Correos antes de llegar a la unidad de reparto del destinatario.</p>
+
+<h4>Tipos de centros</h4>
+<ul>
+  <li><strong>CTA (Centro de Tratamiento Automatizado)</strong>: grandes instalaciones con maquinaria de clasificación automática. Tratan la mayor parte del volumen nacional. Los dos principales son Madrid (Barajas) y Barcelona (Sant Boi).</li>
+  <li><strong>CT (Centro de Tratamiento)</strong>: instalaciones provinciales que tratan el correo provincial y de la zona. Combinan tratamiento manual y automatizado.</li>
+  <li><strong>CDA (Centro de Distribución y Admisión)</strong>: centros urbanos que reciben el correo clasificado y lo preparan para el reparto local.</li>
+  <li><strong>CIEX (Centro de Intercambio Internacional)</strong>: gestiona los envíos internacionales de entrada y salida. Ubicados en Madrid (Barajas), Barcelona (El Prat) y Bilbao.</li>
+</ul>
+
+<h3>2. Proceso de clasificación automática</h3>
+
+<h4>Máquinas clasificadoras</h4>
+<ul>
+  <li><strong>OCR (Reconocimiento Óptico de Caracteres)</strong>: lee automáticamente la dirección del destinatario y codifica el envío.</li>
+  <li><strong>Lectores de código de barras</strong>: leen el código impreso en los envíos para su identificación y clasificación.</li>
+  <li><strong>Clasificadoras de cartas</strong>: clasifican las cartas por código postal y sector de reparto.</li>
+  <li><strong>Clasificadoras de paquetes</strong>: bandas transportadoras con sistemas de lectura y derivación automática.</li>
+</ul>
+
+<h4>Código postal</h4>
+<p>El <strong>código postal</strong> español tiene 5 dígitos:</p>
+<ul>
+  <li>Los <strong>dos primeros</strong> identifican la <strong>provincia</strong> (01-52).</li>
+  <li>El <strong>tercero</strong> identifica el sector dentro de la provincia.</li>
+  <li>Los <strong>dos últimos</strong> identifican el número de reparto o municipio.</li>
+</ul>
+<p>Ejemplo: 28001 = Madrid (28), sector 0, reparto 01 (Centro).</p>
+
+<h3>3. Contenedorización y embalaje</h3>
+
+<ul>
+  <li><strong>Bandeja tipo A</strong>: para cartas normales. Capacidad estándar 30-40 cm de profundidad.</li>
+  <li><strong>Bandeja tipo B</strong>: para grandes envíos de correspondencia.</li>
+  <li><strong>Carro transportador</strong>: estructura metálica de ruedas que porta bandejas. Capacidad aproximada de 20-25 bandejas tipo A llenas.</li>
+  <li><strong>Contenedor postal</strong>: contenedor rígido para transporte de paquetes entre centros.</li>
+</ul>
+
+<h3>4. Red de transporte postal</h3>
+
+<h4>Rutas de transporte</h4>
+<ul>
+  <li><strong>Rutas carretera</strong>: camiones propios y contratados entre centros de tratamiento. Funcionan generalmente de noche para entregar el correo en las unidades de reparto por la mañana.</li>
+  <li><strong>Transporte aéreo</strong>: envíos urgentes y correo internacional utilizan vuelos comerciales y cargueros.</li>
+  <li><strong>Rutas fluviales y marítimas</strong>: para islas (Baleares, Canarias, Ceuta, Melilla) y territorio insular.</li>
+</ul>
+
+<h3>5. Tratamiento del correo internacional de exportación</h3>
+
+<ul>
+  <li>El correo internacional se concentra en los CIEX.</li>
+  <li>Se clasifica por país de destino y se entrega al operador postal del país receptor.</li>
+  <li>Los paquetes con mercancías generan documentación aduanera (CN22, CN23).</li>
+  <li>El sistema <strong>ICS2</strong> (Import Control System 2) de la UE exige declaración anticipada de datos de seguridad antes de la carga en el avión.</li>
+</ul>
+
+<p><em>Puntos clave para el examen: CTA = clasificación automática. OCR = lee dirección y codifica. Código postal: 2 primeras cifras = provincia. Carro transportador = ~20-25 bandejas. CIEX = correo internacional. ICS2 = declaración aduanera anticipada.</em></p>`,
+
+// ══════════════════════════════════════════════════════════════════════════════
+9: `<h2>Tema 9: Procesos operativos III — Distribución y Entrega</h2>
+
+<h3>1. Unidades de reparto</h3>
+
+<p>La <strong>unidad de reparto</strong> es la instalación donde el cartero recibe, organiza y prepara su ruta diaria. Pueden ser:</p>
+<ul>
+  <li><strong>Unidad de Reparto Urbana (URU)</strong>: cubre zonas urbanas de alta densidad.</li>
+  <li><strong>Unidad de Reparto Rural (URR)</strong>: cubre municipios rurales y de baja densidad.</li>
+  <li><strong>Unidad de Reparto Mixta</strong>: combina zonas urbanas y rurales.</li>
+</ul>
+
+<h3>2. Itinerarios y preparación de la ruta</h3>
+
+<h4>Proceso diario del cartero</h4>
+<ol>
+  <li><strong>Llegada y carga</strong>: el cartero llega a la unidad, recibe el correo ya clasificado para su zona.</li>
+  <li><strong>Orden de reparto</strong>: organiza los envíos en el orden de su itinerario.</li>
+  <li><strong>Salida</strong>: inicia el reparto por la ruta establecida.</li>
+  <li><strong>Reparto</strong>: deposita en buzones o entrega en mano según el tipo de envío.</li>
+  <li><strong>Liquidación</strong>: al volver, registra los envíos no entregados y los pendientes.</li>
+</ol>
+
+<h3>3. Entrega de envíos ordinarios</h3>
+
+<p>Las cartas ordinarias y envíos sin firma se depositan en el <strong>buzón domiciliario</strong> del destinatario. El art. 25 RD 437/2024 establece los requisitos de los buzones:</p>
+<ul>
+  <li>Uno por cada vivienda o local independiente.</li>
+  <li>Normalizados según los estándares del sector postal.</li>
+  <li>Accesibles desde la vía pública.</li>
+  <li>Situados en la planta baja o acceso del edificio.</li>
+</ul>
+
+<h3>4. Entrega de envíos certificados (art. 20 RD 437/2024)</h3>
+
+<p><em>"Los envíos certificados sólo podrán entregarse, previa firma, a los respectivos destinatarios"</em>. Proceso:</p>
+<ol>
+  <li>El cartero llama al timbre o llama al destinatario.</li>
+  <li>Si está presente: entrega el envío previa firma en PDA y, si se requiere, verificación del DNI.</li>
+  <li>Si no está presente: deposita aviso en el buzón indicando oficina, horario y plazo para recogerlo.</li>
+  <li>El destinatario dispone de <strong>15 días hábiles</strong> para recoger el envío en la oficina.</li>
+  <li>Transcurrido ese plazo sin recogida: el envío se devuelve al remitente.</li>
+</ol>
+
+<h4>¿Puede entregarse a otra persona?</h4>
+<p>Sí, los envíos certificados pueden entregarse a un <strong>tercero autorizado</strong> que se identifique con DNI y demuestre la autorización. El cartero anota los datos del receptor.</p>
+
+<h3>5. Devoluciones e incidencias</h3>
+
+<ul>
+  <li><strong>Destinatario desconocido</strong>: se devuelve al remitente con indicación de la causa.</li>
+  <li><strong>Dirección incorrecta</strong>: se intenta corregir si es posible identificar al destinatario; si no, se devuelve.</li>
+  <li><strong>Envío rehusado</strong>: el destinatario rechaza recibir el envío. Se devuelve al remitente.</li>
+  <li><strong>Envío dañado</strong>: se recoge evidencia fotográfica y se gestiona la incidencia desde SGIE.</li>
+</ul>
+
+<h3>6. Servicios rurales y su especificidad</h3>
+
+<p>El cartero rural tiene características propias:</p>
+<ul>
+  <li>Cubre municipios de menor densidad, con itinerarios más largos y menos frecuencia de reparto.</li>
+  <li>Puede realizar <strong>admisiones en ruta</strong> desde la PDA (no va a la oficina).</li>
+  <li>Puede prestar servicios adicionales: recarga de tarjetas, pequeños pagos, conexión de mayores rurales.</li>
+  <li>El <strong>servicio postal universal exige al menos cinco días laborables semanales</strong> de reparto.</li>
+</ul>
+
+<h3>7. Frecuencia de distribución (Ley 43/2010, art. 22)</h3>
+
+<p>El SPU obliga a la distribución y entrega de envíos postales <strong>al menos todos los días laborables, de lunes a viernes</strong>. Las excepciones son circunstancias extraordinarias o geográficas debidamente justificadas.</p>
+
+<p><em>Puntos clave para el examen: Certificadas: 1 intento, bajo firma, 15 días para recoger. SPU = reparto todos los días laborables (L-V). Art. 25 RD 437/2024 regula buzones. Art. 20 = certificadas solo al destinatario previa firma. El rural puede admitir en ruta.</em></p>`,
+
+// ══════════════════════════════════════════════════════════════════════════════
+10: `<h2>Tema 10: El cliente — Atención, calidad y protocolos de ventas</h2>
+
+<h3>1. Modelo de atención al cliente de Correos</h3>
+
+<h4>Principios de atención</h4>
+<ul>
+  <li><strong>Escucha activa</strong>: atender sin interrumpir, comprender la necesidad real del cliente antes de ofrecer soluciones.</li>
+  <li><strong>Empatía</strong>: ponerse en el lugar del cliente, especialmente en situaciones conflictivas.</li>
+  <li><strong>Proactividad</strong>: anticiparse a las necesidades, ofrecer productos complementarios.</li>
+  <li><strong>Resolución</strong>: dar respuesta efectiva, no dilatar soluciones.</li>
+  <li><strong>Amabilidad y respeto</strong>: independientemente del comportamiento del cliente.</li>
+</ul>
+
+<h4>Canales de atención al cliente</h4>
+<ul>
+  <li>Oficinas presenciales (red de más de 2.300 puntos).</li>
+  <li>Teléfono: 900 400 500 (gratuito).</li>
+  <li>Web: correos.es (tracking, reclamaciones, servicios online).</li>
+  <li>App móvil oficial de Correos.</li>
+  <li>Redes sociales (Twitter/X, Facebook).</li>
+  <li>Cita previa: web, app y teléfono.</li>
+</ul>
+
+<h3>2. Gestión de reclamaciones</h3>
+
+<h4>Procedimiento (art. 10 RD 437/2024)</h4>
+<ol>
+  <li>El cliente presenta la reclamación (presencial, teléfono o web).</li>
+  <li>Correos dispone de <strong>1 mes</strong> para resolverla desde su presentación.</li>
+  <li>Si el cliente no está satisfecho con la resolución, puede acudir a la <strong>CNMC</strong> o a las Juntas Arbitrales de Consumo.</li>
+  <li>En el caso de envíos perdidos o dañados: Correos indemniza según las tarifas establecidas.</li>
+</ol>
+
+<h4>Plazos para reclamar</h4>
+<ul>
+  <li>El cliente tiene un plazo de <strong>6 meses</strong> desde la admisión del envío para presentar una reclamación.</li>
+  <li>Para envíos internacionales: según los plazos del Convenio UPU.</li>
+</ul>
+
+<h4>Indemnizaciones (SPU)</h4>
+<ul>
+  <li>Carta ordinaria perdida: precio del servicio más una compensación estándar.</li>
+  <li>Envío certificado perdido: hasta 3 veces la tarifa de admisión.</li>
+  <li>Valor declarado: hasta el valor declarado por el remitente.</li>
+</ul>
+
+<h3>3. Calidad en Correos</h3>
+
+<h4>Compromisos de calidad del SPU (Ley 43/2010)</h4>
+<ul>
+  <li>Cartas ordinarias en D+3 laborables: <strong>95 %</strong> de los envíos.</li>
+  <li>Cartas urgentes en D+1: <strong>97 %</strong>.</li>
+  <li>La CNMC publica anualmente los indicadores de calidad de Correos.</li>
+</ul>
+
+<h3>4. Protocolos de ventas en oficina</h3>
+
+<h4>Ciclo de venta AIDA adaptado a Correos</h4>
+<ol>
+  <li><strong>Atención</strong>: recibir al cliente con saludo, mirada y actitud positiva.</li>
+  <li><strong>Diagnóstico</strong>: preguntas abiertas para entender qué necesita ("¿qué tipo de envío es?", "¿tiene prisa?").</li>
+  <li><strong>Oferta</strong>: proponer el producto que mejor encaja, con sus ventajas y precio claro.</li>
+  <li><strong>Cierre</strong>: confirmar la venta, realizar la operación en IRIS, entregar recibo.</li>
+  <li><strong>Venta cruzada</strong>: ofrecer productos complementarios ("¿necesita material de embalaje?", "¿quiere añadir seguro?").</li>
+</ol>
+
+<h3>5. Tipos de clientes en Correos</h3>
+<ul>
+  <li><strong>Clientes particulares</strong>: personas físicas, sin contrato. Pagan a tarifa general.</li>
+  <li><strong>Clientes con contrato</strong>: empresas o autónomos con acuerdo comercial. Tienen tarifa negociada y crédito.</li>
+  <li><strong>Clientes PYME</strong>: pequeña empresa, puede acceder a condiciones específicas.</li>
+  <li><strong>Tarjeta Más Cerca</strong>: programa de fidelización para personas físicas con descuentos y acumulación de puntos. Es personal e intransferible.</li>
+</ul>
+
+<p><em>Puntos clave para el examen: 1 mes para resolver reclamaciones. 6 meses para reclamar. Cartas ordinarias D+3 = 95%. CNMC recibe reclamaciones no resueltas. Tarjeta Más Cerca es personal e intransferible. Ciclo de venta: diagnóstico → oferta → cierre → venta cruzada.</em></p>`,
+
+// ══════════════════════════════════════════════════════════════════════════════
+11: `<h2>Tema 11: Internacionalización y Aduanas</h2>
+
+<h3>1. Envíos internacionales de Correos</h3>
+
+<h4>Tipos de envíos internacionales</h4>
+<ul>
+  <li><strong>Carta internacional ordinaria</strong>: hasta 2 kg, sin seguimiento.</li>
+  <li><strong>Carta internacional certificada</strong>: con número de seguimiento, entrega bajo firma.</li>
+  <li><strong>Paquete internacional</strong>: hasta 30 kg. Varios productos (EMS, Paq Mundial, Paq Standard Internacional).</li>
+  <li><strong>EMS (Express Mail Service)</strong>: servicio urgente internacional de la UPU. Plazos de entrega garantizados entre los países miembros.</li>
+</ul>
+
+<h3>2. La Unión Postal Universal (UPU)</h3>
+
+<p>La <strong>UPU</strong> es el organismo internacional que regula el correo entre sus 192 países miembros:</p>
+<ul>
+  <li>Fundada en 1874 en el Congreso de Berna.</li>
+  <li>Organismo especializado de la ONU desde 1948.</li>
+  <li>Sede en Berna (Suiza).</li>
+  <li>El <strong>Convenio Postal Universal</strong> es su norma principal.</li>
+  <li>Establece las tarifas de liquidación entre países (tasas terminales).</li>
+  <li>Estandariza los formularios (CN22, CN23) para declaración de mercancías.</li>
+</ul>
+
+<h3>3. Gestión aduanera</h3>
+
+<h4>Formularios aduaneros</h4>
+<ul>
+  <li><strong>CN22</strong>: declaración simplificada. Para envíos de particulares de valor < 300 €.</li>
+  <li><strong>CN23</strong>: declaración detallada. Para envíos comerciales o de valor > 300 €. Incluye descripción detallada del contenido, valor, país de origen.</li>
+</ul>
+
+<h4>Términos de entrega (Incoterms)</h4>
+<ul>
+  <li><strong>DAP (Delivered at Place)</strong>: vendedor entrega en el lugar acordado, sin despachar aduanas de destino. El comprador asume gastos aduaneros.</li>
+  <li><strong>DDP (Delivered Duty Paid)</strong>: el vendedor paga todos los gastos, incluidos los aranceles e impuestos en destino. El comprador recibe sin pagar nada adicional.</li>
+  <li>La gestión aduanera de tipo <strong>DDP</strong> significa "entregado con derechos pagados".</li>
+</ul>
+
+<h4>Aranceles e IVA en importaciones</h4>
+<p>Desde el 1 de julio de 2021, se eliminó la franquicia de IVA de 22 € para importaciones. Toda importación desde fuera de la UE está sujeta a IVA.</p>
+<ul>
+  <li><strong>IOSS (Import One-Stop Shop)</strong>: régimen especial para ecommerce. Vendedores externos a la UE pueden registrarse en IOSS, pagar el IVA al declarar, y el comprador recibe sin trámites aduaneros adicionales para envíos ≤ 150 €.</li>
+  <li><strong>H7</strong>: declaración aduanera simplificada para envíos ≤ 150 € sin IOSS.</li>
+</ul>
+
+<h4>ICS2 (Import Control System 2)</h4>
+<p>Sistema europeo que exige la <strong>declaración anticipada de datos de seguridad</strong> antes de que los envíos sean cargados en el medio de transporte de origen. Correos actúa como declarante ante la aduana. Incluye datos del remitente, destinatario, descripción del contenido.</p>
+
+<h4>Correos como representante aduanero</h4>
+<p>Correos actúa como <strong>representante aduanero indirecto</strong> en la importación de paquetes internacionales, presentando el DUA (Documento Único Administrativo) ante la Agencia Tributaria en nombre del destinatario.</p>
+
+<p><em>Puntos clave para el examen: UPU sede en Berna. CN22 < 300€, CN23 > 300€. DDP = impuestos incluidos. IOSS = IVA prepagado en ecommerce (envíos ≤ 150€). ICS2 = declaración anticipada de seguridad. Correos = representante aduanero.</em></p>`,
+
+// ══════════════════════════════════════════════════════════════════════════════
+12: `<h2>Tema 12: Cumplimiento — Protección de datos, Blanqueo, Ética, Ciberseguridad</h2>
+
+<h3>1. Protección de datos personales</h3>
+
+<h4>Marco normativo</h4>
+<ul>
+  <li><strong>Reglamento General de Protección de Datos (RGPD)</strong> — Reglamento UE 2016/679, directamente aplicable en España desde el 25 de mayo de 2018.</li>
+  <li><strong>Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales (LOPD-GDD)</strong>: adapta el RGPD al ordenamiento español.</li>
+  <li>Organismo de control: <strong>Agencia Española de Protección de Datos (AEPD)</strong>.</li>
+</ul>
+
+<h4>Principios del RGPD (art. 5)</h4>
+<ol>
+  <li><strong>Licitud, lealtad y transparencia</strong>: el tratamiento debe tener una base legal y el interesado debe ser informado.</li>
+  <li><strong>Limitación de finalidad</strong>: los datos se recogen para fines específicos y no se usan para otros.</li>
+  <li><strong>Minimización de datos</strong>: solo se recogen los datos necesarios.</li>
+  <li><strong>Exactitud</strong>: los datos deben estar actualizados.</li>
+  <li><strong>Limitación del plazo de conservación</strong>: no se guardan más tiempo del necesario.</li>
+  <li><strong>Integridad y confidencialidad</strong>: medidas de seguridad adecuadas.</li>
+</ol>
+
+<h4>Derechos de los ciudadanos (derechos ARCO+)</h4>
+<ul>
+  <li><strong>Acceso</strong>: conocer qué datos tiene la empresa sobre el interesado.</li>
+  <li><strong>Rectificación</strong>: corregir datos inexactos.</li>
+  <li><strong>Cancelación / Supresión</strong> ("derecho al olvido"): solicitar la eliminación de los datos.</li>
+  <li><strong>Oposición</strong>: oponerse a determinados tratamientos (publicidad).</li>
+  <li><strong>Portabilidad</strong>: recibir los datos en formato reutilizable para transferirlos a otro servicio.</li>
+  <li><strong>Limitación del tratamiento</strong>: suspender provisionalmente el tratamiento.</li>
+</ul>
+
+<h4>Secreto postal</h4>
+<p>El <strong>artículo 18.3 de la Constitución Española</strong> garantiza el secreto de las comunicaciones, incluidas las postales. El art. 7 RD 437/2024 obliga a los operadores postales a garantizar la inviolabilidad de los envíos. El empleado de Correos que vulnere el secreto postal comete delito tipificado en el Código Penal.</p>
+
+<h3>2. Prevención del blanqueo de capitales (PBC)</h3>
+
+<h4>Marco legal</h4>
+<p>La <strong>Ley 10/2010, de 28 de abril, de prevención del blanqueo de capitales y de la financiación del terrorismo</strong> obliga a Correos a aplicar medidas de diligencia debida.</p>
+
+<h4>Obligaciones en las oficinas</h4>
+<ul>
+  <li><strong>Identificación del cliente</strong>: en operaciones de transferencia de fondos o cambio de divisas, identificar al cliente con documento oficial. A partir de <strong>1.000 €</strong>, identificación obligatoria.</li>
+  <li><strong>Comunicación de operaciones sospechosas</strong>: al SEPBLAC (Servicio Ejecutivo de la Comisión de Prevención del Blanqueo de Capitales e Infracciones Monetarias).</li>
+  <li><strong>Conservación de documentación</strong>: durante <strong>10 años</strong>.</li>
+  <li><strong>Diligencia debida reforzada</strong>: en operaciones con países de alto riesgo o personas políticamente expuestas (PEP).</li>
+</ul>
+
+<h4>Señales de alerta</h4>
+<ul>
+  <li>Operaciones por importe elevado sin justificación económica clara.</li>
+  <li>El cliente se muestra reticente a identificarse.</li>
+  <li>Múltiples operaciones en el mismo día cercanas al umbral de 1.000 €.</li>
+  <li>Operaciones a países de alto riesgo.</li>
+</ul>
+
+<h3>3. Compromiso ético y cumplimiento</h3>
+
+<ul>
+  <li><strong>Código Ético de Correos</strong>: principios de conducta para todos los empleados (integridad, confidencialidad, no discriminación, respeto).</li>
+  <li><strong>Canal ético (canal de denuncias)</strong>: sistema interno para comunicar conductas contrarias al Código Ético de forma confidencial o anónima. Regulado por la Directiva UE 2019/1937 (protección de denunciantes) y su transposición española (Ley 2/2023).</li>
+  <li><strong>Conflicto de intereses</strong>: el empleado debe declarar y evitar situaciones donde su interés personal pueda influir en decisiones de la empresa.</li>
+</ul>
+
+<h3>4. Seguridad de la información y ciberseguridad</h3>
+
+<ul>
+  <li><strong>Esquema Nacional de Seguridad (ENS)</strong>: obligatorio para entidades del sector público y sus proveedores. Establece medidas de seguridad para los sistemas de información.</li>
+  <li><strong>Phishing y ingeniería social</strong>: el empleado no debe revelar contraseñas ni datos de acceso bajo ningún pretexto.</li>
+  <li><strong>Uso responsable de los sistemas</strong>: los equipos de trabajo son para uso profesional. El acceso indebido a información confidencial puede constituir delito.</li>
+  <li><strong>Gestión de incidentes</strong>: cualquier incidente de seguridad (pérdida de dispositivo, acceso no autorizado) debe comunicarse al responsable de seguridad inmediatamente.</li>
+</ul>
+
+<p><em>Puntos clave para el examen: Art. 18.3 CE = secreto postal. RGPD derechos: acceso, rectificación, supresión, oposición, portabilidad. Identificación PBC > 1.000€. Conservar documentos PBC 10 años. SEPBLAC = organismo antiblaqueo. Canal ético = denuncias confidenciales. ENS = seguridad información sector público.</em></p>`
+
+};
