@@ -199,7 +199,41 @@ window.CORREOS.TEMARIO_CONTENT = {
   <li><strong>Gobernanza</strong>: transparencia, buen gobierno, cumplimiento, canal ético.</li>
 </ul>
 
-<p><em>Puntos clave para el examen: Ley 31/1995 es la LPRL. Los EPI son obligatorios cuando los riesgos no se pueden evitar. 25 kg límite general de carga manual. El Plan de Igualdad es obligatorio. El acoso laboral requiere sistematicidad y reiteración.</em></p>`,
+<h4>Órganos de prevención en la empresa (LPRL)</h4>
+<table>
+  <tr><th>Órgano</th><th>Quién lo forma</th><th>Función principal</th></tr>
+  <tr><td>Servicio de Prevención</td><td>Técnicos de PRL</td><td>Evaluación de riesgos, planificación preventiva</td></tr>
+  <tr><td>Delegado de Prevención</td><td>Representantes de los trabajadores</td><td>Fiscalización del cumplimiento de la LPRL</td></tr>
+  <tr><td>Comité de Seguridad y Salud</td><td>Delegados + empresa (paritario)</td><td>Consulta y participación en prevención</td></tr>
+</table>
+<p>El Comité de Seguridad y Salud es <strong>obligatorio en empresas de 50 o más trabajadores</strong>. Correos, con más de 50.000 empleados, lo tiene constituido.</p>
+
+<h4>Enfermedades profesionales más frecuentes en Correos</h4>
+<ul>
+  <li><strong>Trastornos musculoesqueléticos</strong>: lumbalgia, tendinitis (cartero a pie y clasificación).</li>
+  <li><strong>Dermatosis de contacto</strong>: por manejo de papeles y tintes en clasificación.</li>
+  <li><strong>Hipoacusia</strong>: por ruido en centros de tratamiento automatizado.</li>
+  <li><strong>Estrés laboral</strong>: personal de atención al cliente y ventanilla.</li>
+</ul>
+
+<h3>5. Emprendimiento e innovación en Correos</h3>
+<ul>
+  <li><strong>CorreosLabs</strong>: unidad de I+D+i interna. Desarrolla proyectos piloto de drones, IA, realidad aumentada y blockchain para la red postal.</li>
+  <li>Correos participa en programas europeos de innovación postal (PostEurop Innovation Group).</li>
+  <li>La digitalización del negocio postal busca compensar el descenso de volumen de carta con servicios de alto valor añadido.</li>
+</ul>
+
+<h4>Mnemotécnico: principios de PRL (art. 15 LPRL)</h4>
+<p style="background:#eef6ff;border-left:4px solid #003366;padding:12px 16px;border-radius:0 8px 8px 0;font-size:14px;line-height:1.8">
+  <strong>E · E · S · P · C → "Evitar Evaluando Siempre, Protegerse Colectivamente"</strong><br>
+  <strong>E</strong>vitar riesgos en origen<br>
+  <strong>E</strong>valuar los que no puedan evitarse<br>
+  <strong>S</strong>ustituir lo peligroso<br>
+  <strong>P</strong>lanificar la prevención<br>
+  <strong>C</strong>olectiva antes que individual (protección colectiva > individual)
+</p>
+
+<p><em>Puntos clave para el examen: Ley 31/1995 es la LPRL. Los EPI son obligatorios cuando los riesgos no se pueden evitar. 25 kg límite general de carga manual. El Plan de Igualdad es obligatorio. El acoso laboral requiere sistematicidad y reiteración. Comité de Seguridad y Salud obligatorio con ≥ 50 trabajadores.</em></p>`,
 
 // ══════════════════════════════════════════════════════════════════════════════
 3: `<h2>Tema 3: Productos y servicios — Comunicación, paquetería, e-commerce</h2>
@@ -277,7 +311,34 @@ window.CORREOS.TEMARIO_CONTENT = {
 <h4>Correos Express</h4>
 <p>Filial de mensajería urgente con red propia de distribución. Especializada en envíos B2B (empresa a empresa) y e-commerce con necesidad de entrega rápida. Diferente a la gama Paq de la matriz Correos.</p>
 
-<p><em>Puntos clave para el examen: Carta ordinaria hasta 2 kg. Certificada entrega bajo firma, 1 intento. Paq24 = día siguiente. Paq72 = 3 días laborables. Burofax tiene plena validez jurídica. Citypaq = taquillas 24h. Art. 20 RD 437/2024 para certificadas.</em></p>`,
+<h3>6. Entrega de envíos: intentos y plazos</h3>
+<table>
+  <tr><th>Tipo de envío</th><th>Intentos de entrega</th><th>Plazo recogida en oficina</th></tr>
+  <tr><td>Carta certificada</td><td>1 intento domicilio</td><td>15 días hábiles</td></tr>
+  <tr><td>Paquetes (Paq24, Paq48…)</td><td>2 intentos domicilio</td><td>15 días hábiles</td></tr>
+  <tr><td>Notificación administrativa</td><td>2 intentos (distintos días)</td><td>Si no recoge, se entiende rechazada</td></tr>
+</table>
+<p>Transcurrido el plazo sin recogida, el envío se devuelve al remitente como <strong>no reclamado</strong>.</p>
+
+<h3>7. Burofax: efectos legales</h3>
+<ul>
+  <li>Tiene <strong>plena validez jurídica y probatoria</strong>: acredita el contenido (con certificación de contenido) y la fecha de envío.</li>
+  <li>Equivale a una comunicación fehaciente: muy usado por abogados, notarías y empresas para rescisión de contratos, reclamaciones de deuda, comunicaciones laborales.</li>
+  <li>Se puede enviar <strong>con</strong> o <strong>sin</strong> certificación de contenido. La certificación de contenido acredita el texto íntegro enviado.</li>
+  <li>Regulado como servicio especial en la Ley 43/2010.</li>
+</ul>
+
+<h4>Mnemotécnico: gama Paq por plazo</h4>
+<p style="background:#eef6ff;border-left:4px solid #003366;padding:12px 16px;border-radius:0 8px 8px 0;font-size:14px;line-height:1.8">
+  <strong>24 · 48 · 72 = 1 · 2 · 3 días laborables</strong><br>
+  Paq<strong>24</strong> → día siguiente (1 día laboral) → tique de urgencia<br>
+  Paq<strong>48</strong> → 2 días laborables → estándar rápido<br>
+  Paq<strong>72</strong> → 3 días laborables → económico<br>
+  Paq <strong>Estándar</strong> → sin compromiso de plazo (más barato)<br>
+  Paq <strong>Premium</strong> → con seguro incluido
+</p>
+
+<p><em>Puntos clave para el examen: Carta ordinaria hasta 2 kg. Certificada: 1 intento + firma, plazo recogida 15 días. Paq24 = día siguiente. Paq72 = 3 días laborables. Burofax plena validez jurídica. Citypaq = taquillas 24h. Art. 20 RD 437/2024 para certificadas.</em></p>`,
 
 // ══════════════════════════════════════════════════════════════════════════════
 4: `<h2>Tema 4: Productos en oficinas. Servicios financieros. Soluciones digitales. Filatelia</h2>
@@ -342,7 +403,32 @@ window.CORREOS.TEMARIO_CONTENT = {
   <li>Suscripciones filatelicas: el coleccionista recibe automáticamente las novedades.</li>
 </ul>
 
-<p><em>Puntos clave para el examen: Tarjeta Correos Prepago no necesita cuenta bancaria. Western Union = envío de dinero internacional en efectivo. DEH = dirección electrónica habilitada, notificaciones con validez legal. Ley 10/2010 regula la prevención del blanqueo. Identificación obligatoria en operaciones > 1.000€.</em></p>`,
+<h3>5. Tabla comparativa de servicios digitales</h3>
+<table>
+  <tr><th>Servicio</th><th>Qué permite</th><th>Base legal / estándar</th></tr>
+  <tr><td><strong>Correos ID</strong></td><td>Identidad digital para autenticación y firma electrónica</td><td>eIDAS (Reg. UE 910/2014)</td></tr>
+  <tr><td><strong>DEH (Buzón Digital)</strong></td><td>Recepción de notificaciones administrativas con validez legal</td><td>Ley 39/2015 art. 41-43</td></tr>
+  <tr><td><strong>Correos Online</strong></td><td>Envíos desde casa con etiqueta imprimible en oficina</td><td>Operativo interno</td></tr>
+  <tr><td><strong>Portal correos.es</strong></td><td>Seguimiento, gestión de entregas, cambio de dirección</td><td>Operativo interno</td></tr>
+</table>
+
+<h4>Servicios en oficina: límites y condiciones destacables</h4>
+<ul>
+  <li><strong>Western Union</strong>: envío máximo variable según país destino. Identificación obligatoria desde 1.000 € (Ley 10/2010). El receptor puede cobrar en efectivo en cualquier agente Western Union del mundo.</li>
+  <li><strong>Correos Cash</strong>: máximo 3.000 € por operación. El receptor recoge en oficina con código.</li>
+  <li><strong>Tarjeta Correos Prepago</strong>: recarga máxima 2.500 €. No requiere domicilio bancario ni nómina. Utilizable en comercios Visa y cajeros.</li>
+  <li><strong>Giro postal</strong>: envío de dinero nacional. El receptor cobra en la oficina que elija.</li>
+</ul>
+
+<h4>Notificaciones administrativas en la práctica</h4>
+<p>Cuando la Administración intenta notificar a una persona jurídica o profesional que tiene buzón electrónico en la DEH:</p>
+<ol>
+  <li>Se deposita el aviso en el buzón electrónico.</li>
+  <li>El interesado tiene <strong>10 días naturales</strong> para acceder a la notificación.</li>
+  <li>Si no accede en ese plazo, se entiende <strong>rechazada</strong> con plena validez.</li>
+</ol>
+
+<p><em>Puntos clave para el examen: Tarjeta Correos Prepago no necesita cuenta bancaria. Western Union = envío de dinero internacional en efectivo. DEH = notificaciones con validez legal, plazo 10 días. Ley 10/2010 regula la prevención del blanqueo. Identificación obligatoria en operaciones > 1.000€. Correos ID = identidad digital eIDAS.</em></p>`,
 
 // ══════════════════════════════════════════════════════════════════════════════
 5: `<h2>Tema 5: Nuevas líneas de negocio — Correos Logística, Correos Frío, otros</h2>
@@ -398,7 +484,26 @@ window.CORREOS.TEMARIO_CONTENT = {
   <li>Realidad aumentada en almacenes logísticos.</li>
 </ul>
 
-<p><em>Puntos clave para el examen: Correos Frío = cadena de frío, temperatura controlada. Correos Logística = almacenaje + fulfillment + última milla. Correos Nexea = impresión y documentación masiva. Correos Telecom = fibra óptica y espectro. CorreosLabs = innovación y drones.</em></p>`,
+<h3>7. Detalles operativos de Correos Frío</h3>
+<table>
+  <tr><th>Modalidad</th><th>Temperatura</th><th>Aplicaciones principales</th></tr>
+  <tr><td>Refrigerado</td><td>2–8 °C</td><td>Vacunas, medicamentos biológicos, muestras de laboratorio</td></tr>
+  <tr><td>Fresco</td><td>0–4 °C</td><td>Alimentos frescos, flores</td></tr>
+  <tr><td>Congelado</td><td>–18 °C o inferior</td><td>Alimentos congelados, reactivos especiales</td></tr>
+</table>
+<p>La cadena de frío incluye <strong>trazabilidad continua</strong> con sensores de temperatura registrados electrónicamente. Correos Frío cumple con las guías GDP (Good Distribution Practice) de la Agencia Europea de Medicamentos para distribución farmacéutica.</p>
+
+<h3>8. Proceso de fulfillment en Correos Logística</h3>
+<ol>
+  <li><strong>Recepción</strong>: entrada de mercancía del cliente en el almacén.</li>
+  <li><strong>Almacenaje</strong>: gestión de stock, ubicación en estanterías.</li>
+  <li><strong>Picking</strong>: selección de artículos según el pedido.</li>
+  <li><strong>Packing</strong>: embalaje y etiquetado del pedido.</li>
+  <li><strong>Envío</strong>: integración con la red de distribución de Correos para la entrega.</li>
+  <li><strong>Logística inversa</strong>: gestión de devoluciones del cliente final.</li>
+</ol>
+
+<p><em>Puntos clave para el examen: Correos Frío = cadena de frío; refrigerado 2-8°C, congelado -18°C. Correos Logística = fulfillment (picking+packing+envío). Correos Nexea = impresión masiva. Correos Telecom = fibra óptica y espectro radioeléctrico. CorreosLabs = I+D+i, drones, IA.</em></p>`,
 
 // ══════════════════════════════════════════════════════════════════════════════
 6: `<h2>Tema 6: Herramientas — IRIS, SGIE, PDA, Minerva, SEDI, CRM</h2>
@@ -869,7 +974,40 @@ window.CORREOS.TEMARIO_CONTENT = {
 <h4>Correos como representante aduanero</h4>
 <p>Correos actúa como <strong>representante aduanero indirecto</strong> en la importación de paquetes internacionales, presentando el DUA (Documento Único Administrativo) ante la Agencia Tributaria en nombre del destinatario.</p>
 
-<p><em>Puntos clave para el examen: UPU sede en Berna. CN22 < 300€, CN23 > 300€. DDP = impuestos incluidos. IOSS = IVA prepagado en ecommerce (envíos ≤ 150€). ICS2 = declaración anticipada de seguridad. Correos = representante aduanero.</em></p>`,
+<h3>4. Órganos de la UPU</h3>
+<table>
+  <tr><th>Órgano</th><th>Composición</th><th>Periodicidad / función</th></tr>
+  <tr><td><strong>Congreso</strong></td><td>Delegaciones de los 192 países miembros</td><td>Cada 4 años; aprueba el Convenio Postal Universal y los Actos de la Unión</td></tr>
+  <tr><td><strong>Consejo de Administración (CA)</strong></td><td>40 países miembros elegidos en el Congreso</td><td>Anual; dirección estratégica y presupuesto de la UPU</td></tr>
+  <tr><td><strong>Consejo de Explotación Postal (CEP)</strong></td><td>48 países miembros</td><td>Anual; normas técnicas y operativas del servicio postal</td></tr>
+  <tr><td><strong>Oficina Internacional (OI)</strong></td><td>Secretaría permanente en Berna</td><td>Gestión administrativa y apoyo técnico permanente</td></tr>
+</table>
+
+<h3>5. Plazos de reclamación internacional</h3>
+<table>
+  <tr><th>Tipo de envío</th><th>Plazo para reclamar</th></tr>
+  <tr><td>Carta certificada internacional</td><td>6 meses desde la fecha de admisión</td></tr>
+  <tr><td>Paquete internacional</td><td>6 meses (extendible a 1 año en algunos países)</td></tr>
+  <tr><td>EMS (correo urgente internacional)</td><td>6 meses</td></tr>
+</table>
+
+<h4>PostEurop vs IPC: diferencia clave</h4>
+<ul>
+  <li><strong>PostEurop</strong>: asociación de <em>operadores postales designados europeos</em> (incluye operadores no UE como Suiza, Turquía). Foco en coordinación política y digitalización.</li>
+  <li><strong>IPC (International Post Corporation)</strong>: cooperativa técnica de <em>24 grandes operadores</em> (incluye USPS, Correos, La Poste). Foco en calidad del servicio de paquetes internacionales y tracking interoperable.</li>
+</ul>
+
+<h4>Productos internacionales de Correos</h4>
+<table>
+  <tr><th>Producto</th><th>Características</th><th>Peso máx.</th></tr>
+  <tr><td>Carta Internacional Ordinaria</td><td>Sin seguimiento, sin firma</td><td>2 kg</td></tr>
+  <tr><td>Carta Internacional Certificada</td><td>Con número, entrega bajo firma</td><td>2 kg</td></tr>
+  <tr><td>EMS</td><td>Urgente, con seguimiento, plazos garantizados</td><td>20-30 kg</td></tr>
+  <tr><td>Paq Mundial</td><td>Paquete standard con seguimiento</td><td>30 kg</td></tr>
+  <tr><td>Paq Standard Internacional</td><td>Económico, sin compromiso de plazo</td><td>30 kg</td></tr>
+</table>
+
+<p><em>Puntos clave para el examen: UPU sede en Berna, Congreso cada 4 años. CN22 para envíos < 300€ (particulares). CN23 para comerciales o > 300€. DDP = impuestos incluidos. IOSS = IVA prepagado ecommerce ≤ 150€. ICS2 = declaración seguridad anticipada. Correos = representante aduanero indirecto. PostEurop = asociación operadores europeos. IPC = cooperativa técnica para calidad paquetes.</em></p>`,
 
 // ══════════════════════════════════════════════════════════════════════════════
 12: `<h2>Tema 12: Cumplimiento — Protección de datos, Blanqueo, Ética, Ciberseguridad</h2>
