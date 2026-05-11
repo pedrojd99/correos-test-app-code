@@ -58,6 +58,40 @@ window.IIAPP.Data = (function() {
     return weighted(Math.min(n, QUESTIONS.length));
   }
 
+  // Simulacro adaptativo: redistribuye preguntas según rendimiento del usuario.
+  // Los temas con peor acierto y mayor peso en el examen reciben más preguntas.
+  async function simulacroAdaptivo() {
+    const n = (TEMARIO && TEMARIO.exam && TEMARIO.exam.test && TEMARIO.exam.test.questions) || 100;
+    let modStats;
+    try { modStats = await window.IIAPP.Stats.byModule(); } catch(e) { return weighted(n); }
+
+    let totalW = 0;
+    const adaptW = {};
+    TEMARIO.modules.forEach(m => {
+      const stat = modStats[m.number];
+      const acc = stat && stat.total > 0 ? stat.accuracy / 100 : 0.5;
+      // Peso adaptado: temas flojos y con más peso oficial reciben más preguntas
+      const w = m.weight * (1.2 - Math.min(acc, 1));
+      adaptW[m.number] = w;
+      totalW += w;
+    });
+
+    const result = [];
+    TEMARIO.modules.forEach(m => {
+      const proportion = adaptW[m.number] / totalW;
+      const target = Math.max(1, Math.round(n * proportion));
+      const pool = shuffle(QUESTIONS_BY_MODULE[m.number] || []);
+      result.push(...pool.slice(0, target));
+    });
+
+    while (result.length < n) {
+      const remaining = QUESTIONS.filter(q => !result.includes(q));
+      if (!remaining.length) break;
+      result.push(remaining[Math.floor(Math.random() * remaining.length)]);
+    }
+    return shuffle(result.slice(0, n));
+  }
+
   // Mezclar opciones (A/B/C/D) manteniendo la lógica de respuesta correcta
   function shuffleOptions(question) {
     const shuffled = shuffle(question.options);
@@ -76,6 +110,6 @@ window.IIAPP.Data = (function() {
   }
 
   return {
-    weighted, fromModules, fromFailed, fromSrsDue, simulacro, shuffleOptions, shuffle
+    weighted, fromModules, fromFailed, fromSrsDue, simulacro, simulacroAdaptivo, shuffleOptions, shuffle
   };
 })();

@@ -178,6 +178,37 @@ window.IIAPP = window.IIAPP || {};
           </div>
 
           <div class="col-side">
+            ${(() => {
+              // Calcula los 3 temas prioritarios: mayor peso × menor acierto
+              const focoMods = TEMARIO.modules.map(m => {
+                const stat = modules[m.number];
+                const acc = stat && stat.accuracy != null ? stat.accuracy / 100 : 0.5;
+                return { ...m, acc: stat && stat.accuracy != null ? stat.accuracy : null, priority: m.weight * (1.2 - Math.min(acc, 1)) };
+              }).sort((a, b) => b.priority - a.priority).slice(0, 3);
+
+              return `
+              <div class="card foco-card">
+                <div class="card-header">
+                  <h3>¿Qué estudiar hoy?</h3>
+                  <span class="badge badge-info">IA</span>
+                </div>
+                <p class="text-muted small" style="margin-bottom:12px">Temas con mayor impacto según el peso del examen y tu acierto actual</p>
+                <div class="foco-list">
+                  ${focoMods.map((m, i) => `
+                    <div class="foco-item">
+                      <div class="foco-rank">${i + 1}</div>
+                      <div class="foco-info">
+                        <div class="foco-name">T${m.number}: ${m.shortName}</div>
+                        <div class="foco-stats">Peso ${Math.round(m.weight * 100)}% · ${m.acc != null ? fmt(m.acc, 0) + '% acierto' : 'sin datos'}</div>
+                      </div>
+                      <button class="btn-foco" onclick="IIAPP.UI.startModule(${m.number}, 15)">15 preg.</button>
+                    </div>
+                  `).join('')}
+                </div>
+                <button class="btn btn-primary btn-block" style="margin-top:12px" onclick="IIAPP.UI.startAdaptiveSimulacro()">Simulacro adaptativo</button>
+              </div>`;
+            })()}
+
             <div class="card srs-card">
               <div class="card-header">
                 <h3>Repaso de hoy</h3>
@@ -381,6 +412,7 @@ window.IIAPP = window.IIAPP || {};
       case 'failed': pool = await Data.fromFailed(num); break;
       case 'srs': pool = await Data.fromSrsDue(num); break;
       case 'simulacro': pool = Data.simulacro(); break;
+      case 'adaptativo': pool = await Data.simulacroAdaptivo(); break;
       default: pool = Data.weighted(num);
     }
 
@@ -676,7 +708,7 @@ window.IIAPP = window.IIAPP || {};
           <h1 class="page-title">Resultado</h1>
           <p class="page-subtitle">${session.questionsCount} preguntas · ${fmtTime(session.durationSeconds)} · ${{
             weighted: 'mixto', module: 'por módulo', failed: 'repaso de fallos',
-            srs: 'repaso SRS', simulacro: 'simulacro'
+            srs: 'repaso SRS', simulacro: 'simulacro', adaptativo: 'simulacro adaptativo'
           }[session.mode]}</p>
         </div>
 
@@ -811,7 +843,7 @@ window.IIAPP = window.IIAPP || {};
                   <div class="session-meta">
                     <div class="session-mode">${{
                       weighted: 'Mixto', module: 'Por módulo', failed: 'Repaso fallos',
-                      srs: 'SRS', simulacro: '⏱ Simulacro'
+                      srs: 'SRS', simulacro: '⏱ Simulacro', adaptativo: '⏱ Adaptativo'
                     }[s.mode] || s.mode}</div>
                     <div class="session-date">${new Date(s.finishedAt).toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' })}</div>
                   </div>
@@ -853,12 +885,17 @@ window.IIAPP = window.IIAPP || {};
 
     target.innerHTML = `
       <div class="container">
-        <h1 class="page-title">Temario oficial</h1>
-        <p class="page-subtitle">12 temas · Basado en la convocatoria oficial y la legislación vigente</p>
+        <div class="page-head-row no-print">
+          <div>
+            <h1 class="page-title">Temario oficial</h1>
+            <p class="page-subtitle">12 temas · Basado en la convocatoria oficial y la legislación vigente</p>
+          </div>
+          <button class="btn btn-secondary" onclick="window.print()">Imprimir ficha</button>
+        </div>
 
-        <div class="temario-nav">${navBtns}</div>
+        <div class="temario-nav no-print">${navBtns}</div>
 
-        ${legislacionBadges ? `<div style="margin-bottom: 16px;">${legislacionBadges}</div>` : ''}
+        ${legislacionBadges ? `<div style="margin-bottom: 16px;" class="no-print">${legislacionBadges}</div>` : ''}
 
         <div class="tema-content">${contenido}</div>
       </div>
@@ -1504,6 +1541,14 @@ window.IIAPP = window.IIAPP || {};
         num: TEMARIO.exam.test.questions || 100,
         penalty: !!TEMARIO.exam.test.penalty,   // false en Correos
         instant: false, shuffle: true
+      });
+    },
+
+    startAdaptiveSimulacro() {
+      startTest({
+        mode: 'adaptativo',
+        num: TEMARIO.exam.test.questions || 100,
+        penalty: false, instant: false, shuffle: true
       });
     },
 
