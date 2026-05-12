@@ -895,7 +895,10 @@ window.IIAPP = window.IIAPP || {};
             <h1 class="page-title">Temario oficial</h1>
             <p class="page-subtitle">12 temas · Basado en la convocatoria oficial y la legislación vigente</p>
           </div>
-          <button class="btn btn-secondary" onclick="window.print()">Imprimir ficha</button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-secondary no-print" onclick="window.print()">Imprimir tema</button>
+            <button class="btn btn-primary no-print" onclick="IIAPP.UI.printTemarioCompleto()">PDF completo (12 temas)</button>
+          </div>
         </div>
 
         <div class="temario-nav no-print">${navBtns}</div>
@@ -1342,25 +1345,49 @@ window.IIAPP = window.IIAPP || {};
 
   // ========== GENERACIÓN DE PDFs (vía window.print) ==========
 
-  function _renderTemaHtml(tema, content) {
+  function _renderTemaHtml(mod, content) {
+    const color = mod.color || '#003366';
     return `
       <article class="pdf-tema">
-        <header class="pdf-tema-head" style="border-color: ${tema.mod ? tema.mod.color : '#0C447C'}">
-          <div class="pdf-tema-num">${String(tema.number).padStart(2, '0')}</div>
+        <header class="pdf-tema-head" style="border-color:${color}">
+          <div class="pdf-tema-num" style="background:${color}">${String(mod.number).padStart(2, '0')}</div>
           <div>
-            ${tema.mod ? `<div class="pdf-tema-mod">Módulo ${tema.mod.number} · ${tema.mod.name}</div>` : ''}
-            <h1>${tema.name}</h1>
+            <div class="pdf-tema-mod">Tema ${mod.number} · ${mod.shortName}</div>
+            <h1>${mod.name}</h1>
           </div>
         </header>
-        <section class="pdf-tema-body">
-          <p>${content}</p>
-        </section>
+        <section class="pdf-tema-body">${content}</section>
         <footer class="pdf-tema-foot">
-          <span>CorreosTest · Preparación oposición Correos</span>
-          <span>correostest.es</span>
+          <span>CorreosTest · Preparación oposición Correos 2026</span>
+          <span>Tema ${mod.number} de 12</span>
         </footer>
       </article>
     `;
+  }
+
+  function printTemarioCompleto() {
+    const CONTENT = window.CORREOS.TEMARIO_CONTENT || {};
+    const temas = TEMARIO.modules
+      .map(m => _renderTemaHtml(m, CONTENT[m.number] || '<p>Contenido no disponible.</p>'))
+      .join('<div class="page-break"></div>');
+
+    const portada = `
+      <div class="pdf-cover">
+        <div class="pdf-logo">CT</div>
+        <h1>Temario Correos 2026</h1>
+        <h2>Personal Laboral Indefinido · Grupo IV</h2>
+        <p class="pdf-cover-meta">12 temas oficiales · Legislación actualizada (RD 437/2024) · CorreosTest</p>
+        <div class="pdf-cover-modules">
+          ${TEMARIO.modules.map(m => `
+            <div class="pdf-cover-mod" style="border-color:${m.color}">
+              <strong>Tema ${m.number}</strong> — ${m.name}
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="page-break"></div>
+    `;
+
+    _openPrintWindow('Temario Correos 2026 — CorreosTest', portada + temas);
   }
 
   function _openPrintWindow(title, htmlBody) {
@@ -1429,6 +1456,19 @@ window.IIAPP = window.IIAPP || {};
           display: flex; justify-content: space-between;
           font-size: 8pt; color: #94a3b8;
         }
+        /* Contenido del temario */
+        h2 { font-size: 15pt; color: #003366; margin: 0 0 14px; line-height: 1.3; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; }
+        h3 { font-size: 13pt; margin: 18px 0 8px; color: #0f172a; }
+        h4 { font-size: 11pt; font-weight: 600; margin: 12px 0 6px; color: #334155; }
+        ul, ol { padding-left: 18px; margin: 6px 0 10px; }
+        li { margin-bottom: 3px; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 10pt; }
+        th { background: #003366 !important; color: #fff; padding: 7px 9px; text-align: left; font-weight: 600; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        td { padding: 6px 9px; border-bottom: 1px solid #e5e7eb; }
+        tr:nth-child(even) td { background: #f8fafc; }
+        em { display: block; background: #FFCD00 !important; padding: 10px 14px; border-radius: 6px; font-style: normal; font-size: 10pt; margin-top: 16px; color: #003366; font-weight: 500; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        p[style*="background:#eef6ff"] { background: #eef6ff !important; border-left: 4px solid #003366; padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 10pt; line-height: 1.6; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        strong { font-weight: 600; }
         .page-break { page-break-after: always; break-after: page; height: 0; }
         .text-muted { color: #64748b; }
         .small { font-size: 9pt; }
@@ -1445,6 +1485,7 @@ window.IIAPP = window.IIAPP || {};
 
   const UI = {
     _activateCode,
+    printTemarioCompleto,
     show,
 
     confirmExit() {
