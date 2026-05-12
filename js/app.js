@@ -22,6 +22,17 @@ window.IIAPP = window.IIAPP || {};
   function $(sel) { return document.querySelector(sel); }
   function $$(sel) { return document.querySelectorAll(sel); }
 
+  // Escapa HTML para evitar XSS al insertar datos del usuario en innerHTML
+  function esc(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   function fmt(n, decimals = 0) {
     if (n == null || isNaN(n)) return '—';
     return n.toFixed(decimals).replace('.', ',');
@@ -91,7 +102,7 @@ window.IIAPP = window.IIAPP || {};
     const dueCount = await SRS.countDue();
     const profile = await Storage.getAllProfile();
 
-    const greeting = profile.alias ? `Hola, ${profile.alias}` : 'Hola, futur@ funcionari@ de Correos';
+    const greeting = profile.alias ? `Hola, ${esc(profile.alias)}` : 'Hola, futur@ funcionari@ de Correos';
     const puestoActual = TEMARIO.getPuesto(profile.puesto);
 
     target.innerHTML = `
@@ -1122,15 +1133,15 @@ window.IIAPP = window.IIAPP || {};
           <h3>Datos personales</h3>
           <label class="form-row">
             <span>Nombre</span>
-            <input type="text" id="cuenta-name" value="${profile.name || ''}" placeholder="Tu nombre" maxlength="60">
+            <input type="text" id="cuenta-name" value="${esc(profile.name || '')}" placeholder="Tu nombre" maxlength="60">
           </label>
           <label class="form-row">
             <span>Email</span>
-            <input type="email" id="cuenta-email" value="${profile.email || ''}" placeholder="tu@email.com" maxlength="120">
+            <input type="email" id="cuenta-email" value="${esc(profile.email || '')}" placeholder="tu@email.com" maxlength="120">
           </label>
           <label class="form-row">
             <span>Alias en ranking</span>
-            <input type="text" id="cuenta-alias" value="${profile.alias || ''}" placeholder="Sin alias" maxlength="20">
+            <input type="text" id="cuenta-alias" value="${esc(profile.alias || '')}" placeholder="Sin alias" maxlength="20">
           </label>
           <button class="btn btn-primary" onclick="IIAPP.UI.saveCuenta()">Guardar datos</button>
         </div>
@@ -1270,7 +1281,7 @@ window.IIAPP = window.IIAPP || {};
           <h3>Perfil</h3>
           <label class="form-row">
             <span>Alias para el ranking</span>
-            <input type="text" id="alias-input" value="${profile.alias || ''}" placeholder="Sin alias" maxlength="20">
+            <input type="text" id="alias-input" value="${esc(profile.alias || '')}" placeholder="Sin alias" maxlength="20">
           </label>
           <label class="form-row">
             <span>Fecha del examen</span>
@@ -1292,23 +1303,50 @@ window.IIAPP = window.IIAPP || {};
         </div>
 
         <div class="card">
-          <h3>Datos</h3>
-          <p class="text-muted">${g.total} respuestas · ${g.sessions} sesiones · ${learned} preguntas en SRS</p>
-          <div class="actions-row">
-            <button class="btn btn-secondary" onclick="IIAPP.Storage.exportAll()">Exportar a JSON</button>
-            <label class="btn btn-secondary">
-              Importar JSON
-              <input type="file" accept=".json" onchange="IIAPP.UI.importBackup(event)" style="display:none">
-            </label>
-            <button class="btn btn-danger" onclick="IIAPP.UI.confirmClear()">Borrar todo</button>
+          <h3>Privacidad y tus datos</h3>
+          <p class="text-muted small" style="margin-bottom:12px">
+            Todos tus datos se guardan <strong>únicamente en este dispositivo</strong>.
+            No se envían a ningún servidor. ${g.total} respuestas · ${g.sessions} sesiones · ${learned} preguntas en SRS.
+          </p>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-radius:8px">
+              <div>
+                <div style="font-weight:600;font-size:14px">Exportar mis datos</div>
+                <div class="text-muted small">Derecho de acceso y portabilidad (art. 15 y 20 RGPD)</div>
+              </div>
+              <button class="btn btn-secondary" onclick="IIAPP.Storage.exportAll()">Exportar JSON</button>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-radius:8px">
+              <div>
+                <div style="font-weight:600;font-size:14px">Importar backup</div>
+                <div class="text-muted small">Restaura tu progreso en un nuevo dispositivo</div>
+              </div>
+              <label class="btn btn-secondary" style="cursor:pointer">
+                Importar
+                <input type="file" accept=".json" onchange="IIAPP.UI.importBackup(event)" style="display:none">
+              </label>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#fff5f5;border-radius:8px;border:1px solid #fecaca">
+              <div>
+                <div style="font-weight:600;font-size:14px;color:#dc2626">Borrar todos mis datos</div>
+                <div class="text-muted small">Derecho de supresión (art. 17 RGPD) · No reversible</div>
+              </div>
+              <button class="btn btn-danger" onclick="IIAPP.UI.confirmClear()">Borrar</button>
+            </div>
           </div>
+          <p style="margin-top:12px">
+            <button onclick="IIAPP.UI.showPrivacyPolicy()"
+              style="background:none;border:0;color:#003366;text-decoration:underline;cursor:pointer;font-family:inherit;font-size:13px;padding:0">
+              Ver política de privacidad completa
+            </button>
+          </p>
         </div>
 
         <div class="card">
           <h3>Sobre la app</h3>
-          <p class="text-muted small">CorreosTest — versión local v0.1</p>
+          <p class="text-muted small">CorreosTest v1.0 · ${QUESTIONS.length} preguntas en el banco.</p>
           <p class="text-muted small">App de preparación para la oposición a Correos. Funciona 100% local en tu dispositivo, sin servidores.</p>
-          <p class="text-muted small">${QUESTIONS.length} preguntas en el banco actual.</p>
+          <p class="text-muted small">Contacto: <a href="mailto:informaticacoseba@gmail.com">informaticacoseba@gmail.com</a></p>
         </div>
       </div>
     `;
@@ -1378,14 +1416,13 @@ window.IIAPP = window.IIAPP || {};
     btn.textContent = 'Verificando...';
     const valid = await validateCode(code, planId);
     if (valid) {
-      // Marcar como usado en localStorage para evitar reutilización
-      const used = JSON.parse(localStorage.getItem('ct_used_codes') || '[]');
+      // Marcar como usado en IndexedDB (no en localStorage, más seguro)
+      const used = (await Storage.getProfile('usedCodes')) || [];
       if (used.includes(code)) {
         msg.innerHTML = '<span style="color:#dc2626">Este código ya fue utilizado.</span>';
         btn.disabled = false; btn.textContent = 'Activar'; return;
       }
-      used.push(code);
-      localStorage.setItem('ct_used_codes', JSON.stringify(used));
+      await Storage.setProfile('usedCodes', [...used, code]);
       const oneYear = 365 * 24 * 60 * 60 * 1000;
       await Storage.setProfile('plan', planId);
       await Storage.setProfile('planActivatedAt', Date.now());
@@ -1551,6 +1588,48 @@ window.IIAPP = window.IIAPP || {};
     _activateCode,
     printTemarioCompleto,
     show,
+
+    acceptConsent() {
+      localStorage.setItem('ct_consent', Date.now().toString());
+      const b = document.getElementById('consent-banner');
+      if (b) b.remove();
+    },
+
+    showPrivacyPolicy() {
+      const m = document.createElement('div');
+      m.className = 'tribunal-overlay';
+      m.innerHTML = `
+        <div class="tribunal-modal" style="max-width:560px;max-height:85vh;overflow-y:auto">
+          <div class="modal-head">
+            <h3>Política de privacidad</h3>
+            <button class="btn-link" onclick="this.closest('.tribunal-overlay').remove()">✕</button>
+          </div>
+          <div class="modal-body" style="font-size:14px;line-height:1.7;color:#334155">
+            <p><strong>Responsable:</strong> Pedro Jiménez Díaz · informaticacoseba@gmail.com</p>
+            <h4 style="margin:16px 0 6px;color:#003366">¿Qué datos guardamos?</h4>
+            <ul>
+              <li>Nombre, email y alias (solo si tú los introduces en Mi cuenta)</li>
+              <li>Progreso de estudio: respuestas, sesiones, estado SRS</li>
+              <li>Preferencias de la app y puesto seleccionado</li>
+            </ul>
+            <h4 style="margin:16px 0 6px;color:#003366">¿Dónde se guardan?</h4>
+            <p>Exclusivamente en <strong>tu dispositivo</strong> mediante IndexedDB. No se envían a ningún servidor externo. Si borras los datos del sitio en tu navegador, se eliminan permanentemente.</p>
+            <h4 style="margin:16px 0 6px;color:#003366">Tus derechos (RGPD · LOPD-GDD)</h4>
+            <ul>
+              <li><strong>Acceso:</strong> exporta todos tus datos desde Ajustes → Exportar JSON</li>
+              <li><strong>Supresión:</strong> borra todo desde Ajustes → Borrar mis datos</li>
+              <li><strong>Portabilidad:</strong> el archivo JSON exportado es legible y reutilizable</li>
+              <li><strong>Rectificación:</strong> edita tus datos en Mi cuenta en cualquier momento</li>
+            </ul>
+            <h4 style="margin:16px 0 6px;color:#003366">Cookies y almacenamiento local</h4>
+            <p>No usamos cookies de terceros ni rastreadores. Solo almacenamiento local del navegador (IndexedDB) para que la app funcione sin conexión.</p>
+            <h4 style="margin:16px 0 6px;color:#003366">Contacto</h4>
+            <p>Para ejercer tus derechos o cualquier consulta sobre privacidad: <a href="mailto:informaticacoseba@gmail.com">informaticacoseba@gmail.com</a></p>
+            <p class="text-muted small" style="margin-top:16px">Última actualización: mayo 2026 · Base legal: consentimiento del usuario (art. 6.1.a RGPD)</p>
+          </div>
+        </div>`;
+      document.body.appendChild(m);
+    },
 
     confirmExit() {
       if (App.test && !App.test.finished && App.test.answers.length > 0) {
@@ -1952,12 +2031,46 @@ window.IIAPP = window.IIAPP || {};
       } catch (e) { /* ignore */ }
     }
 
+    // Banner de privacidad LOPD — primera visita
+    if (!localStorage.getItem('ct_consent')) {
+      showConsentBanner();
+    }
+
     // Primera apertura: si no ha elegido puesto, mostrar onboarding
     if (!profile.puesto) {
       showOnboarding();
     } else {
       show('home');
     }
+  }
+
+  function showConsentBanner() {
+    const b = document.createElement('div');
+    b.id = 'consent-banner';
+    b.setAttribute('role', 'dialog');
+    b.setAttribute('aria-label', 'Aviso de privacidad');
+    b.style.cssText = `
+      position:fixed; bottom:0; left:0; right:0; z-index:999;
+      background:#1e293b; color:#f1f5f9; padding:16px 20px;
+      display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+      font-size:13px; line-height:1.5;
+    `;
+    b.innerHTML = `
+      <p style="margin:0;flex:1;min-width:200px">
+        <strong>CorreosTest</strong> guarda tu progreso de estudio
+        <strong>únicamente en este dispositivo</strong> (sin servidores propios).
+        No usamos cookies de terceros ni enviamos datos personales fuera de tu navegador.
+        <button onclick="IIAPP.UI.showPrivacyPolicy()"
+          style="background:none;border:0;color:#93c5fd;text-decoration:underline;cursor:pointer;font-family:inherit;font-size:13px;padding:0">
+          Política de privacidad
+        </button>
+      </p>
+      <button onclick="IIAPP.UI.acceptConsent()"
+        style="background:#003366;color:#FFCD00;border:0;border-radius:8px;padding:10px 20px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap">
+        Entendido
+      </button>
+    `;
+    document.body.appendChild(b);
   }
 
   function showPaywall() {

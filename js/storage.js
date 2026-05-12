@@ -4,8 +4,8 @@
 window.IIAPP = window.IIAPP || {};
 
 window.IIAPP.Storage = (function() {
-  const DB_NAME = 'iiapp_db';
-  const DB_VERSION = 1;
+  const DB_NAME = 'correostest_db';
+  const DB_VERSION = 2;
   const STORES = {
     sessions: 'sessions',
     answers: 'answers',
@@ -167,7 +167,7 @@ window.IIAPP.Storage = (function() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `iiapp-backup-${new Date().toISOString().slice(0,10)}.json`;
+    a.download = `correostest-backup-${new Date().toISOString().slice(0,10)}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -198,6 +198,9 @@ window.IIAPP.Storage = (function() {
     t.objectStore(STORES.srs).clear();
     t.objectStore(STORES.profile).clear();
     t.objectStore(STORES.cache).clear();
+    // Limpiar también datos residuales en localStorage (cumplimiento RGPD art. 17)
+    localStorage.removeItem('ct_used_codes');
+    localStorage.removeItem('ct_consent');
     return new Promise((res, rej) => {
       t.oncomplete = () => res();
       t.onerror = () => rej(t.error);
