@@ -572,7 +572,7 @@ window.IIAPP = window.IIAPP || {};
     fb.classList.remove('hidden');
     fb.innerHTML = `
       <div class="fb-card ${isCorrect ? 'fb-ok' : 'fb-err'}">
-        <div class="fb-title">${isCorrect ? '✓ Correcto' : '✗ Incorrecto'}</div>
+        <div class="fb-title">${isCorrect ? '🎉 ¡Correcto!' : '😅 No era esa…'}</div>
         ${explanationText ? `<p>${explanationText}</p>` : ''}
       </div>
       ${iaBlock}
@@ -1556,6 +1556,27 @@ window.IIAPP = window.IIAPP || {};
     setTimeout(() => URL.revokeObjectURL(url), 60000);
   }
 
+  // ========== EFECTOS VISUALES ==========
+
+  function launchConfetti(anchor) {
+    const colors = ['#FFCD00','#003366','#22c55e','#f97316','#8b5cf6','#3b82f6'];
+    const rect = anchor.getBoundingClientRect();
+    for (let i = 0; i < 18; i++) {
+      const dot = document.createElement('div');
+      dot.style.cssText = `
+        position:fixed; pointer-events:none; z-index:9999;
+        width:8px; height:8px; border-radius:50%;
+        background:${colors[i % colors.length]};
+        left:${rect.left + rect.width * Math.random()}px;
+        top:${rect.top + rect.height * 0.5}px;
+        animation:confetti-fall ${0.6 + Math.random() * 0.6}s ease-out forwards;
+        animation-delay:${i * 0.03}s;
+      `;
+      document.body.appendChild(dot);
+      setTimeout(() => dot.remove(), 1500);
+    }
+  }
+
   // ========== UI HELPERS ==========
 
   const UI = {
@@ -1651,9 +1672,11 @@ window.IIAPP = window.IIAPP || {};
       const card = document.getElementById('qdq-card');
       if (card) {
         const msg = document.createElement('div');
-        msg.className = letter === correct ? 'qdq-result qdq-result-ok' : 'qdq-result qdq-result-err';
-        msg.textContent = letter === correct ? '¡Correcto! +10 XP' : `Incorrecto — la respuesta era ${correct}`;
+        const ok = letter === correct;
+        msg.className = ok ? 'qdq-result qdq-result-ok' : 'qdq-result qdq-result-err';
+        msg.textContent = ok ? '🎉 ¡Correcto! +10 XP' : `😅 Era la ${correct} — ¡Para el siguiente!`;
         card.appendChild(msg);
+        if (ok) launchConfetti(card);
       }
     },
 
