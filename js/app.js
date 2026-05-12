@@ -568,33 +568,38 @@ window.IIAPP = window.IIAPP || {};
     const fb = $('#feedback');
     const originalLetter = q.options.find(o => o.letter === given)?.originalLetter || given;
 
+    // Obtener explicación: primero del propio objeto, si no del archivo explanations.js
+    const EXP = (window.CORREOS && window.CORREOS.EXPLANATIONS) || {};
+    const expData = EXP[q.id] || {};
+    const explanationText = q.explanation || expData.explanation || '';
+    const falloText = (q.iaFallo && q.iaFallo[originalLetter])
+      || (expData.fallo && expData.fallo[originalLetter]) || '';
+
     let iaBlock = '';
-    if (!isCorrect && q.iaFallo && q.iaFallo[originalLetter]) {
+    if (!isCorrect && falloText) {
       iaBlock = `
         <div class="fb-card fb-ia">
-          <div class="fb-tag">IA · TU FALLO</div>
-          <p>${q.iaFallo[originalLetter]}</p>
+          <div class="fb-tag">Por qué tu respuesta es incorrecta</div>
+          <p>${falloText}</p>
         </div>
       `;
     }
 
-    const highlightedTemario = q.temarioText.replace(
-      q.temarioHighlight,
-      `<span class="highlight">${q.temarioHighlight}</span>`
-    );
+    const mod = TEMARIO.modules.find(m => m.number === q.module);
+    const temarioBlock = mod ? `
+      <div class="fb-card fb-temario">
+        <div class="fb-tag">📖 Tema ${mod.number}: ${mod.shortName}</div>
+        <button class="btn-tema-link" style="margin-top:8px" onclick="IIAPP.UI.showTema(${mod.number})">Abrir en el temario →</button>
+      </div>` : '';
 
     fb.classList.remove('hidden');
     fb.innerHTML = `
       <div class="fb-card ${isCorrect ? 'fb-ok' : 'fb-err'}">
         <div class="fb-title">${isCorrect ? '✓ Correcto' : '✗ Incorrecto'}</div>
-        <p>${q.explanation}</p>
+        ${explanationText ? `<p>${explanationText}</p>` : ''}
       </div>
       ${iaBlock}
-      <div class="fb-card fb-temario">
-        <div class="fb-tag">📖 Del temario</div>
-        <blockquote>"${highlightedTemario}"</blockquote>
-        <div class="fb-source">${q.temarioSource}</div>
-      </div>
+      ${temarioBlock}
     `;
 
     $('#next-btn').classList.remove('hidden');
@@ -1245,168 +1250,94 @@ window.IIAPP = window.IIAPP || {};
     `;
   }
 
-  // ========== FLUJO DE UPGRADE DEEP-LINK (simulado) ==========
+  // ========== FLUJO DE ACTIVACIÓN CON CÓDIGO ==========
+
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  async function validateCode(code, planId) {
+    const hashes = (window.CORREOS.ACTIVATION_HASHES || {})[planId] || [];
+    const h = await sha256(code.trim().toUpperCase());
+    return hashes.includes(h);
+  }
 
   function runUpgradeFlow(planId, email) {
     const plan = PLAN_CATALOG[planId];
     const overlay = document.createElement('div');
     overlay.className = 'tribunal-overlay upgrade-flow';
-    document.body.appendChild(overlay);
-
-    // Paso 1: app pide token y abre navegador
     overlay.innerHTML = `
-      <div class="upgrade-screen up-step1">
-        <div class="up-device-frame">
-          <div class="up-device-screen">
-            <div class="up-app-bar">IIAPP · Cuenta</div>
-            <div class="up-loading">
-              <div class="up-spinner"></div>
-              <p>Solicitando token seguro...</p>
-              <p class="text-muted small">POST /api/auth/upgrade-token</p>
+      <div class="upgrade-modal">
+        <div class="upgrade-modal-head">
+          <h3>Activar ${plan.name} · ${plan.priceLabel}</h3>
+          <button class="btn-link" onclick="this.closest('.tribunal-overlay').remove()">✕</button>
+        </div>
+        <div class="upgrade-steps">
+          <div class="upgrade-step">
+            <div class="upgrade-step-num">1</div>
+            <div>
+              <div class="upgrade-step-title">Realiza el pago</div>
+              <p class="text-muted small">Pago único de ${plan.priceLabel} · Sin renovación automática · Acceso hasta el examen 2026</p>
+              <a class="btn btn-primary" href="mailto:pedrojimenezdiaz@gmail.com?subject=Pedido%20${encodeURIComponent(plan.name)}%20CorreosTest&body=Hola%2C%20quiero%20activar%20el%20plan%20${encodeURIComponent(plan.name)}%20(${plan.priceLabel})%20para%20el%20email%20${encodeURIComponent(email || 'mi-email@correo.com')}" style="display:inline-block;margin-top:8px">Contactar para pagar</a>
+              <p class="text-muted small" style="margin-top:6px">Aceptamos Bizum · Transferencia · Tarjeta. Recibirás un código de activación por email.</p>
             </div>
           </div>
-        </div>
-        <div class="up-caption">
-          <h4>Paso 1 · La app pide al backend un JWT efímero (5 min de vida)</h4>
-          <p class="text-muted small">El token contiene tu userId y un scope limitado a "upgrade". Tu app móvil nunca tiene la clave de firma.</p>
+          <div class="upgrade-step">
+            <div class="upgrade-step-num">2</div>
+            <div style="flex:1">
+              <div class="upgrade-step-title">Introduce tu código de activación</div>
+              <p class="text-muted small">El código llega por email tras confirmar el pago. Formato: CT-XXXX-XXXX-XXXX</p>
+              <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+                <input type="text" id="activation-code-input" placeholder="CT-XXXX-XXXX-XXXX"
+                  style="flex:1;min-width:180px;padding:10px 12px;border:2px solid #e5e7eb;border-radius:8px;font-size:14px;font-family:monospace;text-transform:uppercase"
+                  oninput="this.value=this.value.toUpperCase()">
+                <button class="btn btn-primary" id="activation-submit-btn" onclick="IIAPP.UI._activateCode('${planId}')">Activar</button>
+              </div>
+              <div id="activation-msg" style="margin-top:8px;font-size:13px"></div>
+            </div>
+          </div>
         </div>
       </div>
     `;
-    setTimeout(() => stepBrowser(), 1200);
-
-    // Paso 2: navegador abre la web con el token
-    function stepBrowser() {
-      overlay.innerHTML = `
-        <div class="upgrade-screen up-step2">
-          <div class="up-browser-frame">
-            <div class="up-browser-bar">
-              <span class="up-url">🔒 correostest.es/u?t=eyJhbGc...&plan=${planId}</span>
-            </div>
-            <div class="up-browser-page">
-              <div class="up-checkout">
-                <h3>Activar ${plan.name}</h3>
-                <div class="up-price-row">
-                  <span>${plan.name} · 1 año</span>
-                  <b>${plan.priceLabel}</b>
-                </div>
-                <div class="up-row text-muted small">
-                  <span>IVA incluido</span>
-                  <span>Pago único hasta el examen · Sin renovación automática</span>
-                </div>
-                <div class="up-pay-buttons">
-                  <button class="up-paybtn up-applepay" onclick="IIAPP.UI._payStep('${planId}', '${email}', 'Apple Pay')">
-                     Pay
-                  </button>
-                  <button class="up-paybtn up-googlepay" onclick="IIAPP.UI._payStep('${planId}', '${email}', 'Google Pay')">
-                    G Pay
-                  </button>
-                  <button class="up-paybtn up-bizum" onclick="IIAPP.UI._payStep('${planId}', '${email}', 'Bizum')">
-                    Bizum
-                  </button>
-                  <button class="up-paybtn up-card" onclick="IIAPP.UI._payStep('${planId}', '${email}', 'Tarjeta')">
-                    💳 Tarjeta
-                  </button>
-                </div>
-                <p class="up-secure-text">Pago seguro con Stripe · Powered by ${email}</p>
-              </div>
-            </div>
-          </div>
-          <div class="up-caption">
-            <h4>Paso 2 · Stripe Checkout en navegador externo (no webview)</h4>
-            <p class="text-muted small">El token validó tu sesión. Elige método de pago — todo es 1 toque biométrico. Comisión Stripe ~1,8%, comisión Apple/Google <b>0%</b>.</p>
-          </div>
-          <button class="btn-link up-cancel" onclick="this.closest('.tribunal-overlay').remove()">✕ Cancelar simulación</button>
-        </div>
-      `;
-    }
+    document.body.appendChild(overlay);
   }
 
-  async function _payStep(planId, email, method) {
-    const plan = PLAN_CATALOG[planId];
-    const overlay = document.querySelector('.tribunal-overlay.upgrade-flow');
-    if (!overlay) return;
-
-    // Paso 2.5: biometría
-    overlay.innerHTML = `
-      <div class="upgrade-screen up-step2b">
-        <div class="up-bio-prompt">
-          <div class="up-bio-icon">${method === 'Apple Pay' ? '👤' : method === 'Google Pay' ? '👆' : method === 'Bizum' ? '📱' : '🔐'}</div>
-          <h3>Confirmar con ${method}</h3>
-          <p class="text-muted">${plan.priceLabel} a IIAPP</p>
-          <div class="up-bio-action">
-            <div class="up-bio-pulse"></div>
-            <p class="small">Autentícate para confirmar el pago</p>
-          </div>
-        </div>
-        <div class="up-caption">
-          <h4>Biometría nativa (FaceID / TouchID / huella)</h4>
-          <p class="text-muted small">Mismo gesto que un pago in-app, pero la pasarela es Stripe.</p>
-        </div>
-      </div>
-    `;
-    await new Promise(r => setTimeout(r, 1400));
-
-    // Paso 3: procesando webhook
-    overlay.innerHTML = `
-      <div class="upgrade-screen up-step3">
-        <div class="up-pipeline">
-          <div class="up-pipe-step up-done">
-            <div class="up-check">✓</div>
-            <span>Stripe cobra ${plan.priceLabel}</span>
-          </div>
-          <div class="up-pipe-arrow">↓</div>
-          <div class="up-pipe-step up-active">
-            <div class="up-spinner"></div>
-            <span>Webhook → backend actualiza users.plan</span>
-          </div>
-          <div class="up-pipe-arrow">↓</div>
-          <div class="up-pipe-step">
-            <div class="up-circle"></div>
-            <span>Universal Link abre la app</span>
-          </div>
-        </div>
-        <div class="up-caption">
-          <h4>Paso 3 · Webhook async actualiza tu plan en BD (&lt;2 s)</h4>
-          <p class="text-muted small">Idempotente — si Stripe reenvía el evento, no se duplica gracias a la tabla stripe_events.</p>
-        </div>
-      </div>
-    `;
-
-    const oneYear = 365 * 24 * 60 * 60 * 1000;
-    await Storage.setProfile('plan', planId);
-    await Storage.setProfile('planActivatedAt', Date.now());
-    await Storage.setProfile('planExpires', Date.now() + oneYear);
-    await new Promise(r => setTimeout(r, 1500));
-
-    // Paso 4: deep link de retorno
-    overlay.innerHTML = `
-      <div class="upgrade-screen up-step4">
-        <div class="up-redirect">
-          <div class="up-redirect-icon">↩</div>
-          <h3>iiapp://payment/success</h3>
-          <p class="text-muted small">El sistema operativo abre la app instalada</p>
-          <div class="up-spinner"></div>
-        </div>
-        <div class="up-caption">
-          <h4>Paso 4 · Universal Link / App Link de retorno</h4>
-          <p class="text-muted small">La app refresca el perfil con GET /api/me y desbloquea las funciones del nuevo plan.</p>
-        </div>
-      </div>
-    `;
-    await new Promise(r => setTimeout(r, 1100));
-
-    // Paso 5: app vuelve con plan activo
-    overlay.innerHTML = `
-      <div class="upgrade-screen up-success">
-        <div class="up-success-icon">✓</div>
-        <h2>${plan.name} activado</h2>
-        <p>Tu cuenta <b>${email}</b> tiene ahora todas las funciones de ${plan.name} disponibles durante 1 año.</p>
-        <div class="up-features-quick">
-          ${plan.features.slice(0, 4).map(f => `<div class="up-feat">✓ ${f}</div>`).join('')}
-        </div>
-        <button class="btn btn-primary" onclick="this.closest('.tribunal-overlay').remove(); IIAPP.UI.show('cuenta');">Ir a mi cuenta</button>
-      </div>
-    `;
+  async function _activateCode(planId) {
+    const input = document.getElementById('activation-code-input');
+    const msg = document.getElementById('activation-msg');
+    const btn = document.getElementById('activation-submit-btn');
+    if (!input || !msg) return;
+    const code = input.value.trim().toUpperCase();
+    if (!code) { msg.innerHTML = '<span style="color:#dc2626">Introduce un código.</span>'; return; }
+    btn.disabled = true;
+    btn.textContent = 'Verificando...';
+    const valid = await validateCode(code, planId);
+    if (valid) {
+      // Marcar como usado en localStorage para evitar reutilización
+      const used = JSON.parse(localStorage.getItem('ct_used_codes') || '[]');
+      if (used.includes(code)) {
+        msg.innerHTML = '<span style="color:#dc2626">Este código ya fue utilizado.</span>';
+        btn.disabled = false; btn.textContent = 'Activar'; return;
+      }
+      used.push(code);
+      localStorage.setItem('ct_used_codes', JSON.stringify(used));
+      const oneYear = 365 * 24 * 60 * 60 * 1000;
+      await Storage.setProfile('plan', planId);
+      await Storage.setProfile('planActivatedAt', Date.now());
+      await Storage.setProfile('planExpires', Date.now() + oneYear);
+      document.querySelector('.tribunal-overlay.upgrade-flow').innerHTML = `
+        <div class="upgrade-modal" style="text-align:center;padding:40px 24px">
+          <div style="font-size:48px;margin-bottom:16px">✓</div>
+          <h2 style="color:#003366;margin-bottom:8px">${PLAN_CATALOG[planId].name} activado</h2>
+          <p style="color:#64748b">Tienes acceso completo hasta el examen de 2026.</p>
+          <button class="btn btn-primary" style="margin-top:20px"
+            onclick="this.closest('.tribunal-overlay').remove(); IIAPP.UI.show('planes')">Ver mi plan</button>
+        </div>`;
+    } else {
+      msg.innerHTML = '<span style="color:#dc2626">Código no válido. Comprueba que lo has escrito correctamente.</span>';
+      btn.disabled = false; btn.textContent = 'Activar';
+    }
   }
 
   // ========== GENERACIÓN DE PDFs (vía window.print) ==========
@@ -1513,7 +1444,7 @@ window.IIAPP = window.IIAPP || {};
   // ========== UI HELPERS ==========
 
   const UI = {
-    _payStep,
+    _activateCode,
     show,
 
     confirmExit() {

@@ -1,19 +1,24 @@
 // Service Worker básico para offline-first
 // Solo se activa cuando la app se sirve por http(s) — no funciona desde file://
 
-const CACHE_NAME = 'correostest-v1';
+const CACHE_NAME = 'correostest-v2';
 const URLS_TO_CACHE = [
   './',
   './index.html',
   './manifest.json',
   './css/styles.css',
   './data/temario.js',
+  './data/temario_content.js',
   './data/questions.js',
+  './data/extra_questions.js',
+  './data/explanations.js',
   './js/storage.js',
   './js/srs.js',
   './js/stats.js',
   './js/data.js',
-  './js/app.js'
+  './js/app.js',
+  './icons/icon-192.png',
+  './icons/icon-512.png'
 ];
 
 self.addEventListener('install', event => {

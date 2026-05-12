@@ -1,0 +1,13 @@
+# Códigos de activación privados — NUNCA subir al repositorio
+activation_codes_PRIVATE.json
+../activation_codes_PRIVATE.json
+
+# Scripts de generación (opcionales, contienen lógica interna)
+make_codes.py
+make_icons.py
+make_explanations.py
+
+# Node / sistema
+node_modules/
+.DS_Store
+Thumbs.db

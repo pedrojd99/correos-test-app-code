@@ -77,6 +77,16 @@
   .btn-tema-link { display: inline-block; font-size: 12px; font-weight: 600; color: #003366; background: #f0f4f8; border: 1px solid #003366; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: inherit; transition: background 0.15s; }
   .btn-tema-link:hover { background: #003366; color: #FFCD00; }
 
+  /* Modal de activación de plan */
+  .upgrade-modal { background: #fff; border-radius: 16px; padding: 28px; max-width: 520px; width: 90%; margin: auto; }
+  .upgrade-modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+  .upgrade-modal-head h3 { font-size: 18px; color: #003366; margin: 0; }
+  .upgrade-steps { display: flex; flex-direction: column; gap: 20px; }
+  .upgrade-step { display: flex; gap: 14px; align-items: flex-start; padding: 16px; background: #f8fafc; border-radius: 10px; border: 1px solid #e5e7eb; }
+  .upgrade-step-num { width: 28px; height: 28px; border-radius: 50%; background: #003366; color: #FFCD00; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .upgrade-step-title { font-weight: 600; color: #0f172a; margin-bottom: 4px; }
+  .tribunal-overlay.upgrade-flow { display: flex; align-items: center; justify-content: center; }
+
   /* Impresión de ficha de temario */
   @media print {
     .no-print, .app-header, nav, .temario-nav { display: none !important; }
@@ -131,6 +141,9 @@
 <script src="data/temario.js"></script>
 <script src="data/temario_content.js"></script>
 <script src="data/questions.js"></script>
+<script src="data/extra_questions.js"></script>
+<script src="data/explanations.js"></script>
+<script src="data/activation_hashes.js"></script>
 
 <!-- Lógica -->
 <script src="js/storage.js"></script>
