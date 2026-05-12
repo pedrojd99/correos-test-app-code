@@ -1,3 +1,6 @@
+# Audios generados localmente (42 MB — regenerar con make_audio.py)
+audio/
+
 # Códigos de activación privados — NUNCA subir al repositorio
 activation_codes_PRIVATE.json
 ../activation_codes_PRIVATE.json

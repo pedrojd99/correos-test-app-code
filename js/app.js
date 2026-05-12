@@ -858,6 +858,63 @@ window.IIAPP = window.IIAPP || {};
     `;
   }
 
+  // ========== REPRODUCTOR DE AUDIO ==========
+
+  const TTS = {
+    audio: null,
+    utterance: null, // alias para compatibilidad con comprobaciones existentes
+    currentNum: null,
+
+    play(num, _html, onEnd) {
+      this.stop();
+      const src = `audio/tema-${String(num).padStart(2, '0')}.mp3`;
+      const a = new Audio(src);
+      a.onended = () => {
+        this.utterance = null;
+        this.audio = null;
+        this.currentNum = null;
+        if (onEnd) onEnd();
+      };
+      a.onerror = () => console.warn('Audio no disponible:', src);
+      a.play().catch(() => {});
+      this.audio = a;
+      this.utterance = a; // para que los checks de !TTS.utterance funcionen
+      this.currentNum = num;
+      this._updateBar(num, false);
+    },
+
+    pause() {
+      if (this.audio) { this.audio.pause(); this._updateBar(this.currentNum, true); }
+    },
+
+    resume() {
+      if (this.audio) { this.audio.play().catch(() => {}); this._updateBar(this.currentNum, false); }
+    },
+
+    stop() {
+      if (this.audio) {
+        this.audio.pause();
+        this.audio.currentTime = 0;
+      }
+      this.audio = null;
+      this.utterance = null;
+      this.currentNum = null;
+      this._updateBar(null, false);
+    },
+
+    _updateBar(num, paused) {
+      const bar = document.getElementById('audio-player-bar');
+      if (!bar) return;
+      if (!num) { bar.style.display = 'none'; return; }
+      bar.style.display = 'flex';
+      const mod = TEMARIO.modules.find(m => m.number === num);
+      const nameEl = bar.querySelector('.ap-name');
+      if (nameEl) nameEl.textContent = mod ? `T${num}: ${mod.shortName}` : `Tema ${num}`;
+      const btn = bar.querySelector('.ap-playpause');
+      if (btn) btn.textContent = paused ? '▶' : '⏸';
+    }
+  };
+
   // ========== PANTALLA: TEMARIO ==========
 
   let _temaActivo = 1;
@@ -889,9 +946,20 @@ window.IIAPP = window.IIAPP || {};
             <p class="page-subtitle">12 temas · Basado en la convocatoria oficial y la legislación vigente</p>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-secondary no-print" onclick="IIAPP.UI.playTema(${_temaActivo})">▶ Escuchar</button>
             <button class="btn btn-secondary no-print" onclick="window.print()">Imprimir tema</button>
-            <button class="btn btn-primary no-print" onclick="IIAPP.UI.printTemarioCompleto()">PDF completo (12 temas)</button>
+            <button class="btn btn-secondary no-print" onclick="IIAPP.UI.printTemarioCompleto()">PDF completo</button>
           </div>
+        </div>
+
+        <!-- Barra de audio (oculta hasta que se pulse Escuchar) -->
+        <div id="audio-player-bar" class="audio-bar no-print" style="display:none">
+          <span class="ap-name">—</span>
+          <div class="ap-controls">
+            <button class="ap-btn ap-playpause" onclick="IIAPP.UI.toggleTema()">⏸</button>
+            <button class="ap-btn" onclick="IIAPP.UI.stopTema()">⏹</button>
+          </div>
+          <audio id="audio-progress" style="display:none"></audio>
         </div>
 
         <div class="temario-nav no-print">${navBtns}</div>

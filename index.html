@@ -87,6 +87,13 @@
   .upgrade-step-title { font-weight: 600; color: #0f172a; margin-bottom: 4px; }
   .tribunal-overlay.upgrade-flow { display: flex; align-items: center; justify-content: center; }
 
+  /* Reproductor de audio en temario */
+  .audio-bar { display:flex; align-items:center; gap:12px; background:#003366; color:#fff; padding:10px 16px; border-radius:10px; margin-bottom:16px; }
+  .audio-bar .ap-name { flex:1; font-size:14px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .ap-controls { display:flex; gap:8px; }
+  .ap-btn { background:rgba(255,255,255,0.15); border:0; color:#fff; border-radius:6px; width:34px; height:34px; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .ap-btn:hover { background:rgba(255,255,255,0.25); }
+
   /* Impresión de ficha de temario */
   @media print {
     .no-print, .app-header, nav, .temario-nav { display: none !important; }
@@ -124,22 +131,22 @@
   </div>
 </header>
 
-<!-- Barra de navegación inferior (solo móvil) -->
+<!-- Barra de navegación inferior (solo móvil ≤640px) -->
 <nav class="bottom-nav">
   <button class="bn-item active" data-nav="home" onclick="IIAPP.UI.show('home')">
-    <span class="bn-icon">🏠</span><span>Inicio</span>
+    <span class="bn-icon">⌂</span><span>Inicio</span>
   </button>
   <button class="bn-item" data-nav="study" onclick="IIAPP.UI.show('study')">
-    <span class="bn-icon">📝</span><span>Estudiar</span>
+    <span class="bn-icon">✏</span><span>Test</span>
   </button>
   <button class="bn-item" data-nav="temario" onclick="IIAPP.UI.show('temario')">
-    <span class="bn-icon">📖</span><span>Temario</span>
+    <span class="bn-icon">≡</span><span>Temario</span>
   </button>
   <button class="bn-item" data-nav="history" onclick="IIAPP.UI.show('history')">
-    <span class="bn-icon">📊</span><span>Historial</span>
+    <span class="bn-icon">◷</span><span>Historial</span>
   </button>
-  <button class="bn-item" data-nav="cuenta" onclick="IIAPP.UI.show('cuenta')">
-    <span class="bn-icon">👤</span><span>Cuenta</span>
+  <button class="bn-item" data-nav="planes" onclick="IIAPP.UI.show('planes')">
+    <span class="bn-icon">★</span><span>Planes</span>
   </button>
 </nav>
 
