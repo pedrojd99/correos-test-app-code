@@ -205,7 +205,41 @@ window.IIAPP.Stats = (function() {
     return Array.from(failed);
   }
 
+  // Sistema de XP y niveles
+  async function getXP() {
+    const answers = await Storage.getAllAnswers();
+    const correct = answers.filter(a => a.isCorrect).length;
+    const wrong = answers.length - correct;
+    // 10 XP por acierto, 3 XP por intento fallido (por intentar)
+    return correct * 10 + wrong * 3;
+  }
+
+  function xpToLevel(xp) {
+    const levels = [
+      { min: 0,    max: 99,   level: 1, name: 'Aspirante',       emoji: '📝', color: '#94a3b8' },
+      { min: 100,  max: 349,  level: 2, name: 'Cartero Novel',   emoji: '📬', color: '#22c55e' },
+      { min: 350,  max: 799,  level: 3, name: 'Cartero',         emoji: '📮', color: '#3b82f6' },
+      { min: 800,  max: 1799, level: 4, name: 'Cartero Experto', emoji: '⭐', color: '#f59e0b' },
+      { min: 1800, max: Infinity, level: 5, name: 'Campeón Correos', emoji: '🏆', color: '#FFCD00' },
+    ];
+    const l = levels.find(l => xp >= l.min && xp <= l.max) || levels[0];
+    const next = levels.find(ll => ll.level === l.level + 1);
+    const progress = next
+      ? Math.round(((xp - l.min) / (next.min - l.min)) * 100)
+      : 100;
+    return { ...l, xp, nextXP: next ? next.min : null, progress };
+  }
+
+  // Pregunta del día — determinista por fecha
+  function questionOfDay(questions) {
+    if (!questions || !questions.length) return null;
+    const today = new Date().toISOString().slice(0, 10);
+    const seed = today.split('-').reduce((a, b) => a + parseInt(b, 10), 0);
+    return questions[seed % questions.length];
+  }
+
   return {
-    global, last7Days, byModule, predictApproval, streakDays, topFailed, failedQuestionIds
+    global, last7Days, byModule, predictApproval, streakDays, topFailed, failedQuestionIds,
+    getXP, xpToLevel, questionOfDay
   };
 })();

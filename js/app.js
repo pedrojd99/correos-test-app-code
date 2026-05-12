@@ -98,180 +98,153 @@ window.IIAPP = window.IIAPP || {};
     const g = await Stats.global();
     const last7 = await Stats.last7Days();
     const modules = await Stats.byModule();
-    const prediction = await Stats.predictApproval();
     const dueCount = await SRS.countDue();
     const profile = await Storage.getAllProfile();
+    const xp = await Stats.getXP();
+    const level = Stats.xpToLevel(xp);
+    const qdq = Stats.questionOfDay(window.IIAPP.QUESTIONS);
 
-    const greeting = profile.alias ? `Hola, ${esc(profile.alias)}` : 'Hola, futur@ funcionari@ de Correos';
-    const puestoActual = TEMARIO.getPuesto(profile.puesto);
+    const alias = profile.alias || (profile.name ? profile.name.split(' ')[0] : null);
+    const greeting = alias ? `¡Hola, ${esc(alias)}!` : '¡Hola!';
+
+    // Mensaje motivacional dinámico
+    const motivMsg = (() => {
+      if (g.total === 0) return '5 minutos al día son suficientes para aprobar. ¡Empieza ahora!';
+      if (g.currentStreak >= 7) return `🔥 ¡${g.currentStreak} días seguidos! Estás en racha.`;
+      if (last7.accuracy >= 70) return `Llevas un ${fmt(last7.accuracy,0)}% de acierto esta semana. ¡Sigue así!`;
+      if (last7.accuracy >= 50) return 'Vas mejorando. Unos minutos más hoy y lo notarás.';
+      return 'Cada test que haces te acerca más al aprobado.';
+    })();
+
+    // Calcula temas prioritarios para el foco
+    const focoMods = TEMARIO.modules.map(m => {
+      const stat = modules[m.number];
+      const acc = stat && stat.accuracy != null ? stat.accuracy / 100 : 0.5;
+      return { ...m, acc: stat && stat.accuracy != null ? stat.accuracy : null, priority: m.weight * (1.2 - Math.min(acc, 1)) };
+    }).sort((a, b) => b.priority - a.priority).slice(0, 3);
 
     target.innerHTML = `
       <div class="container">
-        <div class="puesto-banner">
-          <div class="puesto-banner-name">
-            Te estás preparando para: <span>${puestoActual.nombreCorto}</span>
-            <div class="text-muted small" style="color: #cbd5e1; margin-top: 2px;">${puestoActual.descripcion} · aprueba con ${puestoActual.aciertos} aciertos</div>
-          </div>
-          <button class="puesto-banner-link" onclick="IIAPP.UI.show('cuenta')">Cambiar puesto</button>
-        </div>
 
-        <div class="header-row">
-          <div>
-            <h1 class="page-title">${greeting}</h1>
-            <p class="page-subtitle">${g.total === 0 ? 'Empieza con un test de diagnóstico' : `${g.total} preguntas respondidas · ${g.simulacros} simulacros`}</p>
+        <!-- Cabecera: saludo + nivel XP + racha -->
+        <div class="dl-header">
+          <div class="dl-greeting">
+            <h1 class="page-title" style="margin:0">${greeting}</h1>
+            <p class="dl-tagline">${motivMsg}</p>
           </div>
-          ${g.currentStreak > 1 ? `<div class="streak-badge">🔥 ${g.currentStreak} días</div>` : ''}
-        </div>
-
-        <div class="cards-grid">
-          <div class="metric-card">
-            <div class="metric-label">Hoy</div>
-            <div class="metric-value">${last7.count}</div>
-            <div class="metric-sub">preguntas (7d)</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">% acierto</div>
-            <div class="metric-value ${last7.accuracy >= 60 ? 'metric-ok' : 'metric-warn'}">${last7.count ? fmt(last7.accuracy, 0) + '%' : '—'}</div>
-            <div class="metric-sub">últimos 7 días</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">Simulacros</div>
-            <div class="metric-value">${g.simulacros}</div>
-            <div class="metric-sub">completados</div>
-          </div>
-          <div class="metric-card metric-prediction">
-            <div class="metric-label">Predicción IA</div>
-            <div class="metric-value">${prediction.probability != null ? prediction.probability + '%' : '—'}</div>
-            <div class="metric-sub">de aprobar</div>
-          </div>
-        </div>
-
-        <div class="two-col">
-          <div class="col-main">
-            <div class="card">
-              <div class="card-header">
-                <h3>Tu progreso por bloque</h3>
-                <span class="text-muted">% acierto</span>
-              </div>
-              <div class="module-list">
-                ${TEMARIO.modules.map(m => {
-                  const data = modules[m.number];
-                  const pct = data && data.accuracy != null ? data.accuracy : 0;
-                  const status = data && data.accuracy != null
-                    ? (pct >= 70 ? 'ok' : pct >= 50 ? 'mid' : 'warn')
-                    : 'empty';
-                  return `
-                    <div class="module-row">
-                      <div class="module-row-head">
-                        <span class="module-name">${m.shortName}</span>
-                        <span class="module-pct ${status}">${data && data.accuracy != null ? fmt(pct, 0) + '%' : 'sin datos'} ${data && data.total ? `<span class="text-muted">(${data.correct}/${data.total})</span>` : ''}</span>
-                      </div>
-                      <div class="bar"><div class="bar-fill bar-${status}" style="width:${pct}%; background:${status === 'empty' ? '#e2e8f0' : m.color}"></div></div>
-                    </div>
-                  `;
-                }).join('')}
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-header">
-                <h3>Acción recomendada</h3>
-              </div>
-              ${renderRecommendation(modules)}
+          <div class="dl-badges">
+            ${g.currentStreak > 0 ? `<div class="dl-badge dl-streak">🔥 ${g.currentStreak}</div>` : ''}
+            <div class="dl-badge dl-level" style="background:${level.color}20;color:${level.color};border-color:${level.color}40">
+              ${level.emoji} ${level.name}
             </div>
           </div>
+        </div>
 
-          <div class="col-side">
-            ${(() => {
-              // Calcula los 3 temas prioritarios: mayor peso × menor acierto
-              const focoMods = TEMARIO.modules.map(m => {
-                const stat = modules[m.number];
-                const acc = stat && stat.accuracy != null ? stat.accuracy / 100 : 0.5;
-                return { ...m, acc: stat && stat.accuracy != null ? stat.accuracy : null, priority: m.weight * (1.2 - Math.min(acc, 1)) };
-              }).sort((a, b) => b.priority - a.priority).slice(0, 3);
+        <!-- Barra de XP -->
+        <div class="dl-xp-bar-wrap">
+          <div class="dl-xp-info">
+            <span>${level.xp} XP</span>
+            ${level.nextXP ? `<span class="text-muted" style="font-size:12px">Siguiente nivel: ${level.nextXP} XP</span>` : '<span style="color:#FFCD00;font-weight:700">¡Nivel máximo!</span>'}
+          </div>
+          <div class="dl-xp-track">
+            <div class="dl-xp-fill" style="width:${level.progress}%;background:${level.color}"></div>
+          </div>
+        </div>
 
+        <!-- Acción principal: 5 minutos al día -->
+        <button class="dl-cta" onclick="IIAPP.UI.startMicrotest()">
+          <div class="dl-cta-left">
+            <div class="dl-cta-icon">⏱</div>
+            <div>
+              <div class="dl-cta-title">5 minutos al día</div>
+              <div class="dl-cta-sub">5 preguntas · sin presión · construye hábito</div>
+            </div>
+          </div>
+          <div class="dl-cta-arrow">→</div>
+        </button>
+
+        <!-- Pregunta del día -->
+        ${qdq ? `
+        <div class="card dl-qdq" id="qdq-card">
+          <div class="card-header">
+            <h3>Pregunta del día</h3>
+            <span class="badge" style="background:#fff3cd;color:#856404">Hoy</span>
+          </div>
+          <p style="font-size:15px;line-height:1.6;margin:0 0 14px">${qdq.text}</p>
+          <div class="dl-qdq-options" id="qdq-opts">
+            ${qdq.options.map(o => `
+              <button class="dl-qdq-btn" onclick="IIAPP.UI.answerQdq('${o.letter}','${qdq.correct}','${qdq.id}')">
+                <span class="dl-opt-letter">${o.letter}</span> ${o.text}
+              </button>`).join('')}
+          </div>
+        </div>` : ''}
+
+        <!-- Acciones rápidas -->
+        <div class="dl-actions">
+          <button class="dl-action-btn" onclick="IIAPP.UI.startSimulacro()">
+            <span class="dl-action-icon">📋</span>
+            <span class="dl-action-label">Simulacro<br><small>100 preg · 110 min</small></span>
+          </button>
+          <button class="dl-action-btn" onclick="IIAPP.UI.startFailedReview()">
+            <span class="dl-action-icon">↻</span>
+            <span class="dl-action-label">Fallos<br><small>Repasar errores</small></span>
+          </button>
+          <button class="dl-action-btn" onclick="IIAPP.UI.show('temario')">
+            <span class="dl-action-icon">📖</span>
+            <span class="dl-action-label">Temario<br><small>+audio</small></span>
+          </button>
+          <button class="dl-action-btn ${dueCount > 0 ? 'dl-action-highlight' : ''}" onclick="IIAPP.UI.startSrsReview()">
+            <span class="dl-action-icon">🧠</span>
+            <span class="dl-action-label">Repaso<br><small>${dueCount > 0 ? dueCount + ' pendientes' : 'SRS'}</small></span>
+          </button>
+        </div>
+
+        <!-- Progreso por bloque (compacto) -->
+        <div class="card">
+          <div class="card-header">
+            <h3>Tu progreso</h3>
+            <span class="text-muted small">${g.total} preguntas respondidas</span>
+          </div>
+          <div class="module-list">
+            ${TEMARIO.modules.map(m => {
+              const data = modules[m.number];
+              const pct = data && data.accuracy != null ? data.accuracy : 0;
+              const status = data && data.accuracy != null ? (pct >= 70 ? 'ok' : pct >= 50 ? 'mid' : 'warn') : 'empty';
               return `
-              <div class="card foco-card">
-                <div class="card-header">
-                  <h3>¿Qué estudiar hoy?</h3>
-                  <span class="badge badge-info">IA</span>
-                </div>
-                <p class="text-muted small" style="margin-bottom:12px">Temas con mayor impacto según el peso del examen y tu acierto actual</p>
-                <div class="foco-list">
-                  ${focoMods.map((m, i) => `
-                    <div class="foco-item">
-                      <div class="foco-rank">${i + 1}</div>
-                      <div class="foco-info">
-                        <div class="foco-name">T${m.number}: ${m.shortName}</div>
-                        <div class="foco-stats">Peso ${Math.round(m.weight * 100)}% · ${m.acc != null ? fmt(m.acc, 0) + '% acierto' : 'sin datos'}</div>
-                      </div>
-                      <button class="btn-foco" onclick="IIAPP.UI.startModule(${m.number}, 15)">15 preg.</button>
-                    </div>
-                  `).join('')}
-                </div>
-                <button class="btn btn-primary btn-block" style="margin-top:12px" onclick="IIAPP.UI.startAdaptiveSimulacro()">Simulacro adaptativo</button>
-              </div>`;
-            })()}
-
-            <div class="card srs-card">
-              <div class="card-header">
-                <h3>Repaso de hoy</h3>
-                <span class="badge badge-warn">SRS</span>
-              </div>
-              <p class="text-muted small">${dueCount > 0 ? `${dueCount} preguntas listas para repasar` : 'Sin nada pendiente. Haz tests para alimentar el SRS.'}</p>
-              <button class="btn btn-primary btn-block" ${dueCount === 0 ? 'disabled' : ''} onclick="IIAPP.UI.startSrsReview()">
-                ${dueCount > 0 ? 'Empezar repaso' : 'No hay pendiente'}
-              </button>
-            </div>
-
-            <div class="card">
-              <div class="card-header"><h3>Inicio rápido</h3></div>
-              <div class="quick-actions">
-                <button class="quick-btn" onclick="IIAPP.UI.startQuick(10)">
-                  <div class="quick-btn-num">10</div>
-                  <div class="quick-btn-label">preguntas mixtas</div>
-                </button>
-                <button class="quick-btn" onclick="IIAPP.UI.startQuick(25)">
-                  <div class="quick-btn-num">25</div>
-                  <div class="quick-btn-label">test medio</div>
-                </button>
-                <button class="quick-btn" onclick="IIAPP.UI.startSimulacro()">
-                  <div class="quick-btn-num">⏱</div>
-                  <div class="quick-btn-label">Simulacro</div>
-                </button>
-                <button class="quick-btn" onclick="IIAPP.UI.startFailedReview()">
-                  <div class="quick-btn-num">↻</div>
-                  <div class="quick-btn-label">Repasar fallos</div>
-                </button>
-              </div>
-            </div>
+                <div class="module-row">
+                  <div class="module-row-head">
+                    <span class="module-name">${m.shortName}</span>
+                    <span class="module-pct ${status}">${data && data.accuracy != null ? fmt(pct, 0) + '%' : '—'}</span>
+                  </div>
+                  <div class="bar"><div class="bar-fill" style="width:${pct}%;background:${status === 'empty' ? '#e2e8f0' : m.color}"></div></div>
+                </div>`;
+            }).join('')}
           </div>
         </div>
+
+        <!-- Foco del día (colapsado) -->
+        <details class="card dl-details">
+          <summary style="cursor:pointer;padding:4px 0;font-weight:600;color:#003366;list-style:none">
+            ▸ Temas prioritarios hoy (IA)
+          </summary>
+          <div class="foco-list" style="margin-top:12px">
+            ${focoMods.map((m, i) => `
+              <div class="foco-item">
+                <div class="foco-rank">${i + 1}</div>
+                <div class="foco-info">
+                  <div class="foco-name">T${m.number}: ${m.shortName}</div>
+                  <div class="foco-stats">Peso ${Math.round(m.weight * 100)}% · ${m.acc != null ? fmt(m.acc, 0) + '% acierto' : 'sin datos'}</div>
+                </div>
+                <button class="btn-foco" onclick="IIAPP.UI.startModule(${m.number}, 10)">10 preg.</button>
+              </div>`).join('')}
+          </div>
+          <button class="btn btn-primary btn-block" style="margin-top:12px" onclick="IIAPP.UI.startAdaptiveSimulacro()">Simulacro adaptativo</button>
+        </details>
+
       </div>
     `;
   }
 
-  function renderRecommendation(modules) {
-    // Encuentra el módulo más flojo con datos
-    const modArr = Object.values(modules).filter(m => m.accuracy != null);
-    if (modArr.length === 0) {
-      return `
-        <p>Aún no tenemos datos de tu rendimiento. Empieza con un <b>test de 10 preguntas mixtas</b> para que la IA detecte tus puntos fuertes y débiles.</p>
-        <button class="btn btn-primary" onclick="IIAPP.UI.startQuick(10)">Empezar diagnóstico</button>
-      `;
-    }
-    const weakest = modArr.reduce((a, b) => a.accuracy < b.accuracy ? a : b);
-    if (weakest.accuracy < 60) {
-      return `
-        <p>Tu punto más flojo es <b>${weakest.moduleName}</b> (${fmt(weakest.accuracy, 0)}% acierto). Empezar con un repaso enfocado de 25 preguntas en este módulo.</p>
-        <button class="btn btn-primary" onclick="IIAPP.UI.startModule(${weakest.moduleNumber}, 25)">Practicar ${weakest.moduleName}</button>
-      `;
-    }
-    return `
-      <p>Tu rendimiento es bueno en todos los módulos. Para consolidar y subir la predicción, te sugiero un <b>simulacro completo</b> esta semana.</p>
-      <button class="btn btn-primary" onclick="IIAPP.UI.startSimulacro()">Empezar simulacro</button>
-    `;
-  }
 
   // ========== PANTALLA: STUDY (CONFIGURADOR DE TEST) ==========
 
@@ -700,6 +673,9 @@ window.IIAPP = window.IIAPP || {};
     const corte = puestoRes.umbral;
     const vsCorte = session.score - corte;
     const prediction = await Stats.predictApproval();
+    const sessionXP = session.correctCount * 10 + session.incorrectCount * 3;
+    const totalXP = await Stats.getXP();
+    const sessionLevel = Stats.xpToLevel(totalXP);
 
     // Desglose por módulo de esta sesión
     const moduleStats = {};
@@ -735,6 +711,7 @@ window.IIAPP = window.IIAPP || {};
             ${session.unansweredCount ? `<span class="muted">○ ${session.unansweredCount} sin contestar</span>` : ''}
             ${session.penalty ? '<span class="muted small">con penalización −1/3</span>' : ''}
           </div>
+          <div class="xp-gained">+${sessionXP} XP · ${sessionLevel.emoji} ${sessionLevel.name}</div>
         </div>
 
         ${prediction.probability != null ? `
@@ -986,43 +963,40 @@ window.IIAPP = window.IIAPP || {};
 
   const PLAN_CATALOG = {
     free: {
-      id: 'free', name: 'Gratuito', price: 0, priceLabel: '0 €',
-      tag: '', recommended: false,
+      id: 'free', name: 'Gratis', price: 0, priceLabel: '0 €',
+      tag: 'Empieza aquí', recommended: false,
       features: [
+        '5 minutos al día — modo hábito diario',
         '200 preguntas de exámenes oficiales Correos',
-        '1 simulacro completo a la semana',
+        'Pregunta del día',
         'Temario de los 12 temas con mnemotécnicos',
-        'Estadísticas básicas',
-        'Historial últimos 7 días',
+        'Estadísticas básicas y racha',
       ],
     },
     completo: {
-      id: 'completo', name: 'Acceso completo', price: 49, priceLabel: '49 €',
-      tag: 'Recomendado', recommended: true, monthly: 'pago único hasta el examen',
+      id: 'completo', name: 'Acceso completo', price: 14.99, priceLabel: '14,99 €',
+      tag: 'Recomendado', recommended: true, monthly: 'pago único · sin renovación',
       features: [
         'Banco completo de preguntas sin límite',
-        'Simulacros ilimitados cronometrados (100 preg, 110 min)',
+        'Simulacros ilimitados (100 preg · 110 min)',
         'Simulacro adaptativo: más preguntas en tus temas flojos',
-        'Repaso espaciado SRS (recuerda mejor lo que fallas)',
-        'Predicción de probabilidad de aprobado por puesto',
-        'Estadísticas completas por tema y evolución',
-        'Historial completo de sesiones',
-        'Funciona sin conexión (PWA)',
-        'Acceso hasta la fecha del examen 2026 · Sin renovación automática',
+        'Repaso espaciado SRS — memoriza sin esfuerzo',
+        'Predicción de aprobado por puesto (Reparto, Clasificación…)',
+        'Estadísticas completas, historial y XP ilimitado',
+        'Funciona sin conexión · Instálala en tu móvil',
       ],
     },
     premium: {
-      id: 'premium', name: 'Premium', price: 79, priceLabel: '79 €',
-      tag: 'Con audio', recommended: false, monthly: 'pago único hasta el examen',
+      id: 'premium', name: 'Premium + Audio', price: 24.99, priceLabel: '24,99 €',
+      tag: 'Con audio', recommended: false, monthly: 'pago único · sin renovación',
       features: [
         'Todo lo del plan Acceso completo',
         'Audio del temario completo (escucha mientras conduces o paseas)',
-        'Plan de estudio personalizado para tu puesto (Reparto, Clasificación, Atención)',
-        'Análisis semanal de tus puntos débiles por email',
-        'Recordatorios de repaso diario',
-        'Soporte prioritario por email',
+        'Plan de estudio personalizado por puesto',
+        'Análisis semanal de puntos débiles por email',
+        'Soporte prioritario',
       ],
-      compare: 'Las academias presenciales y online cobran 300–1.500 € por la misma preparación',
+      compare: 'Las academias cobran 300–1.500 € por la misma preparación',
     },
   };
 
@@ -1659,6 +1633,28 @@ window.IIAPP = window.IIAPP || {};
         penalty: !!TEMARIO.exam.test.penalty,   // false en Correos
         instant: false, shuffle: true
       });
+    },
+
+    startMicrotest() {
+      startTest({ mode: 'weighted', num: 5, penalty: false, instant: true, shuffle: true });
+    },
+
+    answerQdq(letter, correct, _id) {
+      const opts = document.getElementById('qdq-opts');
+      if (!opts) return;
+      opts.querySelectorAll('.dl-qdq-btn').forEach(btn => {
+        btn.disabled = true;
+        const l = btn.querySelector('.dl-opt-letter')?.textContent?.trim();
+        if (l === letter)   btn.classList.add(letter === correct ? 'qdq-correct' : 'qdq-wrong');
+        if (l === correct && l !== letter) btn.classList.add('qdq-correct');
+      });
+      const card = document.getElementById('qdq-card');
+      if (card) {
+        const msg = document.createElement('div');
+        msg.className = letter === correct ? 'qdq-result qdq-result-ok' : 'qdq-result qdq-result-err';
+        msg.textContent = letter === correct ? '¡Correcto! +10 XP' : `Incorrecto — la respuesta era ${correct}`;
+        card.appendChild(msg);
+      }
     },
 
     startAdaptiveSimulacro() {
