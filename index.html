@@ -124,6 +124,25 @@
   </div>
 </header>
 
+<!-- Barra de navegación inferior (solo móvil) -->
+<nav class="bottom-nav">
+  <button class="bn-item active" data-nav="home" onclick="IIAPP.UI.show('home')">
+    <span class="bn-icon">🏠</span><span>Inicio</span>
+  </button>
+  <button class="bn-item" data-nav="study" onclick="IIAPP.UI.show('study')">
+    <span class="bn-icon">📝</span><span>Estudiar</span>
+  </button>
+  <button class="bn-item" data-nav="temario" onclick="IIAPP.UI.show('temario')">
+    <span class="bn-icon">📖</span><span>Temario</span>
+  </button>
+  <button class="bn-item" data-nav="history" onclick="IIAPP.UI.show('history')">
+    <span class="bn-icon">📊</span><span>Historial</span>
+  </button>
+  <button class="bn-item" data-nav="cuenta" onclick="IIAPP.UI.show('cuenta')">
+    <span class="bn-icon">👤</span><span>Cuenta</span>
+  </button>
+</nav>
+
 <main>
   <section id="screen-home" class="screen"></section>
   <section id="screen-study" class="screen hidden"></section>

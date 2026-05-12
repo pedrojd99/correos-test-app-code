@@ -19,12 +19,6 @@ window.IIAPP = window.IIAPP || {};
 
   // ========== UTILIDADES ==========
 
-  function el(html) {
-    const div = document.createElement('div');
-    div.innerHTML = html.trim();
-    return div.firstChild;
-  }
-
   function $(sel) { return document.querySelector(sel); }
   function $$(sel) { return document.querySelectorAll(sel); }
 
@@ -79,10 +73,9 @@ window.IIAPP = window.IIAPP || {};
     if (screen === 'settings') await renderSettings();
     if (screen === 'result') await renderResult(params.sessionId);
 
-    // Actualizar nav activa
-    $$('.nav-item').forEach(n => n.classList.remove('active'));
-    const active = $(`[data-nav="${screen}"]`);
-    if (active) active.classList.add('active');
+    // Actualizar nav activa (header + barra inferior móvil)
+    $$('.nav-item, .bn-item').forEach(n => n.classList.remove('active'));
+    $$(`[data-nav="${screen}"]`).forEach(n => n.classList.add('active'));
 
     window.scrollTo(0, 0);
   }
@@ -173,7 +166,7 @@ window.IIAPP = window.IIAPP || {};
               <div class="card-header">
                 <h3>Acción recomendada</h3>
               </div>
-              ${renderRecommendation(modules, prediction)}
+              ${renderRecommendation(modules)}
             </div>
           </div>
 
@@ -247,7 +240,7 @@ window.IIAPP = window.IIAPP || {};
     `;
   }
 
-  function renderRecommendation(modules, prediction) {
+  function renderRecommendation(modules) {
     // Encuentra el módulo más flojo con datos
     const modArr = Object.values(modules).filter(m => m.accuracy != null);
     if (modArr.length === 0) {
@@ -1477,8 +1470,11 @@ window.IIAPP = window.IIAPP || {};
         }
       </style>
     `;
-    w.document.write(`<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>${title}</title>${styles}</head><body>${htmlBody}<script>window.addEventListener('load', () => setTimeout(() => window.print(), 300));<\/script></body></html>`);
-    w.document.close();
+    const html = `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>${title}</title>${styles}</head><body>${htmlBody}<script>window.addEventListener('load',()=>setTimeout(()=>window.print(),300));<\/script></body></html>`;
+    const blob = new Blob([html], { type: 'text/html' });
+    const url  = URL.createObjectURL(blob);
+    w.location.href = url;
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
   }
 
   // ========== UI HELPERS ==========
