@@ -583,7 +583,10 @@ window.IIAPP = window.IIAPP || {};
     fb.classList.remove('hidden');
     fb.innerHTML = `
       <div class="fb-card ${isCorrect ? 'fb-ok' : 'fb-err'}">
-        <div class="fb-title">${isCorrect ? '🎉 ¡Correcto!' : '😅 No era esa…'}</div>
+        <div class="fb-title">${isCorrect
+          ? ['🎉 ¡Correcto!', '⭐ ¡Exacto!', '🔥 ¡Ahí está!', '💪 ¡Lo sabías!', '✅ ¡Bien!'][Math.floor(Math.random()*5)]
+          : ['😅 No era esa…', '📬 ¡Casi!', '🤔 Fallo de novato', '😬 ¡Uy!', '📮 A repasar este', '💡 Ahora ya lo sabes'][Math.floor(Math.random()*6)]
+        }</div>
         ${explanationText ? `<p>${explanationText}</p>` : ''}
       </div>
       ${iaBlock}
