@@ -284,6 +284,8 @@
     <!-- ══ BRAZO IZQUIERDO ══ -->
     <g transform="rotate(16,22,96)" filter="url(#f-drop-sm)">
       <rect x="12" y="92" width="20" height="34" rx="10" fill="url(#g-jacket)" stroke="#0a1840" stroke-width="2"/>
+      <!-- franja amarilla manga izquierda -->
+      <rect x="12" y="107" width="20" height="5" rx="2.5" fill="#FFCD00" stroke="#aa8800" stroke-width=".8"/>
       <ellipse cx="22" cy="127" rx="12" ry="9" fill="url(#g-fur)" stroke="#2c1000" stroke-width="2"/>
       <circle cx="14" cy="129" r="3.8" fill="#c87030" stroke="#2c1000" stroke-width="1.2"/>
       <circle cx="22" cy="132" r="3.8" fill="#c87030" stroke="#2c1000" stroke-width="1.2"/>
@@ -294,6 +296,8 @@
     <g id="ct-arm-r" filter="url(#f-drop-sm)">
       <g transform="rotate(-16,98,96)">
         <rect x="88" y="92" width="20" height="34" rx="10" fill="url(#g-jacket)" stroke="#0a1840" stroke-width="2"/>
+        <!-- franja amarilla manga derecha -->
+        <rect x="88" y="107" width="20" height="5" rx="2.5" fill="#FFCD00" stroke="#aa8800" stroke-width=".8"/>
         <ellipse cx="98" cy="127" rx="12" ry="9" fill="url(#g-fur)" stroke="#2c1000" stroke-width="2"/>
         <circle cx="90" cy="129" r="3.8" fill="#c87030" stroke="#2c1000" stroke-width="1.2"/>
         <circle cx="98" cy="132" r="3.8" fill="#c87030" stroke="#2c1000" stroke-width="1.2"/>
@@ -301,16 +305,37 @@
       </g>
     </g>
 
-    <!-- ══ CUERPO / UNIFORME ══ -->
+    <!-- ══ CUERPO / UNIFORME CARTERO ══ -->
     <rect x="28" y="88" width="64" height="48" rx="18" fill="url(#g-jacket)" stroke="#0a1840" stroke-width="2.5" filter="url(#f-drop)"/>
-    <!-- Camisa interior -->
-    <rect x="50" y="89" width="20" height="47" rx="7" fill="#eef4ff" stroke="#c8d8f0" stroke-width="1"/>
-    <!-- Corbata -->
-    <polygon points="60,91 54.5,107 60,120 65.5,107" fill="url(#g-bag)" stroke="#aa8800" stroke-width="1.2"/>
-    <polygon points="56.5,119 60,126 63.5,119" fill="#cc9a00"/>
-    <!-- Botones -->
-    <circle cx="60" cy="104" r="3" fill="#FFCD00" stroke="#aa8800" stroke-width="1"/>
-    <circle cx="60" cy="114" r="3" fill="#FFCD00" stroke="#aa8800" stroke-width="1"/>
+
+    <!-- Franja amarilla en hombros (epauletas de uniforme) -->
+    <path d="M28,101 Q28,88 50,88" stroke="#FFCD00" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M92,101 Q92,88 70,88" stroke="#FFCD00" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <!-- Borde oscuro de la franja -->
+    <path d="M28,101 Q28,88 50,88" stroke="#aa8800" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <path d="M92,101 Q92,88 70,88" stroke="#aa8800" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+
+    <!-- Cremallera frontal (cierre del anorak) -->
+    <rect x="57.5" y="89" width="5" height="46" rx="2.5" fill="#0a1a50" stroke="#061030" stroke-width=".8"/>
+    <!-- Tirador de cremallera -->
+    <rect x="55" y="91" width="10" height="5" rx="2.5" fill="#FFCD00" stroke="#aa8800" stroke-width="1"/>
+    <rect x="58" y="93" width="4" height="2" rx="1" fill="#cc8800"/>
+
+    <!-- Bolsillo pecho izquierdo con insignia postal -->
+    <rect x="32" y="98" width="20" height="15" rx="4" fill="#0a2060" stroke="#FFCD00" stroke-width="1.5"/>
+    <!-- Icono sobre dentro del bolsillo -->
+    <rect x="35.5" y="101" width="13" height="8.5" rx="1.5" fill="#1a5090" stroke="#2a6ab0" stroke-width=".8"/>
+    <path d="M35.5,101 L42,106 L48.5,101" stroke="#FFCD00" stroke-width="1.4" fill="none"/>
+
+    <!-- Franja reflectante horizontal baja (seguridad vial) -->
+    <rect x="28" y="122" width="64" height="7" rx="3.5" fill="#FFCD00" stroke="#aa8800" stroke-width="1.2"/>
+    <!-- Patrón de chevron en la franja -->
+    <line x1="36" y1="122" x2="33" y2="129" stroke="#e6a800" stroke-width="1" opacity=".6"/>
+    <line x1="44" y1="122" x2="41" y2="129" stroke="#e6a800" stroke-width="1" opacity=".6"/>
+    <line x1="52" y1="122" x2="49" y2="129" stroke="#e6a800" stroke-width="1" opacity=".6"/>
+    <line x1="60" y1="122" x2="57" y2="129" stroke="#e6a800" stroke-width="1" opacity=".6"/>
+    <line x1="68" y1="122" x2="65" y2="129" stroke="#e6a800" stroke-width="1" opacity=".6"/>
+    <line x1="76" y1="122" x2="73" y2="129" stroke="#e6a800" stroke-width="1" opacity=".6"/>
 
     <!-- ══ BOLSA POSTAL ══ -->
     <g transform="translate(85,96)" filter="url(#f-drop-sm)">
