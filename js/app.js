@@ -1430,19 +1430,25 @@ window.IIAPP = window.IIAPP || {};
 
   function _renderTemaHtml(mod, content) {
     const color = mod.color || '#003366';
+    const legBadges = (mod.legislacion || [])
+      .map(l => `<span class="tc-leg">${l}</span>`).join('');
+    // Eliminar el h2 inicial del contenido (ya va en la cabecera)
+    const bodyHtml = content.replace(/^<h2>[^<]*<\/h2>\s*/i, '');
     return `
       <article class="pdf-tema">
-        <header class="pdf-tema-head" style="border-color:${color}">
-          <div class="pdf-tema-num" style="background:${color}">${String(mod.number).padStart(2, '0')}</div>
-          <div>
-            <div class="pdf-tema-mod">Tema ${mod.number} · ${mod.shortName}</div>
-            <h1>${mod.name}</h1>
+        <header class="tc-head" style="background:${color};border-color:${color}">
+          <div class="tc-num">${String(mod.number).padStart(2,'0')}</div>
+          <div class="tc-hinfo">
+            <div class="tc-label">TEMA ${mod.number} DE 12 &nbsp;·&nbsp; Peso en examen: ${Math.round(mod.weight*100)}%</div>
+            <div class="tc-title">${mod.name}</div>
           </div>
         </header>
-        <section class="pdf-tema-body">${content}</section>
-        <footer class="pdf-tema-foot">
-          <span>CorreosTest · Preparación oposición Correos 2026</span>
-          <span>Tema ${mod.number} de 12</span>
+        ${legBadges ? `<div class="tc-legrow"><span class="tc-leg-lbl">Legislación:</span>${legBadges}</div>` : ''}
+        <div class="tc-body">${bodyHtml}</div>
+        <footer class="tc-foot">
+          <span>CorreosTest 2026</span>
+          <span>Tema ${mod.number}: ${mod.shortName}</span>
+          <span>Oposición Correos · Grupo IV</span>
         </footer>
       </article>
     `;
@@ -1452,22 +1458,35 @@ window.IIAPP = window.IIAPP || {};
     const CONTENT = window.CORREOS.TEMARIO_CONTENT || {};
     const temas = TEMARIO.modules
       .map(m => _renderTemaHtml(m, CONTENT[m.number] || '<p>Contenido no disponible.</p>'))
-      .join('<div class="page-break"></div>');
+      .join('');
+
+    const hoy = new Date().toLocaleDateString('es-ES', { day:'numeric', month:'long', year:'numeric' });
+    const tocRows = TEMARIO.modules.map(m => `
+      <div class="toc-row">
+        <span class="toc-num">T${m.number}</span>
+        <span class="toc-name">${m.name}</span>
+        <span class="toc-pct">${Math.round(m.weight * 100)}%</span>
+      </div>`).join('');
 
     const portada = `
       <div class="pdf-cover">
-        <div class="pdf-logo">CT</div>
-        <h1>Temario Correos 2026</h1>
-        <h2>Personal Laboral Indefinido · Grupo IV</h2>
-        <p class="pdf-cover-meta">12 temas oficiales · Legislación actualizada (RD 437/2024) · CorreosTest</p>
-        <div class="pdf-cover-modules">
-          ${TEMARIO.modules.map(m => `
-            <div class="pdf-cover-mod" style="border-color:${m.color}">
-              <strong>Tema ${m.number}</strong> — ${m.name}
-            </div>`).join('')}
+        <div class="cover-stripe"></div>
+        <div class="cover-logo">CT</div>
+        <div class="cover-title">Temario Oficial<br>Correos 2026</div>
+        <div class="cover-sub">Personal Laboral Indefinido · Grupo IV</div>
+        <div class="cover-meta">
+          <strong>12 temas oficiales</strong> · Legislación actualizada (RD 437/2024, Ley 43/2010) ·
+          Generado el ${hoy} · CorreosTest
+        </div>
+        <div class="cover-toc">
+          <h2>Índice de contenidos</h2>
+          ${tocRows}
+        </div>
+        <div class="cover-bottom">
+          <span>CorreosTest 2026 · correostest.es</span>
+          <span>Solo para uso personal del opositor</span>
         </div>
       </div>
-      <div class="page-break"></div>
     `;
 
     _openPrintWindow('Temario Correos 2026 — CorreosTest', portada + temas);
@@ -1480,84 +1499,136 @@ window.IIAPP = window.IIAPP || {};
       return;
     }
     const styles = `
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
       <style>
-        @page { size: A4; margin: 18mm 16mm; }
-        * { box-sizing: border-box; }
-        body {
-          font-family: 'Inter', system-ui, sans-serif;
-          color: #0f172a; line-height: 1.55; margin: 0; padding: 0;
-          font-size: 11.5pt;
+        /* ── PÁGINA ─────────────────────────────────────────────────── */
+        @page {
+          size: A4;
+          margin: 28mm 20mm 26mm 22mm;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
         }
-        h1, h2 { font-weight: 600; }
+        @page { /* encabezado y pie en todas las páginas excepto portada */
+          @top-left   { content: "CorreosTest 2026"; font-family:'Inter',sans-serif; font-size:8pt; color:#94a3b8; padding-bottom:3mm; border-bottom:0.5pt solid #e2e8f0; }
+          @top-right  { content: "Preparación Oposición Correos · Grupo IV"; font-family:'Inter',sans-serif; font-size:8pt; color:#94a3b8; padding-bottom:3mm; border-bottom:0.5pt solid #e2e8f0; }
+          @bottom-center { content: "— " counter(page) " —"; font-family:'Inter',sans-serif; font-size:8pt; color:#94a3b8; padding-top:3mm; border-top:0.5pt solid #e2e8f0; }
+        }
+        @page :first { @top-left{content:""} @top-right{content:""} @bottom-center{content:""} }
+
+        /* ── BASE ───────────────────────────────────────────────────── */
+        *  { box-sizing:border-box; }
+        body { font-family:'Inter',system-ui,sans-serif; font-size:10.5pt; color:#1e293b; line-height:1.65; margin:0; padding:0; background:#fff; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+        p  { margin:0 0 10pt; text-align:justify; }
+        strong { font-weight:700; }
+        .page-break { page-break-after:always; break-after:page; }
+
+        /* ── PORTADA ────────────────────────────────────────────────── */
         .pdf-cover {
-          padding: 60px 30px; min-height: 90vh;
-          display: flex; flex-direction: column; justify-content: center; gap: 12px;
           page-break-after: always;
+          min-height: 270mm;
+          display: flex; flex-direction: column;
+          padding: 20mm 0;
+          position: relative;
         }
-        .pdf-logo {
-          background: #0C447C; color: white;
-          width: 80px; height: 80px; border-radius: 16px;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 28px; font-weight: 700; margin-bottom: 24px;
+        .cover-stripe { height:8mm; background:#003366; margin-bottom:20mm; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+        .cover-logo   { width:70px; height:70px; background:#003366; color:#FFCD00; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24pt; font-weight:900; margin-bottom:10mm; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+        .cover-title  { font-size:30pt; font-weight:700; color:#003366; line-height:1.15; margin:0 0 4mm; }
+        .cover-sub    { font-size:14pt; color:#64748b; font-weight:500; margin:0 0 8mm; }
+        .cover-meta   { font-size:9pt; color:#94a3b8; margin:0 0 14mm; }
+        .cover-meta strong { color:#475569; }
+        .cover-toc    { border-top:2pt solid #003366; padding-top:8mm; }
+        .cover-toc h2 { font-size:11pt; font-weight:700; color:#003366; text-transform:uppercase; letter-spacing:.6px; margin:0 0 5mm; }
+        .toc-row { display:flex; align-items:baseline; gap:6px; padding:3px 0; font-size:9.5pt; border-bottom:0.5pt dotted #cbd5e1; }
+        .toc-num  { font-weight:700; color:#003366; min-width:22px; }
+        .toc-name { flex:1; color:#334155; }
+        .toc-pct  { font-size:8pt; color:#94a3b8; white-space:nowrap; }
+        .cover-bottom { margin-top:auto; padding-top:10mm; border-top:0.5pt solid #e2e8f0; font-size:8pt; color:#94a3b8; display:flex; justify-content:space-between; }
+
+        /* ── CABECERA DE CADA TEMA ──────────────────────────────────── */
+        .pdf-tema { page-break-before:always; }
+        .tc-head {
+          display:flex; align-items:center; gap:14px;
+          padding:14px 18px; border-radius:0;
+          margin-bottom:0; color:#fff;
+          -webkit-print-color-adjust:exact; print-color-adjust:exact;
         }
-        .pdf-cover h1 { font-size: 36pt; margin: 0; }
-        .pdf-cover h2 { font-size: 16pt; color: #64748b; font-weight: 500; margin: 8px 0 24px; }
-        .pdf-cover-meta { color: #64748b; font-size: 10pt; margin-bottom: 32px; }
-        .pdf-cover-modules { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
-        .pdf-cover-mod {
-          padding: 10px 14px; border-left: 4px solid #ccc; background: #f8fafc;
-          font-size: 11pt;
+        .tc-num {
+          font-size:28pt; font-weight:900; opacity:.9;
+          min-width:52px; text-align:center; line-height:1;
         }
-        .pdf-module-title {
-          font-size: 22pt; padding: 8px 0; margin: 24px 0 8px;
-          border-bottom: 3px solid;
+        .tc-hinfo { flex:1; }
+        .tc-label { font-size:7.5pt; opacity:.8; text-transform:uppercase; letter-spacing:.7px; margin-bottom:3px; }
+        .tc-title { font-size:13.5pt; font-weight:700; line-height:1.25; }
+
+        /* Faja legislación */
+        .tc-legrow { background:#f8fafc; border:0.5pt solid #e2e8f0; border-top:0; padding:7px 18px; display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-bottom:14px; }
+        .tc-leg-lbl { font-size:7.5pt; color:#64748b; font-weight:600; text-transform:uppercase; letter-spacing:.5px; margin-right:4px; }
+        .tc-leg { font-size:7.5pt; background:#e0e7ff; color:#3730a3; border-radius:4px; padding:2px 7px; font-weight:500; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+        /* ── CUERPO DEL TEMA ────────────────────────────────────────── */
+        .tc-body { padding:0; }
+
+        h2 { display:none; } /* ya va en la cabecera tc-head */
+        h3 {
+          font-size:12pt; font-weight:700; color:#003366;
+          margin:18pt 0 6pt; padding-bottom:4pt;
+          border-bottom:1.5pt solid #003366;
+          page-break-after:avoid;
         }
-        .pdf-module-desc { color: #64748b; margin: 0 0 24px; }
-        .pdf-tema {
-          page-break-inside: avoid;
-          break-inside: avoid;
-          padding: 12px 0;
+        h4 {
+          font-size:10.5pt; font-weight:700; color:#334155;
+          margin:12pt 0 4pt;
+          page-break-after:avoid;
         }
-        .pdf-tema-head {
-          display: flex; align-items: center; gap: 16px;
-          padding-bottom: 12px; margin-bottom: 16px;
-          border-bottom: 2px solid #0C447C;
+
+        ul { list-style:none; padding-left:0; margin:6pt 0 10pt; }
+        ul li { padding-left:14px; margin-bottom:4pt; position:relative; }
+        ul li::before { content:'▸'; position:absolute; left:0; color:#003366; font-size:9pt; }
+        ol { padding-left:18px; margin:6pt 0 10pt; }
+        ol li { margin-bottom:4pt; }
+
+        /* Tablas */
+        table { width:100%; border-collapse:collapse; margin:10pt 0 14pt; font-size:9pt; page-break-inside:avoid; }
+        thead tr { background:#003366 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+        th { background:#003366 !important; color:#fff; padding:7pt 9pt; text-align:left; font-weight:700; font-size:8.5pt; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+        td { padding:6pt 9pt; border-bottom:0.5pt solid #e2e8f0; vertical-align:top; }
+        tr:nth-child(even) td { background:#f8fafc; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+        /* Bloque "Puntos clave para el examen" */
+        em {
+          display:block; font-style:normal;
+          background:#FFF9C4 !important;
+          border-left:4pt solid #FFCD00;
+          padding:9pt 13pt; margin:14pt 0;
+          font-size:9.5pt; color:#1e293b; line-height:1.6;
+          page-break-inside:avoid;
+          -webkit-print-color-adjust:exact; print-color-adjust:exact;
         }
-        .pdf-tema-num {
-          background: #0C447C; color: white;
-          width: 48px; height: 48px; border-radius: 10px;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 18pt; font-weight: 700; flex-shrink: 0;
+        em::before { content:'★  Puntos clave · '; font-weight:700; color:#856404; }
+
+        /* Bloques mnemotécnicos (p con background azul) */
+        p[style*="background:#eef6ff"],
+        p[style*="background: #eef6ff"] {
+          background:#e8f0fe !important;
+          border-left:4pt solid #003366;
+          padding:9pt 13pt; margin:12pt 0;
+          border-radius:0 6pt 6pt 0;
+          font-size:9.5pt; line-height:1.65;
+          page-break-inside:avoid;
+          -webkit-print-color-adjust:exact; print-color-adjust:exact;
         }
-        .pdf-tema-mod { font-size: 9pt; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
-        .pdf-tema-head h1 { font-size: 18pt; margin: 4px 0 0; line-height: 1.2; }
-        .pdf-tema-body { padding: 0 4px; text-align: justify; }
-        .pdf-tema-body p { margin: 0 0 12px; }
-        .pdf-tema-foot {
-          margin-top: 18px; padding-top: 8px;
-          border-top: 1px solid #e2e8f0;
-          display: flex; justify-content: space-between;
-          font-size: 8pt; color: #94a3b8;
+
+        /* ── PIE DE TEMA ────────────────────────────────────────────── */
+        .tc-foot {
+          margin-top:16pt; padding-top:7pt;
+          border-top:0.5pt solid #e2e8f0;
+          display:flex; justify-content:space-between;
+          font-size:7.5pt; color:#94a3b8;
         }
-        /* Contenido del temario */
-        h2 { font-size: 15pt; color: #003366; margin: 0 0 14px; line-height: 1.3; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; }
-        h3 { font-size: 13pt; margin: 18px 0 8px; color: #0f172a; }
-        h4 { font-size: 11pt; font-weight: 600; margin: 12px 0 6px; color: #334155; }
-        ul, ol { padding-left: 18px; margin: 6px 0 10px; }
-        li { margin-bottom: 3px; }
-        table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 10pt; }
-        th { background: #003366 !important; color: #fff; padding: 7px 9px; text-align: left; font-weight: 600; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        td { padding: 6px 9px; border-bottom: 1px solid #e5e7eb; }
-        tr:nth-child(even) td { background: #f8fafc; }
-        em { display: block; background: #FFCD00 !important; padding: 10px 14px; border-radius: 6px; font-style: normal; font-size: 10pt; margin-top: 16px; color: #003366; font-weight: 500; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        p[style*="background:#eef6ff"] { background: #eef6ff !important; border-left: 4px solid #003366; padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 10pt; line-height: 1.6; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        strong { font-weight: 600; }
-        .page-break { page-break-after: always; break-after: page; height: 0; }
-        .text-muted { color: #64748b; }
-        .small { font-size: 9pt; }
-        @media print {
-          body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        }
+
+        /* ── HELPERS ────────────────────────────────────────────────── */
+        .text-muted { color:#64748b; }
+        .small { font-size:8.5pt; }
       </style>
     `;
     const html = `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>${title}</title>${styles}</head><body>${htmlBody}<script>window.addEventListener('load',()=>setTimeout(()=>window.print(),300));<\/script></body></html>`;
