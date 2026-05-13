@@ -95,14 +95,20 @@ window.IIAPP = window.IIAPP || {};
 
   async function renderHome() {
     const target = $('#screen-home');
-    const g = await Stats.global();
-    const last7 = await Stats.last7Days();
-    const modules = await Stats.byModule();
-    const dueCount = await SRS.countDue();
-    const profile = await Storage.getAllProfile();
-    const xp = await Stats.getXP();
-    const level = Stats.xpToLevel(xp);
-    const qdq = Stats.questionOfDay(window.IIAPP.QUESTIONS);
+    let g, last7, modules, dueCount, profile, xp, level, qdq;
+    try {
+      [g, last7, modules, dueCount, profile] = await Promise.all([
+        Stats.global(), Stats.last7Days(), Stats.byModule(),
+        SRS.countDue(), Storage.getAllProfile()
+      ]);
+      xp    = await Stats.getXP().catch(() => 0);
+      level = Stats.xpToLevel(xp);
+      qdq   = Stats.questionOfDay(window.IIAPP.QUESTIONS);
+    } catch(e) {
+      console.error('renderHome error:', e);
+      target.innerHTML = '<div class="container"><p style="padding:32px;text-align:center">Cargando... <button class="btn btn-primary" style="margin-top:16px" onclick="location.reload()">Recargar</button></p></div>';
+      return;
+    }
 
     const alias = profile.alias || (profile.name ? profile.name.split(' ')[0] : null);
     const greeting = alias ? `¡Hola, ${esc(alias)}!` : '¡Hola!';
@@ -1343,8 +1349,13 @@ window.IIAPP = window.IIAPP || {};
   // ========== FLUJO DE ACTIVACIÓN CON CÓDIGO ==========
 
   async function sha256(str) {
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    // crypto.subtle solo funciona en HTTPS/localhost; fallback seguro en HTTP local
+    if (window.crypto && window.crypto.subtle) {
+      const buf = await window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+    // Sin crypto.subtle: código nunca válido (impide activación en HTTP no seguro)
+    return 'http-no-secure-context';
   }
 
   async function validateCode(code, planId) {

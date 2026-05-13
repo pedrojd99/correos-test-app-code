@@ -3,6 +3,12 @@
    Estilos y animaciones del personaje SVG clay-style
    ============================================================ */
 
+/* ── Desactiva filtros SVG pesados en móvil (evita crash Chrome Android) */
+@media (max-width: 768px) {
+  .cartito-char * { filter: none !important; }
+  #cartito { filter: drop-shadow(0 3px 5px rgba(0,0,0,.2)); }
+}
+
 /* ── Animaciones ─────────────────────────────────────────────── */
 @keyframes cartito-bob   { 0%,100%{ transform:translateY(0) }       50%{ transform:translateY(-7px) } }
 @keyframes cartito-jump  { 0%,100%{ transform:translateY(0) rotate(0) }

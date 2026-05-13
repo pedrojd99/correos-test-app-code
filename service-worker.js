@@ -1,12 +1,13 @@
 // Service Worker básico para offline-first
 // Solo se activa cuando la app se sirve por http(s) — no funciona desde file://
 
-const CACHE_NAME = 'correostest-v3';
+const CACHE_NAME = 'correostest-v4';
 const URLS_TO_CACHE = [
   './',
   './index.html',
   './manifest.json',
   './css/styles.css',
+  './css/cartito.css',
   './data/temario.js',
   './data/temario_content.js',
   './data/questions.js',
