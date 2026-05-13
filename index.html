@@ -114,45 +114,37 @@
     .tema-content th { background: #003366 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 
-  /* ── CARTITO ───────────────────────────────────────────────── */
-  @keyframes cartito-bob  {0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)}}
-  @keyframes cartito-jump {0%,100%{transform:translateY(0) rotate(0)} 30%{transform:translateY(-18px) rotate(-6deg)} 70%{transform:translateY(-10px) rotate(5deg)}}
-  @keyframes cartito-shake{0%,100%{transform:rotate(0)} 25%{transform:rotate(-8deg)} 75%{transform:rotate(8deg)}}
-  @keyframes arm-wave     {0%,100%{transform:rotate(10deg)} 50%{transform:rotate(55deg)}}
-  @keyframes bubble-pop   {0%{transform:scale(.6) translateY(8px);opacity:0} 100%{transform:scale(1) translateY(0);opacity:1}}
-  @keyframes blink        {0%,88%,100%{transform:scaleY(1)} 92%{transform:scaleY(.08)}}
+  /* ── CARTITO SVG ────────────────────────────────────────────── */
+  @keyframes cartito-bob  {0%,100%{transform:translateY(0)}   50%{transform:translateY(-7px)}}
+  @keyframes cartito-jump {0%,100%{transform:translateY(0) rotate(0)} 25%{transform:translateY(-20px) rotate(-7deg)} 65%{transform:translateY(-10px) rotate(5deg)}}
+  @keyframes cartito-shake{0%,100%{transform:rotate(0)}  20%{transform:rotate(-9deg)}  60%{transform:rotate(9deg)}}
+  @keyframes arm-wave-svg {0%,100%{transform:rotate(0deg)} 50%{transform:rotate(-55deg)}}
+  @keyframes bubble-pop   {0%{transform:scale(.55) translateY(10px);opacity:0} 100%{transform:scale(1) translateY(0);opacity:1}}
+  @keyframes lid-blink    {0%,85%,100%{transform:scaleY(0)} 92%{transform:scaleY(1)}}
 
-  #cartito{position:fixed;bottom:72px;right:12px;z-index:300;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;user-select:none}
+  #cartito{position:fixed;bottom:72px;right:12px;z-index:300;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;user-select:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.18))}
   @media(min-width:641px){#cartito{bottom:16px}}
-  .cartito-bubble{background:#fff;border:2.5px solid #003366;border-radius:14px;padding:9px 13px;max-width:180px;font-size:13px;font-weight:600;color:#0f172a;text-align:center;line-height:1.4;position:relative;box-shadow:0 6px 18px rgba(0,0,0,.15);animation:bubble-pop .35s cubic-bezier(.34,1.56,.64,1)}
+
+  .cartito-bubble{background:#fff;border:2.5px solid #003366;border-radius:14px;padding:9px 14px;max-width:182px;font-size:13px;font-weight:600;color:#0f172a;text-align:center;line-height:1.4;position:relative;box-shadow:0 6px 18px rgba(0,0,0,.16);animation:bubble-pop .38s cubic-bezier(.34,1.56,.64,1)}
   .cartito-bubble::after {content:'';position:absolute;bottom:-11px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top:10px solid #003366}
   .cartito-bubble::before{content:'';position:absolute;bottom:-8px; left:50%;transform:translateX(-50%);border:5px solid transparent;border-top:9px solid #fff;z-index:1}
-  .cartito-char{width:58px;position:relative;animation:cartito-bob 2.4s ease-in-out infinite}
-  .cartito-char.jump {animation:cartito-jump  .55s ease-in-out 2 !important}
-  .cartito-char.shake{animation:cartito-shake .4s  ease-in-out 3 !important}
-  .c-hat-top  {width:32px;height:18px;background:#003366;border-radius:6px 6px 0 0;margin:0 auto;position:relative}
-  .c-hat-badge{position:absolute;top:4px;left:50%;transform:translateX(-50%);background:#FFCD00;color:#003366;font-size:7px;font-weight:900;padding:1px 4px;border-radius:3px}
-  .c-hat-brim {width:46px;height:7px;background:#002244;border-radius:3px;margin:0 auto}
-  .c-head{width:40px;height:38px;background:#f5c08a;border-radius:50%;margin:-1px auto 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative;box-shadow:inset -2px -3px 0 rgba(0,0,0,.08)}
-  .c-cheek{position:absolute;width:10px;height:7px;background:#e8967a;border-radius:50%;opacity:.55;top:22px}
-  .c-cheek.l{left:3px}.c-cheek.r{right:3px}
-  .c-eyes{display:flex;gap:9px}
-  .c-eye{width:7px;height:7px;background:#1a1a2e;border-radius:50%;position:relative;animation:blink 4s ease-in-out infinite}
-  .c-eye::after{content:'';position:absolute;top:1px;right:1px;width:2px;height:2px;background:#fff;border-radius:50%}
-  .c-mouth{width:16px;height:7px;border-bottom:2.5px solid #cc7444;border-radius:0 0 50% 50%;transition:border-radius .3s,border .3s}
-  .cartito-char.shake .c-mouth{border-bottom:0;border-top:2.5px solid #cc7444;border-radius:50% 50% 0 0}
-  .c-body{width:38px;height:32px;background:#003366;border-radius:10px;margin:0 auto;position:relative;display:flex;align-items:center;justify-content:center}
-  .c-tie {width:6px;height:14px;background:#FFCD00;border-radius:3px;position:absolute;top:6px}
-  .c-arm {width:9px;height:22px;background:#003366;border-radius:5px;position:absolute;top:2px}
-  .c-arm.l{left:-8px;transform-origin:top center;transform:rotate(-8deg)}
-  .c-arm.r{right:-8px;transform-origin:top center;transform:rotate(8deg)}
-  .cartito-char.jump .c-arm.r{animation:arm-wave .25s ease-in-out 6 forwards}
-  .c-bag{width:18px;height:14px;background:#FFCD00;border-radius:4px;position:absolute;right:-18px;bottom:0}
-  .c-bag::before{content:'';position:absolute;top:-5px;left:3px;width:7px;height:6px;background:#FFCD00;border-radius:3px 3px 0 0}
-  .c-legs{display:flex;gap:5px;justify-content:center;margin-top:1px}
-  .c-leg {width:10px;height:17px;background:#1a3a5c;border-radius:5px 5px 4px 4px}
-  .c-shoes{display:flex;gap:3px;justify-content:center}
-  .c-shoe{width:14px;height:6px;background:#111;border-radius:4px 4px 3px 3px;margin:-1px auto 0}
+
+  .cartito-char{width:88px;display:block;animation:cartito-bob 2.5s ease-in-out infinite}
+  .cartito-char.jump {animation:cartito-jump  .6s  ease-in-out 2 !important}
+  .cartito-char.shake{animation:cartito-shake .45s ease-in-out 3 !important}
+
+  /* Parpadeo — eyelids sobre los ojos */
+  #ct-lid-l{transform-origin:38px 52px; animation:lid-blink 5s ease-in-out infinite;       transform:scaleY(0)}
+  #ct-lid-r{transform-origin:62px 52px; animation:lid-blink 5s ease-in-out infinite .07s;  transform:scaleY(0)}
+
+  /* Brazo derecho saluda cuando el char tiene .jump */
+  #ct-arm-r{transform-origin:74px 82px;transition:transform .2s}
+  .cartito-char.jump  #ct-arm-r{animation:arm-wave-svg .28s ease-in-out 6 forwards}
+
+  /* Boca triste cuando .shake */
+  #ct-mouth-happy{transition:opacity .25s} #ct-mouth-sad{transition:opacity .25s;opacity:0}
+  .cartito-char.shake #ct-mouth-happy{opacity:0}
+  .cartito-char.shake #ct-mouth-sad  {opacity:1}
   /* ── fin Cartito ─────────────────────────────────────────────── */
 </style>
 </head>
@@ -216,28 +208,153 @@
 <script src="data/explanations.js"></script>
 <script src="data/activation_hashes.js"></script>
 
-<!-- Cartito — mascota cartero animada -->
-<div id="cartito" onclick="IIAPP.Mascot && IIAPP.Mascot.tap()" title="¡Soy Cartito!">
+<!-- Cartito — mascota cartero SVG -->
+<div id="cartito" onclick="IIAPP.Mascot && IIAPP.Mascot.tap()" title="¡Toca a Cartito!">
   <div class="cartito-bubble" id="cartito-bubble" style="display:none">
     <p id="cartito-text">¡Hola! 👋</p>
   </div>
-  <div class="cartito-char" id="cartito-char">
-    <div class="c-hat-top"><span class="c-hat-badge">CT</span></div>
-    <div class="c-hat-brim"></div>
-    <div class="c-head">
-      <div class="c-cheek l"></div><div class="c-cheek r"></div>
-      <div class="c-eyes"><div class="c-eye"></div><div class="c-eye"></div></div>
-      <div class="c-mouth"></div>
-    </div>
-    <div class="c-body">
-      <div class="c-arm l"></div>
-      <div class="c-arm r"></div>
-      <div class="c-tie"></div>
-      <div class="c-bag"></div>
-    </div>
-    <div class="c-legs"><div class="c-leg"></div><div class="c-leg"></div></div>
-    <div class="c-shoes"><div class="c-shoe"></div><div class="c-shoe"></div></div>
-  </div>
+  <svg id="cartito-char" class="cartito-char" viewBox="0 0 100 148" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="g-skin" cx="38%" cy="30%" r="65%">
+        <stop offset="0%" stop-color="#fde3bb"/>
+        <stop offset="100%" stop-color="#e8a87c"/>
+      </radialGradient>
+      <radialGradient id="g-cheek" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#f0907a" stop-opacity=".65"/>
+        <stop offset="100%" stop-color="#f0907a" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="g-jacket" cx="40%" cy="20%" r="70%">
+        <stop offset="0%" stop-color="#1a4f8a"/>
+        <stop offset="100%" stop-color="#001f4d"/>
+      </radialGradient>
+      <radialGradient id="g-hat" cx="40%" cy="30%" r="65%">
+        <stop offset="0%" stop-color="#1a4f8a"/>
+        <stop offset="100%" stop-color="#001533"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Sombra suelo -->
+    <ellipse cx="50" cy="145" rx="21" ry="4" fill="rgba(0,0,0,.14)"/>
+
+    <!-- PIERNAS -->
+    <rect x="32" y="110" width="14" height="26" rx="7" fill="#1a3560"/>
+    <rect x="54" y="110" width="14" height="26" rx="7" fill="#1a3560"/>
+
+    <!-- ZAPATOS -->
+    <ellipse cx="39" cy="136" rx="11" ry="6" fill="#111827"/>
+    <ellipse cx="61" cy="136" rx="11" ry="6" fill="#111827"/>
+    <ellipse cx="37" cy="134" rx="4.5" ry="1.8" fill="rgba(255,255,255,.18)"/>
+    <ellipse cx="59" cy="134" rx="4.5" ry="1.8" fill="rgba(255,255,255,.18)"/>
+
+    <!-- BRAZO IZQUIERDO -->
+    <g transform="rotate(12,20,82)">
+      <rect x="11" y="80" width="16" height="30" rx="8" fill="url(#g-jacket)"/>
+      <!-- mano -->
+      <circle cx="19" cy="111" r="7.5" fill="url(#g-skin)"/>
+      <ellipse cx="13.5" cy="108" rx="4.5" ry="3.5" fill="#fde3bb" transform="rotate(-25,13.5,108)"/>
+    </g>
+
+    <!-- BRAZO DERECHO (saluda) -->
+    <g id="ct-arm-r">
+      <g transform="rotate(-12,80,82)">
+        <rect x="73" y="80" width="16" height="30" rx="8" fill="url(#g-jacket)"/>
+        <circle cx="81" cy="111" r="7.5" fill="url(#g-skin)"/>
+        <ellipse cx="86.5" cy="108" rx="4.5" ry="3.5" fill="#fde3bb" transform="rotate(25,86.5,108)"/>
+      </g>
+    </g>
+
+    <!-- CUERPO / CHAQUETA -->
+    <rect x="26" y="78" width="48" height="38" rx="13" fill="url(#g-jacket)"/>
+    <!-- camisa -->
+    <rect x="43" y="79" width="14" height="37" rx="5" fill="#f0f4ff"/>
+    <!-- corbata -->
+    <polygon points="50,81 46,93 50,104 54,93" fill="#FFCD00"/>
+    <polygon points="47,103 50,108 53,103" fill="#e6b800"/>
+    <!-- solapas chaqueta -->
+    <path d="M43,79 C38,84 36,94 38,102" stroke="rgba(255,255,255,.12)" stroke-width="1.2" fill="none"/>
+    <path d="M57,79 C62,84 64,94 62,102" stroke="rgba(255,255,255,.12)" stroke-width="1.2" fill="none"/>
+    <!-- botones -->
+    <circle cx="50" cy="90" r="2.2" fill="#FFCD00"/>
+    <circle cx="50" cy="98" r="2.2" fill="#FFCD00"/>
+
+    <!-- BOLSA DE CORREOS -->
+    <g transform="translate(72,88)">
+      <!-- correa -->
+      <path d="M2,-2 Q-3,-10 0,-16" stroke="#cc9900" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <!-- cuerpo -->
+      <rect x="0" y="0" width="24" height="22" rx="6" fill="#FFCD00"/>
+      <!-- sombra -->
+      <rect x="0" y="0" width="24" height="22" rx="6" fill="url(#g-cheek)" opacity=".3"/>
+      <!-- solapa -->
+      <path d="M0,11 Q12,7 24,11 L24,0 Q12,-3 0,0 Z" fill="#e6b800"/>
+      <!-- cierre -->
+      <circle cx="12" cy="5.5" r="3.5" fill="#cc8800"/>
+      <circle cx="12" cy="5.5" r="2"   fill="#aa7000"/>
+      <!-- sobre -->
+      <rect x="4" y="13" width="16" height="10" rx="1.5" fill="white" opacity=".92"/>
+      <path d="M4,13 L12,19 L20,13" stroke="#c9d4e0" stroke-width="1.2" fill="none"/>
+      <line x1="6" y1="16" x2="10" y2="16" stroke="#c9d4e0" stroke-width=".8"/>
+    </g>
+
+    <!-- CUELLO -->
+    <rect x="43" y="72" width="14" height="10" rx="5" fill="url(#g-skin)"/>
+
+    <!-- OREJAS -->
+    <circle cx="22" cy="52" r="8"   fill="url(#g-skin)"/>
+    <circle cx="78" cy="52" r="8"   fill="url(#g-skin)"/>
+    <circle cx="22" cy="52" r="4.5" fill="#e8967a" opacity=".6"/>
+    <circle cx="78" cy="52" r="4.5" fill="#e8967a" opacity=".6"/>
+
+    <!-- CABEZA -->
+    <circle cx="50" cy="50" r="28" fill="url(#g-skin)"/>
+    <!-- brillo sutil en la frente -->
+    <ellipse cx="44" cy="36" rx="10" ry="6" fill="rgba(255,255,255,.18)" transform="rotate(-20,44,36)"/>
+
+    <!-- GORRA -->
+    <rect x="22" y="26" width="56" height="26" rx="9" fill="url(#g-hat)"/>
+    <!-- visera -->
+    <rect x="13" y="42" width="74" height="10" rx="5" fill="#001533"/>
+    <!-- borde inferior visera -->
+    <rect x="13" y="49" width="74" height="3"  rx="1.5" fill="#FFCD00"/>
+    <!-- franja lateral -->
+    <rect x="22" y="26" width="56" height="5"  rx="4" fill="rgba(255,255,255,.08)"/>
+    <!-- placa "CT" -->
+    <rect x="34" y="30" width="32" height="16" rx="5" fill="#FFCD00"/>
+    <text x="50" y="42" text-anchor="middle" font-family="Arial Black,Arial,sans-serif"
+          font-size="10.5" font-weight="900" fill="#003366">CT</text>
+
+    <!-- CEJAS -->
+    <path d="M33,37 Q38,34 43,37" stroke="#7a4f28" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M57,37 Q62,34 67,37" stroke="#7a4f28" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+    <!-- OJO IZQUIERDO -->
+    <ellipse cx="38" cy="48" rx="7" ry="7.5" fill="white"/>
+    <circle  cx="38" cy="49" r="5.5" fill="#2a1a0e"/>
+    <circle  cx="38" cy="49" r="3"   fill="#4e2e10"/>
+    <circle  cx="39.8" cy="47" r="2" fill="white"/>
+    <ellipse cx="38" cy="48" rx="7.5" ry="7.5" id="ct-lid-l" fill="url(#g-skin)" style="transform:scaleY(0)"/>
+
+    <!-- OJO DERECHO -->
+    <ellipse cx="62" cy="48" rx="7" ry="7.5" fill="white"/>
+    <circle  cx="62" cy="49" r="5.5" fill="#2a1a0e"/>
+    <circle  cx="62" cy="49" r="3"   fill="#4e2e10"/>
+    <circle  cx="63.8" cy="47" r="2" fill="white"/>
+    <ellipse cx="62" cy="48" rx="7.5" ry="7.5" id="ct-lid-r" fill="url(#g-skin)" style="transform:scaleY(0)"/>
+
+    <!-- MEJILLAS -->
+    <ellipse cx="30" cy="57" rx="8.5" ry="6" fill="url(#g-cheek)"/>
+    <ellipse cx="70" cy="57" rx="8.5" ry="6" fill="url(#g-cheek)"/>
+
+    <!-- NARIZ -->
+    <circle cx="50" cy="54" r="2.8" fill="#d4956a"/>
+
+    <!-- BOCA SONRISA -->
+    <path id="ct-mouth-happy" d="M41,61 Q50,69 59,61" stroke="#8b4513" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    <!-- Dientes -->
+    <path d="M43,62 Q50,67 57,62" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".55"/>
+    <!-- BOCA TRISTE (oculta por defecto) -->
+    <path id="ct-mouth-sad" d="M41,66 Q50,60 59,66" stroke="#8b4513" stroke-width="2.8" fill="none" stroke-linecap="round" opacity="0"/>
+  </svg>
 </div>
 
 <!-- Lógica -->
