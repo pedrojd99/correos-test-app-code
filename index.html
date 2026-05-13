@@ -98,20 +98,29 @@
   .ap-btn { background:rgba(255,255,255,0.15); border:0; color:#fff; border-radius:6px; width:34px; height:34px; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
   .ap-btn:hover { background:rgba(255,255,255,0.25); }
 
-  /* Impresión de ficha de temario */
+  /* Impresión de ficha de temario (botón "Imprimir tema") */
   @media print {
-    .no-print, .app-header, nav, .temario-nav { display: none !important; }
+    @page { size: A4; margin: 22mm 18mm 20mm 20mm; }
+    .no-print, .app-header, nav, .temario-nav, #cartito { display: none !important; }
     .screen { display: block !important; }
     .screen:not(#screen-temario) { display: none !important; }
-    body { background: white; font-size: 12px; }
+    body { background: white; font-size: 11px; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .container { max-width: 100%; padding: 0; }
-    .tema-content { border: none; padding: 0; box-shadow: none; font-size: 12px; line-height: 1.5; }
-    .tema-content h2 { font-size: 15px; border-bottom: 2px solid #003366; padding-bottom: 6px; margin-bottom: 12px; }
-    .tema-content h3 { font-size: 13px; margin: 14px 0 6px; }
-    .tema-content h4 { font-size: 12px; margin: 10px 0 4px; }
-    .tema-content em { background: #fffde7; border: 1px solid #fbc02d; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .tema-content table { font-size: 11px; }
-    .tema-content th { background: #003366 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    /* Cabecera fija al imprimir tema individual */
+    .page-head-row::after {
+      content: 'CorreosTest 2026  ·  Preparación Oposición Correos · Grupo IV';
+      display: block; font-size: 7pt; color: #94a3b8;
+      border-top: 0.5pt solid #e2e8f0; margin-top: 8pt; padding-top: 4pt;
+    }
+    .tema-content { border: none; padding: 0; box-shadow: none; font-size: 10.5pt; line-height: 1.6; }
+    .tema-content h2 { font-size: 14pt; color: #003366; border-bottom: 1.5pt solid #003366; padding-bottom: 5px; margin-bottom: 10px; }
+    .tema-content h3 { font-size: 12pt; color: #003366; margin: 14px 0 5px; }
+    .tema-content h4 { font-size: 10.5pt; font-weight: 700; margin: 10px 0 4px; }
+    .tema-content ul li { margin-bottom: 3pt; }
+    .tema-content em { background: #FFF9C4 !important; border-left: 3pt solid #FFCD00; padding: 7pt 10pt; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .tema-content table { font-size: 9pt; }
+    .tema-content th { background: #003366 !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .tema-content tr:nth-child(even) td { background: #f8fafc !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 
   /* ── CARTITO — Perro Cartero SVG ───────────────────────────── */

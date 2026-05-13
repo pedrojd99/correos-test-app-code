@@ -1492,7 +1492,17 @@ window.IIAPP = window.IIAPP || {};
       </div>
     `;
 
-    _openPrintWindow('Temario Correos 2026 — CorreosTest', portada + temas);
+    const runningElements = `
+      <div class="ph">
+        <span>CorreosTest 2026</span>
+        <span>Preparación Oposición Correos &middot; Grupo IV</span>
+      </div>
+      <div class="pf">
+        <span>Solo para uso personal del opositor</span>
+        <span>correostest.es</span>
+      </div>`;
+
+    _openPrintWindow('Temario Correos 2026 — CorreosTest', runningElements + portada + temas);
   }
 
   function _openPrintWindow(title, htmlBody) {
@@ -1507,20 +1517,48 @@ window.IIAPP = window.IIAPP || {};
         /* ── PÁGINA ─────────────────────────────────────────────────── */
         @page {
           size: A4;
-          margin: 28mm 20mm 26mm 22mm;
+          margin: 24mm 18mm 22mm 20mm;
           -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
         }
-        @page { /* encabezado y pie en todas las páginas excepto portada */
-          @top-left   { content: "CorreosTest 2026"; font-family:'Inter',sans-serif; font-size:8pt; color:#94a3b8; padding-bottom:3mm; border-bottom:0.5pt solid #e2e8f0; }
-          @top-right  { content: "Preparación Oposición Correos · Grupo IV"; font-family:'Inter',sans-serif; font-size:8pt; color:#94a3b8; padding-bottom:3mm; border-bottom:0.5pt solid #e2e8f0; }
-          @bottom-center { content: "— " counter(page) " —"; font-family:'Inter',sans-serif; font-size:8pt; color:#94a3b8; padding-top:3mm; border-top:0.5pt solid #e2e8f0; }
-        }
-        @page :first { @top-left{content:""} @top-right{content:""} @bottom-center{content:""} }
 
         /* ── BASE ───────────────────────────────────────────────────── */
-        *  { box-sizing:border-box; }
-        body { font-family:'Inter',system-ui,sans-serif; font-size:10.5pt; color:#1e293b; line-height:1.65; margin:0; padding:0; background:#fff; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+        * { box-sizing: border-box; }
+        body {
+          font-family: 'Inter', system-ui, sans-serif;
+          font-size: 10.5pt; color: #1e293b; line-height: 1.65;
+          margin: 0;
+          /* Espacio para cabecera y pie fijos */
+          padding-top: 12mm;
+          padding-bottom: 11mm;
+          background: #fff;
+          -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        }
+
+        /* ── CABECERA FIJA (se repite en cada página en Chrome) ─────── */
+        .ph {
+          position: fixed; top: 0; left: 0; right: 0; height: 11mm;
+          display: flex; justify-content: space-between; align-items: flex-end;
+          padding-bottom: 2.5mm;
+          font-size: 7.5pt; color: #94a3b8;
+          border-bottom: 0.5pt solid #e2e8f0;
+          background: white; z-index: 99;
+          -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        }
+
+        /* ── PIE FIJO ───────────────────────────────────────────────── */
+        .pf {
+          position: fixed; bottom: 0; left: 0; right: 0; height: 10mm;
+          display: flex; justify-content: space-between; align-items: flex-start;
+          padding-top: 2.5mm;
+          font-size: 7.5pt; color: #94a3b8;
+          border-top: 0.5pt solid #e2e8f0;
+          background: white; z-index: 99;
+          -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        }
+
+        /* Portada: sin padding extra, ocupa el espacio completo */
+        .pdf-cover { padding-top: 0; }
         p  { margin:0 0 10pt; text-align:justify; }
         strong { font-weight:700; }
         .page-break { page-break-after:always; break-after:page; }
