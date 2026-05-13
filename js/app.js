@@ -143,8 +143,8 @@ window.IIAPP = window.IIAPP || {};
         <!-- Barra de XP -->
         <div class="dl-xp-bar-wrap">
           <div class="dl-xp-info">
-            <span>${level.xp} XP</span>
-            ${level.nextXP ? `<span class="text-muted" style="font-size:12px">Siguiente nivel: ${level.nextXP} XP</span>` : '<span style="color:#FFCD00;font-weight:700">¡Nivel máximo!</span>'}
+            <span>${level.xp} puntos</span>
+            ${level.nextXP ? `<span class="text-muted" style="font-size:12px">Siguiente nivel: ${level.nextXP} puntos</span>` : '<span style="color:#FFCD00;font-weight:700">¡Nivel máximo!</span>'}
           </div>
           <div class="dl-xp-track">
             <div class="dl-xp-fill" style="width:${level.progress}%;background:${level.color}"></div>
@@ -725,7 +725,7 @@ window.IIAPP = window.IIAPP || {};
             ${session.unansweredCount ? `<span class="muted">○ ${session.unansweredCount} sin contestar</span>` : ''}
             ${session.penalty ? '<span class="muted small">con penalización −1/3</span>' : ''}
           </div>
-          <div class="xp-gained">+${sessionXP} XP · ${sessionLevel.emoji} ${sessionLevel.name}</div>
+          <div class="xp-gained">+${sessionXP} puntos · ${sessionLevel.emoji} ${sessionLevel.name}</div>
         </div>
 
         ${prediction.probability != null ? `
@@ -996,7 +996,7 @@ window.IIAPP = window.IIAPP || {};
         'Simulacro adaptativo: más preguntas en tus temas flojos',
         'Repaso espaciado SRS — memoriza sin esfuerzo',
         'Predicción de aprobado por puesto (Reparto, Clasificación…)',
-        'Estadísticas completas, historial y XP ilimitado',
+        'Estadísticas completas e historial ilimitado',
         'Funciona sin conexión · Instálala en tu móvil',
       ],
     },
@@ -1856,7 +1856,7 @@ window.IIAPP = window.IIAPP || {};
         const msg = document.createElement('div');
         const ok = letter === correct;
         msg.className = ok ? 'qdq-result qdq-result-ok' : 'qdq-result qdq-result-err';
-        msg.textContent = ok ? '🎉 ¡Correcto! +10 XP' : `😅 Era la ${correct} — ¡Para el siguiente!`;
+        msg.textContent = ok ? '🎉 ¡Correcto! +10 puntos' : `😅 Era la ${correct} — ¡Para el siguiente!`;
         card.appendChild(msg);
         if (ok) launchConfetti(card);
       }
