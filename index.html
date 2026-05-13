@@ -146,32 +146,32 @@
   .cartito-bubble::after {content:'';position:absolute;bottom:-11px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top:10px solid #003366}
   .cartito-bubble::before{content:'';position:absolute;bottom:-8px; left:50%;transform:translateX(-50%);border:5px solid transparent;border-top:9px solid #fff;z-index:1}
 
-  .cartito-char{width:92px;display:block;animation:cartito-bob 2.5s ease-in-out infinite}
+  .cartito-char{width:100px;display:block;animation:cartito-bob 2.5s ease-in-out infinite}
   .cartito-char.jump {animation:cartito-jump  .65s ease-in-out 2 !important}
   .cartito-char.shake{animation:cartito-shake .45s ease-in-out 3 !important}
 
-  /* Parpadeo */
-  #ct-lid-l{transform-origin:37px 49px;transform:scaleY(0);animation:lid-blink 5s ease-in-out infinite}
-  #ct-lid-r{transform-origin:63px 49px;transform:scaleY(0);animation:lid-blink 5s ease-in-out infinite .08s}
+  /* Parpadeo — origin ajustado al nuevo viewBox */
+  #ct-lid-l{transform-origin:44px 60px;transform:scaleY(0);animation:lid-blink 5s ease-in-out infinite}
+  #ct-lid-r{transform-origin:76px 60px;transform:scaleY(0);animation:lid-blink 5s ease-in-out infinite .09s}
 
-  /* Cola que menea al saltar */
-  #ct-tail{transform-origin:74px 98px}
-  .cartito-char.jump #ct-tail{animation:tail-wag .2s ease-in-out 10 forwards}
+  /* Cola */
+  #ct-tail{transform-origin:85px 112px}
+  .cartito-char.jump #ct-tail{animation:tail-wag .22s ease-in-out 10 forwards}
 
-  /* Orejas que rebotan al saltar */
-  #ct-ear-l{transform-origin:28px 42px}
-  #ct-ear-r{transform-origin:72px 42px}
+  /* Orejas */
+  #ct-ear-l{transform-origin:31px 44px}
+  #ct-ear-r{transform-origin:89px 44px}
   .cartito-char.jump #ct-ear-l,.cartito-char.jump #ct-ear-r{animation:ear-bounce .3s ease-in-out 5 forwards}
 
-  /* Brazo derecho saluda */
-  #ct-arm-r{transform-origin:76px 84px}
+  /* Brazo derecho */
+  #ct-arm-r{transform-origin:98px 96px}
   .cartito-char.jump #ct-arm-r{animation:arm-wave-svg .28s ease-in-out 6 forwards}
 
-  /* Lengua al saltar */
-  #ct-tongue{transform-origin:50px 62px;transform:scaleY(0);opacity:0}
+  /* Lengua */
+  #ct-tongue{transform-origin:60px 75px;transform:scaleY(0);opacity:0}
   .cartito-char.jump #ct-tongue{animation:tongue-out .5s ease-in-out 3 forwards}
 
-  /* Boca triste / cejas tristes al shake */
+  /* Expresiones */
   #ct-mouth-happy,#ct-brow-l,#ct-brow-r{transition:opacity .25s}
   #ct-mouth-sad,#ct-brow-sad-l,#ct-brow-sad-r{opacity:0;transition:opacity .25s}
   .cartito-char.shake #ct-mouth-happy{opacity:0}
@@ -241,34 +241,225 @@
 <script src="data/explanations.js"></script>
 <script src="data/activation_hashes.js"></script>
 
-<!-- Cartito — mascota cartero SVG -->
+<!--
+  CARTITO — Integración Lottie (cuando tengas el archivo):
+  1. Descarga un JSON de lottiefiles.com (perro/mascota de tu elección)
+  2. Guárdalo como: audio/cartito-idle.json
+  3. Añade estos scripts justo antes del cierre </body>:
+     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  4. Llama: IIAPP.Mascot.loadLottie('audio/cartito-idle.json')
+  Los estados (jump, shake) se controlan con loadLottie('audio/cartito-happy.json') etc.
+-->
 <div id="cartito" onclick="IIAPP.Mascot && IIAPP.Mascot.tap()" title="¡Toca a Cartito!">
   <div class="cartito-bubble" id="cartito-bubble" style="display:none">
     <p id="cartito-text">¡Hola! 👋</p>
   </div>
-  <svg id="cartito-char" class="cartito-char" viewBox="0 0 100 148" xmlns="http://www.w3.org/2000/svg">
+  <!-- SVG Clay-style — outline grueso + gradientes volumétricos + filtros sombra -->
+  <svg id="cartito-char" class="cartito-char" viewBox="0 0 120 170" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <radialGradient id="g-fur" cx="38%" cy="30%" r="65%">
-        <stop offset="0%" stop-color="#f0b97a"/>
-        <stop offset="100%" stop-color="#c87941"/>
+      <!-- Gradientes clay — 3 paradas para efecto volumétrico -->
+      <radialGradient id="g-fur" cx="35%" cy="25%" r="65%">
+        <stop offset="0%"   stop-color="#ffd080"/>
+        <stop offset="55%"  stop-color="#f09040"/>
+        <stop offset="100%" stop-color="#b85c18"/>
       </radialGradient>
-      <radialGradient id="g-fur-dark" cx="50%" cy="30%" r="60%">
-        <stop offset="0%" stop-color="#c07035"/>
-        <stop offset="100%" stop-color="#8b4e1e"/>
+      <radialGradient id="g-fur-ear" cx="40%" cy="30%" r="70%">
+        <stop offset="0%"   stop-color="#e07830"/>
+        <stop offset="100%" stop-color="#8b3e0e"/>
       </radialGradient>
-      <radialGradient id="g-muzzle" cx="50%" cy="40%" r="60%">
-        <stop offset="0%" stop-color="#fce4c0"/>
-        <stop offset="100%" stop-color="#e8b888"/>
+      <radialGradient id="g-muzzle" cx="45%" cy="35%" r="65%">
+        <stop offset="0%"   stop-color="#fff2d8"/>
+        <stop offset="70%"  stop-color="#f8d8a0"/>
+        <stop offset="100%" stop-color="#e4b478"/>
+      </radialGradient>
+      <radialGradient id="g-jacket" cx="30%" cy="20%" r="75%">
+        <stop offset="0%"   stop-color="#3a70c0"/>
+        <stop offset="60%"  stop-color="#0040a0"/>
+        <stop offset="100%" stop-color="#001860"/>
+      </radialGradient>
+      <radialGradient id="g-hat" cx="35%" cy="25%" r="70%">
+        <stop offset="0%"   stop-color="#2a5aa0"/>
+        <stop offset="100%" stop-color="#001040"/>
+      </radialGradient>
+      <radialGradient id="g-bag" cx="30%" cy="20%" r="70%">
+        <stop offset="0%"   stop-color="#ffe040"/>
+        <stop offset="60%"  stop-color="#FFCD00"/>
+        <stop offset="100%" stop-color="#c89400"/>
+      </radialGradient>
+      <radialGradient id="g-eye-iris" cx="35%" cy="30%" r="60%">
+        <stop offset="0%"   stop-color="#8b5a28"/>
+        <stop offset="100%" stop-color="#3a1a08"/>
       </radialGradient>
       <radialGradient id="g-cheek" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#e07858" stop-opacity=".6"/>
-        <stop offset="100%" stop-color="#e07858" stop-opacity="0"/>
+        <stop offset="0%"   stop-color="#f07858" stop-opacity=".7"/>
+        <stop offset="100%" stop-color="#f07858" stop-opacity="0"/>
       </radialGradient>
-      <radialGradient id="g-jacket" cx="35%" cy="20%" r="70%">
-        <stop offset="0%" stop-color="#1a4f8a"/>
-        <stop offset="100%" stop-color="#001f4d"/>
-      </radialGradient>
+      <!-- Filtro sombra suave (clay look) -->
+      <filter id="f-drop" x="-15%" y="-15%" width="130%" height="130%">
+        <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="#4a2000" flood-opacity=".22"/>
+      </filter>
+      <filter id="f-drop-sm" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#4a2000" flood-opacity=".18"/>
+      </filter>
     </defs>
+
+    <!-- ═══ CONTORNO EXTERIOR global (clay outline) ═══ -->
+    <!-- Sombra suelo -->
+    <ellipse cx="60" cy="167" rx="28" ry="5" fill="rgba(0,0,0,.18)"/>
+
+    <!-- ══ COLA ══ -->
+    <g id="ct-tail" filter="url(#f-drop-sm)">
+      <path d="M85,112 Q108,96 104,76 Q100,60 88,66 Q82,70 88,80 Q94,90 84,106 Z"
+            fill="url(#g-fur-ear)" stroke="#2c1000" stroke-width="2" stroke-linejoin="round"/>
+      <ellipse cx="100" cy="72" rx="7" ry="9" fill="#fff5e0" stroke="#e8c080" stroke-width="1.2"
+               transform="rotate(-25,100,72)"/>
+    </g>
+
+    <!-- ══ PIERNAS ══ -->
+    <rect x="36" y="128" width="18" height="28" rx="9" fill="#1a3070" stroke="#0a1840" stroke-width="2"/>
+    <rect x="66" y="128" width="18" height="28" rx="9" fill="#1a3070" stroke="#0a1840" stroke-width="2"/>
+    <!-- Patas / pies -->
+    <ellipse cx="45" cy="157" rx="13" ry="8" fill="url(#g-fur-ear)" stroke="#2c1000" stroke-width="2"/>
+    <ellipse cx="75" cy="157" rx="13" ry="8" fill="url(#g-fur-ear)" stroke="#2c1000" stroke-width="2"/>
+    <!-- Dedos (3 cada pata) -->
+    <circle cx="36" cy="159" r="4.5" fill="#9a4c18" stroke="#2c1000" stroke-width="1.5"/>
+    <circle cx="44" cy="162" r="4.5" fill="#9a4c18" stroke="#2c1000" stroke-width="1.5"/>
+    <circle cx="53" cy="160" r="4.5" fill="#9a4c18" stroke="#2c1000" stroke-width="1.5"/>
+    <circle cx="66" cy="160" r="4.5" fill="#9a4c18" stroke="#2c1000" stroke-width="1.5"/>
+    <circle cx="75" cy="162" r="4.5" fill="#9a4c18" stroke="#2c1000" stroke-width="1.5"/>
+    <circle cx="84" cy="159" r="4.5" fill="#9a4c18" stroke="#2c1000" stroke-width="1.5"/>
+
+    <!-- ══ BRAZO IZQUIERDO ══ -->
+    <g transform="rotate(16,22,96)" filter="url(#f-drop-sm)">
+      <rect x="12" y="92" width="20" height="34" rx="10" fill="url(#g-jacket)" stroke="#0a1840" stroke-width="2"/>
+      <ellipse cx="22" cy="127" rx="12" ry="9" fill="url(#g-fur)" stroke="#2c1000" stroke-width="2"/>
+      <circle cx="14" cy="129" r="3.8" fill="#c87030" stroke="#2c1000" stroke-width="1.2"/>
+      <circle cx="22" cy="132" r="3.8" fill="#c87030" stroke="#2c1000" stroke-width="1.2"/>
+      <circle cx="30" cy="129" r="3.8" fill="#c87030" stroke="#2c1000" stroke-width="1.2"/>
+    </g>
+
+    <!-- ══ BRAZO DERECHO (saluda) ══ -->
+    <g id="ct-arm-r" filter="url(#f-drop-sm)">
+      <g transform="rotate(-16,98,96)">
+        <rect x="88" y="92" width="20" height="34" rx="10" fill="url(#g-jacket)" stroke="#0a1840" stroke-width="2"/>
+        <ellipse cx="98" cy="127" rx="12" ry="9" fill="url(#g-fur)" stroke="#2c1000" stroke-width="2"/>
+        <circle cx="90" cy="129" r="3.8" fill="#c87030" stroke="#2c1000" stroke-width="1.2"/>
+        <circle cx="98" cy="132" r="3.8" fill="#c87030" stroke="#2c1000" stroke-width="1.2"/>
+        <circle cx="106" cy="129" r="3.8" fill="#c87030" stroke="#2c1000" stroke-width="1.2"/>
+      </g>
+    </g>
+
+    <!-- ══ CUERPO / UNIFORME ══ -->
+    <rect x="28" y="88" width="64" height="48" rx="18" fill="url(#g-jacket)" stroke="#0a1840" stroke-width="2.5" filter="url(#f-drop)"/>
+    <!-- Camisa interior -->
+    <rect x="50" y="89" width="20" height="47" rx="7" fill="#eef4ff" stroke="#c8d8f0" stroke-width="1"/>
+    <!-- Corbata -->
+    <polygon points="60,91 54.5,107 60,120 65.5,107" fill="url(#g-bag)" stroke="#aa8800" stroke-width="1.2"/>
+    <polygon points="56.5,119 60,126 63.5,119" fill="#cc9a00"/>
+    <!-- Botones -->
+    <circle cx="60" cy="104" r="3" fill="#FFCD00" stroke="#aa8800" stroke-width="1"/>
+    <circle cx="60" cy="114" r="3" fill="#FFCD00" stroke="#aa8800" stroke-width="1"/>
+
+    <!-- ══ BOLSA POSTAL ══ -->
+    <g transform="translate(85,96)" filter="url(#f-drop-sm)">
+      <!-- correa -->
+      <path d="M4,0 Q-5,-12 0,-22" stroke="#aa8000" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <!-- cuerpo bolsa -->
+      <rect x="0" y="0" width="28" height="26" rx="8" fill="url(#g-bag)" stroke="#aa8000" stroke-width="2"/>
+      <!-- solapa bolsa -->
+      <path d="M0,13 Q14,8 28,13 L28,0 Q14,-5 0,0 Z" fill="#e6b800" stroke="#aa8000" stroke-width="1.5"/>
+      <!-- cierre -->
+      <circle cx="14" cy="6.5" r="4.5" fill="#cc8800" stroke="#aa6600" stroke-width="1.2"/>
+      <circle cx="14" cy="6.5" r="2.5" fill="#886600"/>
+      <!-- carta -->
+      <rect x="4" y="15" width="20" height="12" rx="2.5" fill="white" stroke="#c0d0e0" stroke-width="1"/>
+      <path d="M4,15 L14,22 L24,15" stroke="#94a8b8" stroke-width="1.5" fill="none"/>
+    </g>
+
+    <!-- ══ COLLAR ══ -->
+    <rect x="46" y="85" width="28" height="10" rx="5" fill="#dd1a1a" stroke="#aa0000" stroke-width="1.5"/>
+    <rect x="56" y="87" width="8" height="8" rx="2.5" fill="#FFCD00" stroke="#aa8800" stroke-width="1"/>
+    <text x="60" y="93.5" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="5" font-weight="900" fill="#003366">CT</text>
+
+    <!-- ══ OREJAS CAÍDAS ══ -->
+    <g id="ct-ear-l" filter="url(#f-drop-sm)">
+      <path d="M31,44 Q12,54 16,80 Q20,92 34,88 Q42,86 40,74 Q38,62 32,52 Z"
+            fill="url(#g-fur-ear)" stroke="#2c1000" stroke-width="2.2" stroke-linejoin="round"/>
+      <path d="M33,50 Q18,60 22,76 Q24,84 32,82 Q38,80 37,72 Q36,62 32,52 Z"
+            fill="#e08060" opacity=".55"/>
+    </g>
+    <g id="ct-ear-r" filter="url(#f-drop-sm)">
+      <path d="M89,44 Q108,54 104,80 Q100,92 86,88 Q78,86 80,74 Q82,62 88,52 Z"
+            fill="url(#g-fur-ear)" stroke="#2c1000" stroke-width="2.2" stroke-linejoin="round"/>
+      <path d="M87,50 Q102,60 98,76 Q96,84 88,82 Q82,80 83,72 Q84,62 88,52 Z"
+            fill="#e08060" opacity=".55"/>
+    </g>
+
+    <!-- ══ CABEZA ══ -->
+    <circle cx="60" cy="60" r="34" fill="url(#g-fur)" stroke="#2c1000" stroke-width="2.5" filter="url(#f-drop)"/>
+    <!-- Brillo frente (clay highlight) -->
+    <ellipse cx="50" cy="40" rx="13" ry="7" fill="rgba(255,255,255,.3)" transform="rotate(-20,50,40)"/>
+
+    <!-- ══ GORRA POSTAL ══ -->
+    <rect x="26" y="32" width="68" height="28" rx="10" fill="url(#g-hat)" stroke="#0a1030" stroke-width="2.5" filter="url(#f-drop-sm)"/>
+    <!-- Visera -->
+    <rect x="16" y="51" width="88" height="11" rx="5.5" fill="#001030" stroke="#0a1030" stroke-width="1.5"/>
+    <!-- Franja dorada -->
+    <rect x="16" y="58" width="88" height="4" rx="2" fill="#FFCD00" stroke="#aa8800" stroke-width="1"/>
+    <!-- Badge CT -->
+    <rect x="40" y="35" width="40" height="18" rx="6" fill="url(#g-bag)" stroke="#aa8800" stroke-width="1.8"/>
+    <text x="60" y="48" text-anchor="middle" font-family="Arial Black,Arial,sans-serif"
+          font-size="13" font-weight="900" fill="#003366">CT</text>
+
+    <!-- ══ CEJAS ══ -->
+    <path id="ct-brow-l" d="M36,47 Q44,42 52,46" stroke="#2c1000" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path id="ct-brow-r" d="M68,46 Q76,42 84,47" stroke="#2c1000" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <!-- Cejas tristes -->
+    <path id="ct-brow-sad-l" d="M36,45 Q44,49 52,46" stroke="#2c1000" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0"/>
+    <path id="ct-brow-sad-r" d="M68,46 Q76,49 84,45" stroke="#2c1000" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0"/>
+
+    <!-- ══ OJO IZQUIERDO ══ -->
+    <ellipse cx="44" cy="60" rx="9.5" ry="10.5" fill="white" stroke="#2c1000" stroke-width="2"/>
+    <ellipse cx="44" cy="61" rx="7" ry="8" fill="url(#g-eye-iris)"/>
+    <circle  cx="44" cy="62" r="4.5" fill="#1a0a04"/>
+    <circle  cx="46.5" cy="58.5" r="3"   fill="white"/>
+    <circle  cx="42.5" cy="64"   r="1.2" fill="rgba(255,255,255,.5)"/>
+    <!-- Párpado -->
+    <ellipse cx="44" cy="60" rx="10" ry="10.5" id="ct-lid-l" fill="url(#g-fur)" style="transform:scaleY(0)" stroke="#2c1000" stroke-width="1.5"/>
+
+    <!-- ══ OJO DERECHO ══ -->
+    <ellipse cx="76" cy="60" rx="9.5" ry="10.5" fill="white" stroke="#2c1000" stroke-width="2"/>
+    <ellipse cx="76" cy="61" rx="7" ry="8" fill="url(#g-eye-iris)"/>
+    <circle  cx="76" cy="62" r="4.5" fill="#1a0a04"/>
+    <circle  cx="78.5" cy="58.5" r="3"   fill="white"/>
+    <circle  cx="74.5" cy="64"   r="1.2" fill="rgba(255,255,255,.5)"/>
+    <ellipse cx="76" cy="60" rx="10" ry="10.5" id="ct-lid-r" fill="url(#g-fur)" style="transform:scaleY(0)" stroke="#2c1000" stroke-width="1.5"/>
+
+    <!-- ══ MEJILLAS ══ -->
+    <ellipse cx="33" cy="70" rx="10" ry="7" fill="url(#g-cheek)"/>
+    <ellipse cx="87" cy="70" rx="10" ry="7" fill="url(#g-cheek)"/>
+
+    <!-- ══ HOCICO ══ -->
+    <ellipse cx="60" cy="75" rx="17" ry="13" fill="url(#g-muzzle)" stroke="#2c1000" stroke-width="2" filter="url(#f-drop-sm)"/>
+    <!-- Brillo hocico -->
+    <ellipse cx="55" cy="70" rx="5" ry="3" fill="rgba(255,255,255,.35)" transform="rotate(-15,55,70)"/>
+
+    <!-- ══ NARIZ ══ -->
+    <path d="M52,64 Q60,60 68,64 Q68,70 60,72 Q52,70 52,64 Z" fill="#1a0a04" stroke="#0a0500" stroke-width="1"/>
+    <ellipse cx="56" cy="65" rx="3" ry="1.8" fill="rgba(255,255,255,.5)"/>
+
+    <!-- ══ BOCA ══ -->
+    <path id="ct-mouth-happy" d="M49,77 Q60,86 71,77" stroke="#2c1000" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M51,78 Q60,84 69,78" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".5"/>
+    <path id="ct-mouth-sad" d="M49,83 Q60,75 71,83" stroke="#2c1000" stroke-width="3" fill="none" stroke-linecap="round" opacity="0"/>
+
+    <!-- ══ LENGUA ══ -->
+    <g id="ct-tongue" style="transform:scaleY(0);opacity:0">
+      <ellipse cx="60" cy="84" rx="7" ry="9" fill="#e84060" stroke="#c02040" stroke-width="1.5"/>
+      <ellipse cx="60" cy="90" rx="6.5" ry="5.5" fill="#c02040"/>
+      <line x1="60" y1="78" x2="60" y2="91" stroke="#aa1830" stroke-width="1.5" opacity=".6"/>
+    </g>
+  </svg>
 
     <!-- SOMBRA SUELO -->
     <ellipse cx="50" cy="146" rx="22" ry="4" fill="rgba(0,0,0,.13)"/>
