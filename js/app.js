@@ -545,10 +545,21 @@ window.IIAPP = window.IIAPP || {};
     const fb = $('#feedback');
     const originalLetter = q.options.find(o => o.letter === given)?.originalLetter || given;
 
-    // Obtener explicación: primero del propio objeto, si no del archivo explanations.js
+    // Explicación dinámica basada en la pregunta YA MEZCLADA
+    // (las letras cambian con el shuffle, no podemos usar las del archivo estático)
+    const correctOpt = q.options.find(o => o.letter === q.correct);
+    const correctOptText = correctOpt ? correctOpt.text : q.correct;
+
+    // Contexto adicional del archivo explanations.js — eliminamos la parte de la letra
+    // porque fue generada con el orden original del PDF, no con el orden mezclado
     const EXP = (window.CORREOS && window.CORREOS.EXPLANATIONS) || {};
     const expData = EXP[q.id] || {};
-    const explanationText = q.explanation || expData.explanation || '';
+    const staticExp = (q.explanation || expData.explanation || '');
+    // Quitar el prefijo "La respuesta correcta es la X) «...» —" si existe
+    const extraCtx = staticExp.replace(/^La respuesta correcta es la [A-D]\)\s*«[^»]*»\s*[—-]?\s*/i, '').trim();
+
+    const explanationText = `<strong>${q.correct}) ${esc(correctOptText)}</strong>${extraCtx ? ` — ${extraCtx}` : ''}`;
+
     const falloText = (q.iaFallo && q.iaFallo[originalLetter])
       || (expData.fallo && expData.fallo[originalLetter]) || '';
 
@@ -1556,6 +1567,65 @@ window.IIAPP = window.IIAPP || {};
     setTimeout(() => URL.revokeObjectURL(url), 60000);
   }
 
+  // ========== CARTITO — MASCOTA ==========
+
+  const Mascot = (() => {
+    let _timer = null;
+    let _tapCount = 0;
+
+    const phrases = {
+      greet:   ['¡Hola! Soy Cartito 👋', '¡Listo para repartir saber! ✉️', '¡A por esas preguntas! 🚀'],
+      correct: ['¡Eso es! ¡Lo sabías! 🎉', '¡Perfecto! ¡Crack! ⭐', '¡Bien hecho, tío! 💪', '¡Ahí está! 🔥'],
+      wrong:   ['¡Casi! No te rajes 😅', '¡Tranqui, próxima sí! 📬', 'Todos fallamos, sigue 💙', '¡Error de novato, igual que yo a veces! 😂'],
+      streak:  (n) => `🔥 ¡${n} días seguidos! ¡Imparable!`,
+      levelup: (name) => `¡Subiste a ${name}! 🏆 ¡Lo petas!`,
+      finish:  (score) => score >= 7 ? `¡${fmt(score,1)}/10! ¡Eres un fiera! 🎉` : score >= 5.5 ? `¡${fmt(score,1)}/10! ¡Aprobado! 🎊` : `${fmt(score,1)}/10 — ¡Sigue, que lo pillas! 💪`,
+      tap:     ['¡Para, que tengo correo que repartir! 😄', '¡Eh! ¡Eso hace cosquillas! 🤣', '¡Sigo aquí! No me olvides ✉️', '¡Mi bolsa está llena de preguntas para ti! 📬', '¡Vamos! ¡Tú puedes! 💪'],
+      idle:    ['¿Llevas rachas de estudio? ¡La constancia es clave! 🔑', '¡Recuerda hacer el simulacro esta semana! ⏱️', '¿Sabes cuántos intentos tiene la carta certificada? Solo 1 😉', '¡El temario también tiene audio! Pruébalo 🎧'],
+    };
+
+    function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+    function show(text, mood = 'happy', duration = 4000) {
+      const bubble = document.getElementById('cartito-bubble');
+      const textEl = document.getElementById('cartito-text');
+      const char   = document.getElementById('cartito-char');
+      if (!bubble || !textEl || !char) return;
+
+      textEl.textContent = text;
+      bubble.style.display = 'block';
+      // Recrear la burbuja para relanzar la animación
+      bubble.style.animation = 'none';
+      void bubble.offsetWidth;
+      bubble.style.animation = '';
+
+      char.classList.remove('jump', 'shake');
+      void char.offsetWidth;
+      if (mood === 'happy' || mood === 'levelup') char.classList.add('jump');
+      if (mood === 'wrong') char.classList.add('shake');
+
+      clearTimeout(_timer);
+      _timer = setTimeout(() => { bubble.style.display = 'none'; }, duration);
+    }
+
+    return {
+      show,
+      greet()   { show(pick(phrases.greet), 'happy', 5000); },
+      correct() { show(pick(phrases.correct), 'happy'); },
+      wrong()   { show(pick(phrases.wrong), 'wrong'); },
+      streak(n) { show(phrases.streak(n), 'happy', 5000); },
+      levelup(name) { show(phrases.levelup(name), 'levelup', 5000); },
+      finish(score) { show(phrases.finish(score), score >= 5.5 ? 'happy' : 'wrong', 5000); },
+      tap() {
+        _tapCount++;
+        show(phrases.tap[_tapCount % phrases.tap.length], 'happy', 3500);
+      },
+      idle() { show(pick(phrases.idle), 'happy', 6000); },
+    };
+  })();
+
+  window.IIAPP.Mascot = Mascot;
+
   // ========== EFECTOS VISUALES ==========
 
   function launchConfetti(anchor) {
@@ -2061,6 +2131,19 @@ window.IIAPP = window.IIAPP || {};
     } else {
       show('home');
     }
+
+    // Cartito aparece al arrancar tras un pequeño retraso
+    setTimeout(async () => {
+      const g2 = await Stats.global().catch(() => ({}));
+      if ((g2.currentStreak || 0) >= 3) {
+        Mascot.streak(g2.currentStreak);
+      } else {
+        Mascot.greet();
+      }
+    }, 1200);
+
+    // Mensajes idle de Cartito cada 3 minutos sin interacción
+    setInterval(() => { Mascot.idle(); }, 3 * 60 * 1000);
   }
 
   function showConsentBanner() {

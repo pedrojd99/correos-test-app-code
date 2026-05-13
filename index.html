@@ -113,6 +113,47 @@
     .tema-content table { font-size: 11px; }
     .tema-content th { background: #003366 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
+
+  /* ── CARTITO ───────────────────────────────────────────────── */
+  @keyframes cartito-bob  {0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)}}
+  @keyframes cartito-jump {0%,100%{transform:translateY(0) rotate(0)} 30%{transform:translateY(-18px) rotate(-6deg)} 70%{transform:translateY(-10px) rotate(5deg)}}
+  @keyframes cartito-shake{0%,100%{transform:rotate(0)} 25%{transform:rotate(-8deg)} 75%{transform:rotate(8deg)}}
+  @keyframes arm-wave     {0%,100%{transform:rotate(10deg)} 50%{transform:rotate(55deg)}}
+  @keyframes bubble-pop   {0%{transform:scale(.6) translateY(8px);opacity:0} 100%{transform:scale(1) translateY(0);opacity:1}}
+  @keyframes blink        {0%,88%,100%{transform:scaleY(1)} 92%{transform:scaleY(.08)}}
+
+  #cartito{position:fixed;bottom:72px;right:12px;z-index:300;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;user-select:none}
+  @media(min-width:641px){#cartito{bottom:16px}}
+  .cartito-bubble{background:#fff;border:2.5px solid #003366;border-radius:14px;padding:9px 13px;max-width:180px;font-size:13px;font-weight:600;color:#0f172a;text-align:center;line-height:1.4;position:relative;box-shadow:0 6px 18px rgba(0,0,0,.15);animation:bubble-pop .35s cubic-bezier(.34,1.56,.64,1)}
+  .cartito-bubble::after {content:'';position:absolute;bottom:-11px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top:10px solid #003366}
+  .cartito-bubble::before{content:'';position:absolute;bottom:-8px; left:50%;transform:translateX(-50%);border:5px solid transparent;border-top:9px solid #fff;z-index:1}
+  .cartito-char{width:58px;position:relative;animation:cartito-bob 2.4s ease-in-out infinite}
+  .cartito-char.jump {animation:cartito-jump  .55s ease-in-out 2 !important}
+  .cartito-char.shake{animation:cartito-shake .4s  ease-in-out 3 !important}
+  .c-hat-top  {width:32px;height:18px;background:#003366;border-radius:6px 6px 0 0;margin:0 auto;position:relative}
+  .c-hat-badge{position:absolute;top:4px;left:50%;transform:translateX(-50%);background:#FFCD00;color:#003366;font-size:7px;font-weight:900;padding:1px 4px;border-radius:3px}
+  .c-hat-brim {width:46px;height:7px;background:#002244;border-radius:3px;margin:0 auto}
+  .c-head{width:40px;height:38px;background:#f5c08a;border-radius:50%;margin:-1px auto 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative;box-shadow:inset -2px -3px 0 rgba(0,0,0,.08)}
+  .c-cheek{position:absolute;width:10px;height:7px;background:#e8967a;border-radius:50%;opacity:.55;top:22px}
+  .c-cheek.l{left:3px}.c-cheek.r{right:3px}
+  .c-eyes{display:flex;gap:9px}
+  .c-eye{width:7px;height:7px;background:#1a1a2e;border-radius:50%;position:relative;animation:blink 4s ease-in-out infinite}
+  .c-eye::after{content:'';position:absolute;top:1px;right:1px;width:2px;height:2px;background:#fff;border-radius:50%}
+  .c-mouth{width:16px;height:7px;border-bottom:2.5px solid #cc7444;border-radius:0 0 50% 50%;transition:border-radius .3s,border .3s}
+  .cartito-char.shake .c-mouth{border-bottom:0;border-top:2.5px solid #cc7444;border-radius:50% 50% 0 0}
+  .c-body{width:38px;height:32px;background:#003366;border-radius:10px;margin:0 auto;position:relative;display:flex;align-items:center;justify-content:center}
+  .c-tie {width:6px;height:14px;background:#FFCD00;border-radius:3px;position:absolute;top:6px}
+  .c-arm {width:9px;height:22px;background:#003366;border-radius:5px;position:absolute;top:2px}
+  .c-arm.l{left:-8px;transform-origin:top center;transform:rotate(-8deg)}
+  .c-arm.r{right:-8px;transform-origin:top center;transform:rotate(8deg)}
+  .cartito-char.jump .c-arm.r{animation:arm-wave .25s ease-in-out 6 forwards}
+  .c-bag{width:18px;height:14px;background:#FFCD00;border-radius:4px;position:absolute;right:-18px;bottom:0}
+  .c-bag::before{content:'';position:absolute;top:-5px;left:3px;width:7px;height:6px;background:#FFCD00;border-radius:3px 3px 0 0}
+  .c-legs{display:flex;gap:5px;justify-content:center;margin-top:1px}
+  .c-leg {width:10px;height:17px;background:#1a3a5c;border-radius:5px 5px 4px 4px}
+  .c-shoes{display:flex;gap:3px;justify-content:center}
+  .c-shoe{width:14px;height:6px;background:#111;border-radius:4px 4px 3px 3px;margin:-1px auto 0}
+  /* ── fin Cartito ─────────────────────────────────────────────── */
 </style>
 </head>
 <body>
@@ -174,6 +215,30 @@
 <script src="data/extra_questions.js"></script>
 <script src="data/explanations.js"></script>
 <script src="data/activation_hashes.js"></script>
+
+<!-- Cartito — mascota cartero animada -->
+<div id="cartito" onclick="IIAPP.Mascot && IIAPP.Mascot.tap()" title="¡Soy Cartito!">
+  <div class="cartito-bubble" id="cartito-bubble" style="display:none">
+    <p id="cartito-text">¡Hola! 👋</p>
+  </div>
+  <div class="cartito-char" id="cartito-char">
+    <div class="c-hat-top"><span class="c-hat-badge">CT</span></div>
+    <div class="c-hat-brim"></div>
+    <div class="c-head">
+      <div class="c-cheek l"></div><div class="c-cheek r"></div>
+      <div class="c-eyes"><div class="c-eye"></div><div class="c-eye"></div></div>
+      <div class="c-mouth"></div>
+    </div>
+    <div class="c-body">
+      <div class="c-arm l"></div>
+      <div class="c-arm r"></div>
+      <div class="c-tie"></div>
+      <div class="c-bag"></div>
+    </div>
+    <div class="c-legs"><div class="c-leg"></div><div class="c-leg"></div></div>
+    <div class="c-shoes"><div class="c-shoe"></div><div class="c-shoe"></div></div>
+  </div>
+</div>
 
 <!-- Lógica -->
 <script src="js/storage.js"></script>
