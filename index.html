@@ -15,6 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/cartito.css">
 <style>
   :root { --brand-primary: #003366; --brand-accent: #FFCD00; }
   .app-header { background: #003366 !important; color: #FFCD00 !important; }
@@ -128,57 +129,7 @@
     .tema-content tr:nth-child(even) td { background: #f8fafc !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 
-  /* ── CARTITO — Perro Cartero SVG ───────────────────────────── */
-  @keyframes cartito-bob  {0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)}}
-  @keyframes cartito-jump {0%,100%{transform:translateY(0) rotate(0)} 25%{transform:translateY(-22px) rotate(-6deg)} 65%{transform:translateY(-10px) rotate(4deg)}}
-  @keyframes cartito-shake{0%,100%{transform:rotate(0)} 20%{transform:rotate(-10deg)} 60%{transform:rotate(10deg)}}
-  @keyframes arm-wave-svg {0%,100%{transform:rotate(0deg)} 50%{transform:rotate(-58deg)}}
-  @keyframes tail-wag     {0%,100%{transform:rotate(0deg)} 50%{transform:rotate(28deg)}}
-  @keyframes ear-bounce   {0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)}}
-  @keyframes tongue-out   {0%,100%{transform:scaleY(0);opacity:0} 40%,60%{transform:scaleY(1);opacity:1}}
-  @keyframes bubble-pop   {0%{transform:scale(.55) translateY(10px);opacity:0} 100%{transform:scale(1) translateY(0);opacity:1}}
-  @keyframes lid-blink    {0%,85%,100%{transform:scaleY(0)} 92%{transform:scaleY(1)}}
-
-  #cartito{position:fixed;bottom:72px;right:12px;z-index:300;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;user-select:none;filter:drop-shadow(0 5px 10px rgba(0,0,0,.2))}
-  @media(min-width:641px){#cartito{bottom:16px}}
-
-  .cartito-bubble{background:#fff;border:2.5px solid #003366;border-radius:14px;padding:9px 14px;max-width:184px;font-size:13px;font-weight:600;color:#0f172a;text-align:center;line-height:1.4;position:relative;box-shadow:0 6px 18px rgba(0,0,0,.16);animation:bubble-pop .38s cubic-bezier(.34,1.56,.64,1)}
-  .cartito-bubble::after {content:'';position:absolute;bottom:-11px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top:10px solid #003366}
-  .cartito-bubble::before{content:'';position:absolute;bottom:-8px; left:50%;transform:translateX(-50%);border:5px solid transparent;border-top:9px solid #fff;z-index:1}
-
-  .cartito-char{width:100px;display:block;animation:cartito-bob 2.5s ease-in-out infinite}
-  .cartito-char.jump {animation:cartito-jump  .65s ease-in-out 2 !important}
-  .cartito-char.shake{animation:cartito-shake .45s ease-in-out 3 !important}
-
-  /* Parpadeo — origin ajustado al nuevo viewBox */
-  #ct-lid-l{transform-origin:44px 60px;transform:scaleY(0);animation:lid-blink 5s ease-in-out infinite}
-  #ct-lid-r{transform-origin:76px 60px;transform:scaleY(0);animation:lid-blink 5s ease-in-out infinite .09s}
-
-  /* Cola */
-  #ct-tail{transform-origin:85px 112px}
-  .cartito-char.jump #ct-tail{animation:tail-wag .22s ease-in-out 10 forwards}
-
-  /* Orejas */
-  #ct-ear-l{transform-origin:31px 44px}
-  #ct-ear-r{transform-origin:89px 44px}
-  .cartito-char.jump #ct-ear-l,.cartito-char.jump #ct-ear-r{animation:ear-bounce .3s ease-in-out 5 forwards}
-
-  /* Brazo derecho */
-  #ct-arm-r{transform-origin:98px 96px}
-  .cartito-char.jump #ct-arm-r{animation:arm-wave-svg .28s ease-in-out 6 forwards}
-
-  /* Lengua */
-  #ct-tongue{transform-origin:60px 75px;transform:scaleY(0);opacity:0}
-  .cartito-char.jump #ct-tongue{animation:tongue-out .5s ease-in-out 3 forwards}
-
-  /* Expresiones */
-  #ct-mouth-happy,#ct-brow-l,#ct-brow-r{transition:opacity .25s}
-  #ct-mouth-sad,#ct-brow-sad-l,#ct-brow-sad-r{opacity:0;transition:opacity .25s}
-  .cartito-char.shake #ct-mouth-happy{opacity:0}
-  .cartito-char.shake #ct-mouth-sad  {opacity:1}
-  .cartito-char.shake #ct-brow-l,.cartito-char.shake #ct-brow-r{opacity:0}
-  .cartito-char.shake #ct-brow-sad-l,.cartito-char.shake #ct-brow-sad-r{opacity:1}
-  /* ── fin Cartito ─────────────────────────────────────────────── */
+  /* Cartito → css/cartito.css */
 </style>
 </head>
 <body>
@@ -378,8 +329,9 @@
 
     <!-- ══ COLLAR ══ -->
     <rect x="46" y="85" width="28" height="10" rx="5" fill="#dd1a1a" stroke="#aa0000" stroke-width="1.5"/>
+    <!-- placa dorada sin texto (CT ya aparece en la gorra) -->
     <rect x="56" y="87" width="8" height="8" rx="2.5" fill="#FFCD00" stroke="#aa8800" stroke-width="1"/>
-    <text x="60" y="93.5" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="5" font-weight="900" fill="#003366">CT</text>
+    <circle cx="60" cy="91" r="2" fill="#cc8800"/>
 
     <!-- ══ OREJAS CAÍDAS ══ -->
     <g id="ct-ear-l" filter="url(#f-drop-sm)">
