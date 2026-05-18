@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de baremo de méritos — Oposición Correos</title>
+<meta name="description" content="Calcula tu puntuación en el baremo de méritos de la oposición a Correos. El factor decisivo para conseguir plaza.">
+<style>
+  :root {
+    --negro: #1a1a1a;
+    --gris-oscuro: #2d2d2d;
+    --gris-medio: #6b6b6b;
+    --gris-claro: #e6e9ef;
+    --crema: #fffbf5;
+    --amarillo: #ffcc00;
+    --amarillo-suave: #fffae0;
+    --azul: #003366;
+    --azul-suave: #e6eef7;
+    --verde: #15833f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--negro);
+    background: var(--crema);
+    line-height: 1.5;
+    padding: 20px;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 16px;
+    padding: 32px 40px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 8px 24px rgba(0,51,102,0.06);
+    border-top: 4px solid var(--amarillo);
+  }
+  .eyebrow {
+    display: inline-block;
+    background: var(--amarillo-suave);
+    color: var(--azul);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+    color: var(--azul);
+  }
+  .lead { color: var(--gris-medio); font-size: 15px; margin-bottom: 28px; }
+  .grupo {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--gris-claro);
+  }
+  .grupo:last-of-type { border-bottom: none; padding-bottom: 0; }
+  .grupo h4 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--azul);
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+  .item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .item label {
+    font-size: 14px;
+    color: var(--negro);
+    line-height: 1.4;
+  }
+  .item input[type="number"] {
+    grid-column: 1;
+    grid-row: 2;
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: 600;
+    border: 1px solid var(--gris-claro);
+    border-radius: 6px;
+    font-family: inherit;
+    color: var(--negro);
+    background: var(--crema);
+  }
+  .item input[type="number"]:focus {
+    outline: none;
+    border-color: var(--azul);
+  }
+  .item .puntos {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    font-size: 12px;
+    color: var(--gris-medio);
+    white-space: nowrap;
+    align-self: center;
+  }
+  .item.checkbox-item { grid-template-columns: 1fr; gap: 0; }
+  .item.checkbox-item label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 8px 0;
+  }
+  .item.checkbox-item label .puntos { margin-left: auto; }
+  .item.checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--azul);
+  }
+  .resultado {
+    margin-top: 24px;
+    padding: 20px 24px;
+    background: var(--crema);
+    border-radius: 12px;
+    border: 1px solid var(--gris-claro);
+  }
+  .res-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 14px;
+  }
+  .res-label { color: var(--gris-medio); }
+  .res-val {
+    font-weight: 700;
+    color: var(--negro);
+    font-variant-numeric: tabular-nums;
+  }
+  .res-row.total {
+    border-top: 2px solid var(--gris-claro);
+    margin-top: 8px;
+    padding-top: 14px;
+    font-size: 17px;
+  }
+  .res-row.total .res-label {
+    color: var(--negro);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+  }
+  .res-row.total .res-val {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--azul);
+    letter-spacing: -0.5px;
+  }
+  .info {
+    margin-top: 24px;
+    padding: 12px 14px;
+    border-left: 3px solid var(--amarillo);
+    background: var(--amarillo-suave);
+    font-size: 13px;
+    color: var(--gris-oscuro);
+    border-radius: 0 8px 8px 0;
+  }
+  .info-critico {
+    margin-bottom: 24px;
+    padding: 14px 16px;
+    background: var(--azul-suave);
+    border-left: 3px solid var(--azul);
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    color: var(--negro);
+  }
+  @media (max-width: 600px) {
+    body { padding: 12px; }
+    .container { padding: 24px 20px; }
+    .item { grid-template-columns: 1fr; }
+    .item .puntos { grid-column: 1; grid-row: auto; margin-bottom: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="eyebrow">Herramienta gratuita</div>
+  <h1>Calculadora de baremo de méritos — Correos</h1>
+  <p class="lead">Estima tu puntuación en la fase de concurso. En Correos no hay nota mínima de corte: lo que decide es la suma de la nota del test y el baremo. Para quien no tiene experiencia previa, el baremo es muchas veces la diferencia entre entrar y quedar fuera.</p>
+
+  <div class="info-critico">
+    💡 <strong>Lo que más puntúa:</strong> los servicios prestados en Correos como personal eventual o interino. Cada mes trabajado puede valer entre 0,30 y 0,50 puntos. Si has trabajado 2 años en Correos, son entre 7 y 12 puntos de salida sobre los aspirantes nuevos.
+  </div>
+
+  <div class="grupo">
+    <h4>Servicios prestados</h4>
+    <div class="item">
+      <label>Meses trabajados en Correos en la misma especialidad a la que opositas</label>
+      <input type="number" id="exp-misma" min="0" value="0">
+      <span class="puntos">×0,40 pts/mes (máx. 35 pts)</span>
+    </div>
+    <div class="item">
+      <label>Meses trabajados en Correos en otras especialidades</label>
+      <input type="number" id="exp-otras" min="0" value="0">
+      <span class="puntos">×0,20 pts/mes (máx. 18 pts)</span>
+    </div>
+    <div class="item">
+      <label>Meses trabajados en otras Administraciones Públicas (puesto similar)</label>
+      <input type="number" id="exp-otras-admon" min="0" value="0">
+      <span class="puntos">×0,07 pts/mes (máx. 6 pts)</span>
+    </div>
+  </div>
+
+  <div class="grupo">
+    <h4>Colectivos prioritarios</h4>
+    <div class="item checkbox-item">
+      <label><input type="checkbox" id="discapacidad"> Discapacidad reconocida ≥ 33% <span class="puntos">+3 pts</span></label>
+    </div>
+    <div class="item checkbox-item">
+      <label><input type="checkbox" id="mayor45"> Tengo 45 años o más <span class="puntos">+1 pt</span></label>
+    </div>
+    <div class="item checkbox-item">
+      <label><input type="checkbox" id="parolargo"> Desempleo de larga duración (≥12 meses inscrito) <span class="puntos">+1 pt</span></label>
+    </div>
+    <div class="item checkbox-item">
+      <label><input type="checkbox" id="familianumerosa"> Familia numerosa <span class="puntos">+1 pt</span></label>
+    </div>
+    <div class="item checkbox-item">
+      <label><input type="checkbox" id="violenciagenero"> Víctima de violencia de género o de terrorismo <span class="puntos">+2 pts</span></label>
+    </div>
+  </div>
+
+  <div class="grupo">
+    <h4>Formación específica</h4>
+    <div class="item">
+      <label>Horas totales de cursos homologados (logística, atención al cliente, ofimática, prevención)</label>
+      <input type="number" id="formacion" min="0" value="0">
+      <span class="puntos">×0,01 pts/hora (máx. 3 pts)</span>
+    </div>
+    <div class="item checkbox-item">
+      <label><input type="checkbox" id="permiso-c"> Tengo permiso de conducir C, D o E <span class="puntos">+0,5 pts</span></label>
+    </div>
+  </div>
+
+  <div class="grupo">
+    <h4>Idiomas (acreditación oficial)</h4>
+    <div class="item">
+      <label>Idiomas con nivel B2 acreditado</label>
+      <input type="number" id="b2" min="0" max="5" value="0">
+      <span class="puntos">×0,5 pts (máx. 1 pt)</span>
+    </div>
+    <div class="item">
+      <label>Idiomas con nivel C1 o superior acreditado</label>
+      <input type="number" id="c1" min="0" max="5" value="0">
+      <span class="puntos">×1 pt (máx. 2 pts)</span>
+    </div>
+  </div>
+
+  <div class="resultado">
+    <div class="res-row"><span class="res-label">Servicios prestados</span><span class="res-val" id="r-exp">0,00 pts</span></div>
+    <div class="res-row"><span class="res-label">Colectivos prioritarios</span><span class="res-val" id="r-col">0,00 pts</span></div>
+    <div class="res-row"><span class="res-label">Formación</span><span class="res-val" id="r-for">0,00 pts</span></div>
+    <div class="res-row"><span class="res-label">Idiomas</span><span class="res-val" id="r-idi">0,00 pts</span></div>
+    <div class="res-row total"><span class="res-label">Tu baremo estimado</span><span class="res-val" id="r-total">0,00 pts</span></div>
+  </div>
+
+  <div class="info">
+    ⚠️ <strong>Importante:</strong> los coeficientes son orientativos según convocatorias recientes de Correos. El baremo exacto se publica en cada convocatoria — verifícalo antes de tomar decisiones definitivas. No olvides marcar los méritos en la solicitud inicial: si no los marcas, aunque tengas la documentación, no se computan.
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const num = id => parseFloat($(id).value) || 0;
+const check = id => $(id).checked ? 1 : 0;
+const fmt = n => n.toFixed(2).replace('.', ',');
+
+function calcular() {
+  // Experiencia (con topes individuales)
+  const expMisma = Math.min(num('exp-misma') * 0.40, 35);
+  const expOtras = Math.min(num('exp-otras') * 0.20, 18);
+  const expOtrasAdmon = Math.min(num('exp-otras-admon') * 0.07, 6);
+  const exp = expMisma + expOtras + expOtrasAdmon;
+
+  // Colectivos prioritarios
+  const col = check('discapacidad') * 3 +
+              check('mayor45') * 1 +
+              check('parolargo') * 1 +
+              check('familianumerosa') * 1 +
+              check('violenciagenero') * 2;
+
+  // Formación
+  const forma = Math.min(num('formacion') * 0.01, 3) + check('permiso-c') * 0.5;
+
+  // Idiomas
+  const idiomas = Math.min(num('b2') * 0.5, 1) + Math.min(num('c1') * 1, 2);
+
+  const total = exp + col + forma + idiomas;
+
+  $('r-exp').textContent = fmt(exp) + ' pts';
+  $('r-col').textContent = fmt(col) + ' pts';
+  $('r-for').textContent = fmt(forma) + ' pts';
+  $('r-idi').textContent = fmt(idiomas) + ' pts';
+  $('r-total').textContent = fmt(total) + ' pts';
+}
+
+['exp-misma','exp-otras','exp-otras-admon','formacion','b2','c1'].forEach(id => {
+  $(id).addEventListener('input', calcular);
+});
+['discapacidad','mayor45','parolargo','familianumerosa','violenciagenero','permiso-c'].forEach(id => {
+  $(id).addEventListener('change', calcular);
+});
+calcular();
+</script>
+
+</body>
+</html>
