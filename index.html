@@ -16,6 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="css/cartito.css">
+<link rel="stylesheet" href="css/tutor.css">
 <style>
   :root { --brand-primary: #003366; --brand-accent: #FFCD00; }
   .app-header { background: #003366 !important; color: #FFCD00 !important; }
@@ -181,7 +182,6 @@
   <section id="screen-planes" class="screen hidden"></section>
   <section id="screen-cuenta" class="screen hidden"></section>
   <section id="screen-settings" class="screen hidden"></section>
-  <section id="screen-tribunal" class="screen hidden"></section>
 </main>
 
 <!-- Datos -->
@@ -205,397 +205,291 @@
   <div class="cartito-bubble" id="cartito-bubble" style="display:none">
     <p id="cartito-text">¡Hola! 👋</p>
   </div>
-  <!-- SVG Clay-style — outline grueso + gradientes volumétricos + filtros sombra -->
+  <!-- SVG Clay-style v2 — formas redondeadas, gradientes suaves, expresión amable -->
+  <!-- viewBox 120×170 conservado para no romper transform-origins del CSS -->
   <svg id="cartito-char" class="cartito-char" viewBox="0 0 120 170" xmlns="http://www.w3.org/2000/svg"
-       overflow="hidden" role="img" aria-label="Cartito, el perro cartero">
+       role="img" aria-label="Cartito, el perro cartero">
     <defs>
-      <!-- Gradientes clay — 3 paradas para efecto volumétrico -->
-      <radialGradient id="g-fur" cx="35%" cy="25%" r="65%">
-        <stop offset="0%"   stop-color="#ffd080"/>
-        <stop offset="55%"  stop-color="#f09040"/>
-        <stop offset="100%" stop-color="#b85c18"/>
+      <!-- ─── Gradientes suaves (más calidad, transiciones limpias) ─── -->
+      <radialGradient id="g-fur" cx="38%" cy="28%" r="72%">
+        <stop offset="0%"   stop-color="#ffdfa5"/>
+        <stop offset="55%"  stop-color="#ee9550"/>
+        <stop offset="100%" stop-color="#a85d20"/>
       </radialGradient>
-      <radialGradient id="g-fur-ear" cx="40%" cy="30%" r="70%">
-        <stop offset="0%"   stop-color="#e07830"/>
-        <stop offset="100%" stop-color="#8b3e0e"/>
+      <radialGradient id="g-fur-ear" cx="40%" cy="35%" r="75%">
+        <stop offset="0%"   stop-color="#d77838"/>
+        <stop offset="100%" stop-color="#7a3818"/>
       </radialGradient>
-      <radialGradient id="g-muzzle" cx="45%" cy="35%" r="65%">
-        <stop offset="0%"   stop-color="#fff2d8"/>
-        <stop offset="70%"  stop-color="#f8d8a0"/>
-        <stop offset="100%" stop-color="#e4b478"/>
+      <radialGradient id="g-fur-ear-in" cx="50%" cy="55%" r="60%">
+        <stop offset="0%"   stop-color="#f7bca0" stop-opacity=".95"/>
+        <stop offset="100%" stop-color="#e08560" stop-opacity=".3"/>
       </radialGradient>
-      <radialGradient id="g-jacket" cx="30%" cy="20%" r="75%">
-        <stop offset="0%"   stop-color="#3a70c0"/>
-        <stop offset="60%"  stop-color="#0040a0"/>
-        <stop offset="100%" stop-color="#001860"/>
+      <radialGradient id="g-muzzle" cx="50%" cy="40%" r="70%">
+        <stop offset="0%"   stop-color="#fff6e2"/>
+        <stop offset="60%"  stop-color="#fadeb0"/>
+        <stop offset="100%" stop-color="#e0b888"/>
       </radialGradient>
-      <radialGradient id="g-hat" cx="35%" cy="25%" r="70%">
-        <stop offset="0%"   stop-color="#2a5aa0"/>
+      <radialGradient id="g-jacket" cx="35%" cy="22%" r="80%">
+        <stop offset="0%"   stop-color="#4078c8"/>
+        <stop offset="55%"  stop-color="#0c4aa8"/>
+        <stop offset="100%" stop-color="#062060"/>
+      </radialGradient>
+      <radialGradient id="g-hat" cx="40%" cy="28%" r="75%">
+        <stop offset="0%"   stop-color="#2e60a8"/>
+        <stop offset="60%"  stop-color="#0c2c68"/>
         <stop offset="100%" stop-color="#001040"/>
       </radialGradient>
-      <radialGradient id="g-bag" cx="30%" cy="20%" r="70%">
-        <stop offset="0%"   stop-color="#ffe040"/>
-        <stop offset="60%"  stop-color="#FFCD00"/>
-        <stop offset="100%" stop-color="#c89400"/>
+      <linearGradient id="g-visor" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%"   stop-color="#001840"/>
+        <stop offset="100%" stop-color="#000820"/>
+      </linearGradient>
+      <radialGradient id="g-bag" cx="35%" cy="25%" r="78%">
+        <stop offset="0%"   stop-color="#ffe860"/>
+        <stop offset="55%"  stop-color="#FFCD00"/>
+        <stop offset="100%" stop-color="#b88600"/>
       </radialGradient>
-      <radialGradient id="g-eye-iris" cx="35%" cy="30%" r="60%">
-        <stop offset="0%"   stop-color="#8b5a28"/>
-        <stop offset="100%" stop-color="#3a1a08"/>
+      <radialGradient id="g-bag-flap" cx="50%" cy="40%" r="60%">
+        <stop offset="0%"   stop-color="#ffd840"/>
+        <stop offset="100%" stop-color="#cc9c00"/>
+      </radialGradient>
+      <radialGradient id="g-collar" cx="50%" cy="30%" r="65%">
+        <stop offset="0%"   stop-color="#e84040"/>
+        <stop offset="100%" stop-color="#960808"/>
+      </radialGradient>
+      <radialGradient id="g-eye" cx="35%" cy="30%" r="65%">
+        <stop offset="0%"   stop-color="#9c6838"/>
+        <stop offset="55%"  stop-color="#5a3018"/>
+        <stop offset="100%" stop-color="#2a1208"/>
       </radialGradient>
       <radialGradient id="g-cheek" cx="50%" cy="50%" r="50%">
-        <stop offset="0%"   stop-color="#f07858" stop-opacity=".7"/>
-        <stop offset="100%" stop-color="#f07858" stop-opacity="0"/>
+        <stop offset="0%"   stop-color="#ff8c70" stop-opacity=".6"/>
+        <stop offset="100%" stop-color="#ff8c70" stop-opacity="0"/>
       </radialGradient>
-      <!-- Filtro sombra suave (clay look) -->
-      <filter id="f-drop" x="-15%" y="-15%" width="130%" height="130%">
-        <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="#4a2000" flood-opacity=".22"/>
+      <radialGradient id="g-nose" cx="35%" cy="25%" r="70%">
+        <stop offset="0%"   stop-color="#3a2018"/>
+        <stop offset="100%" stop-color="#0a0402"/>
+      </radialGradient>
+
+      <!-- ─── Filtros sombra suaves (mejor que feDropShadow para iOS) ─── -->
+      <filter id="f-soft" x="-15%" y="-15%" width="135%" height="135%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="1.6"/>
+        <feOffset dx="1" dy="2.2"/>
+        <feComponentTransfer><feFuncA type="linear" slope=".25"/></feComponentTransfer>
+        <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
       </filter>
-      <filter id="f-drop-sm" x="-20%" y="-20%" width="140%" height="140%">
-        <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#4a2000" flood-opacity=".18"/>
+      <filter id="f-soft-sm" x="-15%" y="-15%" width="130%" height="130%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation=".9"/>
+        <feOffset dx=".4" dy="1.2"/>
+        <feComponentTransfer><feFuncA type="linear" slope=".22"/></feComponentTransfer>
+        <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
       </filter>
     </defs>
 
-    <!-- ═══ CONTORNO EXTERIOR global (clay outline) ═══ -->
-    <!-- Sombra suelo -->
-    <ellipse cx="60" cy="167" rx="28" ry="5" fill="rgba(0,0,0,.18)"/>
+    <!-- ─── Sombra de suelo ─── -->
+    <ellipse cx="60" cy="165" rx="32" ry="5" fill="rgba(0,0,0,.18)"/>
 
-    <!-- ══ COLA ══ -->
-    <g id="ct-tail" filter="url(#f-drop-sm)">
-      <path d="M85,112 Q108,96 104,76 Q100,60 88,66 Q82,70 88,80 Q94,90 84,106 Z"
-            fill="url(#g-fur-ear)" stroke="#2c1000" stroke-width="2" stroke-linejoin="round"/>
-      <ellipse cx="100" cy="72" rx="7" ry="9" fill="#fff5e0" stroke="#e8c080" stroke-width="1.2"
-               transform="rotate(-25,100,72)"/>
+    <!-- ─── COLA (pivot: 85,112 — coincide con CSS) ─── -->
+    <g id="ct-tail">
+      <path d="M82,114 Q104,98 100,76 Q97,60 84,66 Q78,72 86,82 Q94,92 80,108 Z"
+            fill="url(#g-fur-ear)" stroke="#451c08" stroke-width="1.6" stroke-linejoin="round"
+            filter="url(#f-soft-sm)"/>
+      <ellipse cx="96" cy="70" rx="6" ry="8" fill="#fff2dc" stroke="#dcb888" stroke-width="1"
+               transform="rotate(-22 96 70)"/>
     </g>
 
-    <!-- ══ PIERNAS ══ -->
-    <rect x="36" y="128" width="18" height="28" rx="9" fill="#1a3070" stroke="#0a1840" stroke-width="2"/>
-    <rect x="66" y="128" width="18" height="28" rx="9" fill="#1a3070" stroke="#0a1840" stroke-width="2"/>
-    <!-- Patas / pies -->
-    <ellipse cx="45" cy="157" rx="13" ry="8" fill="url(#g-fur-ear)" stroke="#2c1000" stroke-width="2"/>
-    <ellipse cx="75" cy="157" rx="13" ry="8" fill="url(#g-fur-ear)" stroke="#2c1000" stroke-width="2"/>
-    <!-- Dedos (3 cada pata) -->
-    <circle cx="36" cy="159" r="4.5" fill="#9a4c18" stroke="#2c1000" stroke-width="1.5"/>
-    <circle cx="44" cy="162" r="4.5" fill="#9a4c18" stroke="#2c1000" stroke-width="1.5"/>
-    <circle cx="53" cy="160" r="4.5" fill="#9a4c18" stroke="#2c1000" stroke-width="1.5"/>
-    <circle cx="66" cy="160" r="4.5" fill="#9a4c18" stroke="#2c1000" stroke-width="1.5"/>
-    <circle cx="75" cy="162" r="4.5" fill="#9a4c18" stroke="#2c1000" stroke-width="1.5"/>
-    <circle cx="84" cy="159" r="4.5" fill="#9a4c18" stroke="#2c1000" stroke-width="1.5"/>
+    <!-- ─── PIERNAS ─── -->
+    <rect x="38" y="128" width="18" height="26" rx="9" fill="#1e3672"
+          stroke="#0a1840" stroke-width="1.3"/>
+    <rect x="64" y="128" width="18" height="26" rx="9" fill="#1e3672"
+          stroke="#0a1840" stroke-width="1.3"/>
 
-    <!-- ══ BRAZO IZQUIERDO ══ -->
-    <g transform="rotate(16,22,96)" filter="url(#f-drop-sm)">
-      <rect x="12" y="92" width="20" height="34" rx="10" fill="url(#g-jacket)" stroke="#0a1840" stroke-width="2"/>
-      <!-- franja amarilla manga izquierda -->
-      <rect x="12" y="107" width="20" height="5" rx="2.5" fill="#FFCD00" stroke="#aa8800" stroke-width=".8"/>
-      <ellipse cx="22" cy="127" rx="12" ry="9" fill="url(#g-fur)" stroke="#2c1000" stroke-width="2"/>
-      <circle cx="14" cy="129" r="3.8" fill="#c87030" stroke="#2c1000" stroke-width="1.2"/>
-      <circle cx="22" cy="132" r="3.8" fill="#c87030" stroke="#2c1000" stroke-width="1.2"/>
-      <circle cx="30" cy="129" r="3.8" fill="#c87030" stroke="#2c1000" stroke-width="1.2"/>
+    <!-- ─── PIES (más redondeados, dedos en forma de gota) ─── -->
+    <ellipse cx="47" cy="156" rx="12.5" ry="7.5" fill="url(#g-fur-ear)"
+             stroke="#451c08" stroke-width="1.6"/>
+    <ellipse cx="73" cy="156" rx="12.5" ry="7.5" fill="url(#g-fur-ear)"
+             stroke="#451c08" stroke-width="1.6"/>
+    <ellipse cx="40" cy="159" rx="2.8" ry="2.6" fill="#7a3c18"/>
+    <ellipse cx="47" cy="161" rx="2.8" ry="2.6" fill="#7a3c18"/>
+    <ellipse cx="54" cy="159" rx="2.8" ry="2.6" fill="#7a3c18"/>
+    <ellipse cx="66" cy="159" rx="2.8" ry="2.6" fill="#7a3c18"/>
+    <ellipse cx="73" cy="161" rx="2.8" ry="2.6" fill="#7a3c18"/>
+    <ellipse cx="80" cy="159" rx="2.8" ry="2.6" fill="#7a3c18"/>
+
+    <!-- ─── BRAZO IZQUIERDO (manga + pata) ─── -->
+    <g transform="rotate(14 22 96)" filter="url(#f-soft-sm)">
+      <rect x="13" y="92" width="20" height="33" rx="10" fill="url(#g-jacket)"
+            stroke="#062060" stroke-width="1.3"/>
+      <rect x="13" y="106" width="20" height="4.5" rx="2.25" fill="#FFCD00" opacity=".95"/>
+      <ellipse cx="23" cy="127" rx="11.5" ry="9" fill="url(#g-fur)"
+               stroke="#451c08" stroke-width="1.6"/>
+      <ellipse cx="17" cy="130" rx="3" ry="2.8" fill="#c87838"/>
+      <ellipse cx="23" cy="132" rx="3" ry="2.8" fill="#c87838"/>
+      <ellipse cx="29" cy="130" rx="3" ry="2.8" fill="#c87838"/>
     </g>
 
-    <!-- ══ BRAZO DERECHO (saluda) ══ -->
-    <g id="ct-arm-r" filter="url(#f-drop-sm)">
-      <g transform="rotate(-16,98,96)">
-        <rect x="88" y="92" width="20" height="34" rx="10" fill="url(#g-jacket)" stroke="#0a1840" stroke-width="2"/>
-        <!-- franja amarilla manga derecha -->
-        <rect x="88" y="107" width="20" height="5" rx="2.5" fill="#FFCD00" stroke="#aa8800" stroke-width=".8"/>
-        <ellipse cx="98" cy="127" rx="12" ry="9" fill="url(#g-fur)" stroke="#2c1000" stroke-width="2"/>
-        <circle cx="90" cy="129" r="3.8" fill="#c87030" stroke="#2c1000" stroke-width="1.2"/>
-        <circle cx="98" cy="132" r="3.8" fill="#c87030" stroke="#2c1000" stroke-width="1.2"/>
-        <circle cx="106" cy="129" r="3.8" fill="#c87030" stroke="#2c1000" stroke-width="1.2"/>
+    <!-- ─── BRAZO DERECHO (pivot: 98,96 — coincide con CSS) ─── -->
+    <g id="ct-arm-r">
+      <g transform="rotate(-14 98 96)" filter="url(#f-soft-sm)">
+        <rect x="87" y="92" width="20" height="33" rx="10" fill="url(#g-jacket)"
+              stroke="#062060" stroke-width="1.3"/>
+        <rect x="87" y="106" width="20" height="4.5" rx="2.25" fill="#FFCD00" opacity=".95"/>
+        <ellipse cx="97" cy="127" rx="11.5" ry="9" fill="url(#g-fur)"
+                 stroke="#451c08" stroke-width="1.6"/>
+        <ellipse cx="91" cy="130" rx="3" ry="2.8" fill="#c87838"/>
+        <ellipse cx="97" cy="132" rx="3" ry="2.8" fill="#c87838"/>
+        <ellipse cx="103" cy="130" rx="3" ry="2.8" fill="#c87838"/>
       </g>
     </g>
 
-    <!-- ══ CUERPO / UNIFORME CARTERO ══ -->
-    <rect x="28" y="88" width="64" height="48" rx="18" fill="url(#g-jacket)" stroke="#0a1840" stroke-width="2.5" filter="url(#f-drop)"/>
+    <!-- ─── CUERPO (uniforme — pill shape, más redondeado) ─── -->
+    <path d="M30,100 Q30,86 44,84 L76,84 Q90,86 90,100 L90,128 Q90,140 78,140 L42,140 Q30,140 30,128 Z"
+          fill="url(#g-jacket)" stroke="#062060" stroke-width="1.6" filter="url(#f-soft)"/>
 
-    <!-- Franja amarilla en hombros (epauletas de uniforme) -->
-    <path d="M28,101 Q28,88 50,88" stroke="#FFCD00" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <path d="M92,101 Q92,88 70,88" stroke="#FFCD00" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <!-- Borde oscuro de la franja -->
-    <path d="M28,101 Q28,88 50,88" stroke="#aa8800" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-    <path d="M92,101 Q92,88 70,88" stroke="#aa8800" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <!-- Epauletas amarillas (hombros suaves) -->
+    <path d="M30,98 Q30,86 44,84" stroke="#FFCD00" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M90,98 Q90,86 76,84" stroke="#FFCD00" stroke-width="4" fill="none" stroke-linecap="round"/>
 
-    <!-- Cremallera frontal (cierre del anorak) -->
-    <rect x="57.5" y="89" width="5" height="46" rx="2.5" fill="#0a1a50" stroke="#061030" stroke-width=".8"/>
-    <!-- Tirador de cremallera -->
-    <rect x="55" y="91" width="10" height="5" rx="2.5" fill="#FFCD00" stroke="#aa8800" stroke-width="1"/>
-    <rect x="58" y="93" width="4" height="2" rx="1" fill="#cc8800"/>
+    <!-- Cremallera frontal sutil -->
+    <line x1="60" y1="88" x2="60" y2="136" stroke="#0a1840" stroke-width="1.2"
+          stroke-dasharray="1.5 1.5" opacity=".85"/>
+    <rect x="56" y="90" width="8" height="4.5" rx="2.25" fill="#FFCD00"
+          stroke="#aa8800" stroke-width=".7"/>
 
-    <!-- Bolsillo pecho izquierdo con insignia postal -->
-    <rect x="32" y="98" width="20" height="15" rx="4" fill="#0a2060" stroke="#FFCD00" stroke-width="1.5"/>
-    <!-- Icono sobre dentro del bolsillo -->
-    <rect x="35.5" y="101" width="13" height="8.5" rx="1.5" fill="#1a5090" stroke="#2a6ab0" stroke-width=".8"/>
-    <path d="M35.5,101 L42,106 L48.5,101" stroke="#FFCD00" stroke-width="1.4" fill="none"/>
+    <!-- Bolsillo pecho con icono sobre -->
+    <rect x="36" y="100" width="18" height="14" rx="3.5" fill="#0a2868"
+          stroke="#FFCD00" stroke-width="1.1"/>
+    <rect x="39" y="103" width="12" height="8" rx="1.5" fill="#1c5aa0"
+          stroke="#2e72c0" stroke-width=".5"/>
+    <path d="M39,103 L45,107 L51,103" stroke="#FFCD00" stroke-width="1.1"
+          fill="none" stroke-linecap="round"/>
 
-    <!-- Franja reflectante horizontal baja (seguridad vial) -->
-    <rect x="28" y="122" width="64" height="7" rx="3.5" fill="#FFCD00" stroke="#aa8800" stroke-width="1.2"/>
-    <!-- Patrón de chevron en la franja -->
-    <line x1="36" y1="122" x2="33" y2="129" stroke="#e6a800" stroke-width="1" opacity=".6"/>
-    <line x1="44" y1="122" x2="41" y2="129" stroke="#e6a800" stroke-width="1" opacity=".6"/>
-    <line x1="52" y1="122" x2="49" y2="129" stroke="#e6a800" stroke-width="1" opacity=".6"/>
-    <line x1="60" y1="122" x2="57" y2="129" stroke="#e6a800" stroke-width="1" opacity=".6"/>
-    <line x1="68" y1="122" x2="65" y2="129" stroke="#e6a800" stroke-width="1" opacity=".6"/>
-    <line x1="76" y1="122" x2="73" y2="129" stroke="#e6a800" stroke-width="1" opacity=".6"/>
+    <!-- Franja reflectante (sin chevrons — más limpio) -->
+    <rect x="30" y="124" width="60" height="6" rx="3" fill="#FFCD00" opacity=".95"/>
+    <rect x="30" y="124" width="60" height="6" rx="3" fill="none"
+          stroke="#cc9c00" stroke-width=".5"/>
 
-    <!-- ══ BOLSA POSTAL ══ -->
-    <g transform="translate(85,96)" filter="url(#f-drop-sm)">
-      <!-- correa -->
-      <path d="M4,0 Q-5,-12 0,-22" stroke="#aa8000" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-      <!-- cuerpo bolsa -->
-      <rect x="0" y="0" width="28" height="26" rx="8" fill="url(#g-bag)" stroke="#aa8000" stroke-width="2"/>
-      <!-- solapa bolsa -->
-      <path d="M0,13 Q14,8 28,13 L28,0 Q14,-5 0,0 Z" fill="#e6b800" stroke="#aa8000" stroke-width="1.5"/>
-      <!-- cierre -->
-      <circle cx="14" cy="6.5" r="4.5" fill="#cc8800" stroke="#aa6600" stroke-width="1.2"/>
-      <circle cx="14" cy="6.5" r="2.5" fill="#886600"/>
-      <!-- carta -->
-      <rect x="4" y="15" width="20" height="12" rx="2.5" fill="white" stroke="#c0d0e0" stroke-width="1"/>
-      <path d="M4,15 L14,22 L24,15" stroke="#94a8b8" stroke-width="1.5" fill="none"/>
+    <!-- ─── BOLSA POSTAL (más redondeada, cierre dorado refinado) ─── -->
+    <g transform="translate(85 100)" filter="url(#f-soft-sm)">
+      <path d="M5,-2 Q-4,-14 0,-26" stroke="#aa8000" stroke-width="2.8"
+            fill="none" stroke-linecap="round"/>
+      <path d="M0,0 L28,0 Q32,0 32,4 L32,24 Q32,28 28,28 L0,28 Q-4,28 -4,24 L-4,4 Q-4,0 0,0 Z"
+            fill="url(#g-bag)" stroke="#aa8000" stroke-width="1.5"/>
+      <path d="M-2,14 Q14,8 30,14 L30,0 Q14,-5 -2,0 Z" fill="url(#g-bag-flap)"
+            stroke="#aa8000" stroke-width="1.2"/>
+      <circle cx="14" cy="7" r="4" fill="#cc8800" stroke="#aa6600" stroke-width="1"/>
+      <circle cx="14" cy="7" r="2.2" fill="#7a5800"/>
+      <rect x="3" y="16" width="22" height="11" rx="2.2" fill="white"
+            stroke="#b8c8d8" stroke-width=".7"/>
+      <path d="M3,16 L14,22 L25,16" stroke="#88a0b8" stroke-width="1.1" fill="none"/>
     </g>
 
-    <!-- ══ COLLAR ══ -->
-    <rect x="46" y="85" width="28" height="10" rx="5" fill="#dd1a1a" stroke="#aa0000" stroke-width="1.5"/>
-    <!-- placa dorada sin texto (CT ya aparece en la gorra) -->
-    <rect x="56" y="87" width="8" height="8" rx="2.5" fill="#FFCD00" stroke="#aa8800" stroke-width="1"/>
-    <circle cx="60" cy="91" r="2" fill="#cc8800"/>
+    <!-- ─── COLLAR (más fino, curvado al cuello) ─── -->
+    <path d="M44,82 Q60,90 76,82 L76,86 Q60,94 44,86 Z" fill="url(#g-collar)"
+          stroke="#7c0808" stroke-width="1.1"/>
+    <rect x="56" y="84" width="8" height="7" rx="2" fill="#FFCD00"
+          stroke="#aa8800" stroke-width=".7"/>
+    <circle cx="60" cy="87.5" r="1.5" fill="#cc8800"/>
 
-    <!-- ══ OREJAS CAÍDAS ══ -->
-    <g id="ct-ear-l" filter="url(#f-drop-sm)">
-      <path d="M31,44 Q12,54 16,80 Q20,92 34,88 Q42,86 40,74 Q38,62 32,52 Z"
-            fill="url(#g-fur-ear)" stroke="#2c1000" stroke-width="2.2" stroke-linejoin="round"/>
-      <path d="M33,50 Q18,60 22,76 Q24,84 32,82 Q38,80 37,72 Q36,62 32,52 Z"
-            fill="#e08060" opacity=".55"/>
+    <!-- ─── OREJAS (pivot izq:31,44 · der:89,44 — coincide con CSS) ─── -->
+    <g id="ct-ear-l" filter="url(#f-soft-sm)">
+      <path d="M28,42 Q12,48 14,76 Q16,90 30,88 Q42,86 40,72 Q38,58 32,48 Q30,44 28,42 Z"
+            fill="url(#g-fur-ear)" stroke="#451c08" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M30,50 Q20,56 22,72 Q23,80 30,80 Q35,78 35,68 Q34,58 31,50 Z"
+            fill="url(#g-fur-ear-in)"/>
     </g>
-    <g id="ct-ear-r" filter="url(#f-drop-sm)">
-      <path d="M89,44 Q108,54 104,80 Q100,92 86,88 Q78,86 80,74 Q82,62 88,52 Z"
-            fill="url(#g-fur-ear)" stroke="#2c1000" stroke-width="2.2" stroke-linejoin="round"/>
-      <path d="M87,50 Q102,60 98,76 Q96,84 88,82 Q82,80 83,72 Q84,62 88,52 Z"
-            fill="#e08060" opacity=".55"/>
+    <g id="ct-ear-r" filter="url(#f-soft-sm)">
+      <path d="M92,42 Q108,48 106,76 Q104,90 90,88 Q78,86 80,72 Q82,58 88,48 Q90,44 92,42 Z"
+            fill="url(#g-fur-ear)" stroke="#451c08" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M90,50 Q100,56 98,72 Q97,80 90,80 Q85,78 85,68 Q86,58 89,50 Z"
+            fill="url(#g-fur-ear-in)"/>
     </g>
 
-    <!-- ══ CABEZA ══ -->
-    <circle cx="60" cy="60" r="34" fill="url(#g-fur)" stroke="#2c1000" stroke-width="2.5" filter="url(#f-drop)"/>
-    <!-- Brillo frente (clay highlight) -->
-    <ellipse cx="50" cy="40" rx="13" ry="7" fill="rgba(255,255,255,.3)" transform="rotate(-20,50,40)"/>
+    <!-- ─── CABEZA (mayor, más expresiva) ─── -->
+    <circle cx="60" cy="60" r="36" fill="url(#g-fur)"
+            stroke="#451c08" stroke-width="1.8" filter="url(#f-soft)"/>
+    <!-- Highlight suave -->
+    <ellipse cx="46" cy="40" rx="14" ry="8" fill="rgba(255,255,255,.32)"
+             transform="rotate(-22 46 40)"/>
 
-    <!-- ══ GORRA POSTAL ══ -->
-    <rect x="26" y="32" width="68" height="28" rx="10" fill="url(#g-hat)" stroke="#0a1030" stroke-width="2.5" filter="url(#f-drop-sm)"/>
-    <!-- Visera -->
-    <rect x="16" y="51" width="88" height="11" rx="5.5" fill="#001030" stroke="#0a1030" stroke-width="1.5"/>
-    <!-- Franja dorada -->
-    <rect x="16" y="58" width="88" height="4" rx="2" fill="#FFCD00" stroke="#aa8800" stroke-width="1"/>
+    <!-- ─── GORRA POSTAL (forma más natural, costura visible) ─── -->
+    <path d="M24,34 Q24,24 36,24 L84,24 Q96,24 96,34 L96,54 L24,54 Z"
+          fill="url(#g-hat)" stroke="#000820" stroke-width="1.8" filter="url(#f-soft-sm)"/>
+    <!-- Costura horizontal -->
+    <path d="M26,40 L94,40" stroke="#000820" stroke-width=".6" opacity=".55"/>
+    <!-- Visera (pill alargada) -->
+    <path d="M14,52 L106,52 Q108,52 108,55 L108,58 Q108,62 104,62 L16,62 Q12,62 12,58 L12,55 Q12,52 14,52 Z"
+          fill="url(#g-visor)" stroke="#000820" stroke-width="1.2"/>
+    <!-- Franja dorada visera -->
+    <rect x="14" y="58" width="92" height="3" rx="1.5" fill="#FFCD00"/>
     <!-- Badge CT -->
-    <rect x="40" y="35" width="40" height="18" rx="6" fill="url(#g-bag)" stroke="#aa8800" stroke-width="1.8"/>
-    <text x="60" y="48" text-anchor="middle" font-family="Arial Black,Arial,sans-serif"
+    <rect x="40" y="30" width="40" height="18" rx="5" fill="url(#g-bag)"
+          stroke="#aa8800" stroke-width="1.4"/>
+    <text x="60" y="43" text-anchor="middle" font-family="Arial Black,Arial,sans-serif"
           font-size="13" font-weight="900" fill="#003366" aria-hidden="true">CT</text>
 
-    <!-- ══ CEJAS ══ -->
-    <path id="ct-brow-l" d="M36,47 Q44,42 52,46" stroke="#2c1000" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-    <path id="ct-brow-r" d="M68,46 Q76,42 84,47" stroke="#2c1000" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-    <!-- Cejas tristes -->
-    <path id="ct-brow-sad-l" d="M36,45 Q44,49 52,46" stroke="#2c1000" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0"/>
-    <path id="ct-brow-sad-r" d="M68,46 Q76,49 84,45" stroke="#2c1000" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0"/>
+    <!-- ─── CEJAS (más cortas, arco suave, marrón cálido) ─── -->
+    <path id="ct-brow-l" d="M37,49 Q44,45 51,48"
+          stroke="#4a2008" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <path id="ct-brow-r" d="M69,48 Q76,45 83,49"
+          stroke="#4a2008" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <path id="ct-brow-sad-l" d="M37,47 Q44,51 51,48"
+          stroke="#4a2008" stroke-width="2.6" fill="none" stroke-linecap="round" opacity="0"/>
+    <path id="ct-brow-sad-r" d="M69,48 Q76,51 83,47"
+          stroke="#4a2008" stroke-width="2.6" fill="none" stroke-linecap="round" opacity="0"/>
 
-    <!-- ══ OJO IZQUIERDO ══ -->
-    <ellipse cx="44" cy="60" rx="9.5" ry="10.5" fill="white" stroke="#2c1000" stroke-width="2"/>
-    <ellipse cx="44" cy="61" rx="7" ry="8" fill="url(#g-eye-iris)"/>
-    <circle  cx="44" cy="62" r="4.5" fill="#1a0a04"/>
-    <circle  cx="46.5" cy="58.5" r="3"   fill="white"/>
-    <circle  cx="42.5" cy="64"   r="1.2" fill="rgba(255,255,255,.5)"/>
-    <!-- Párpado -->
-    <ellipse cx="44" cy="60" rx="10" ry="10.5" id="ct-lid-l" fill="url(#g-fur)" style="transform:scaleY(0)" stroke="#2c1000" stroke-width="1.5"/>
+    <!-- ─── MEJILLAS rosadas (más arriba) ─── -->
+    <ellipse cx="32" cy="68" rx="10" ry="6.5" fill="url(#g-cheek)"/>
+    <ellipse cx="88" cy="68" rx="10" ry="6.5" fill="url(#g-cheek)"/>
 
-    <!-- ══ OJO DERECHO ══ -->
-    <ellipse cx="76" cy="60" rx="9.5" ry="10.5" fill="white" stroke="#2c1000" stroke-width="2"/>
-    <ellipse cx="76" cy="61" rx="7" ry="8" fill="url(#g-eye-iris)"/>
-    <circle  cx="76" cy="62" r="4.5" fill="#1a0a04"/>
-    <circle  cx="78.5" cy="58.5" r="3"   fill="white"/>
-    <circle  cx="74.5" cy="64"   r="1.2" fill="rgba(255,255,255,.5)"/>
-    <ellipse cx="76" cy="60" rx="10" ry="10.5" id="ct-lid-r" fill="url(#g-fur)" style="transform:scaleY(0)" stroke="#2c1000" stroke-width="1.5"/>
+    <!-- ─── OJO IZQUIERDO (cx=44 cy=60 — coincide con CSS lid origin) ─── -->
+    <ellipse cx="44" cy="60" rx="9.5" ry="11" fill="white"
+             stroke="#451c08" stroke-width="1.6"/>
+    <ellipse cx="44.5" cy="61.5" rx="7" ry="8.5" fill="url(#g-eye)"/>
+    <circle  cx="44.5" cy="62" r="4" fill="#0a0402"/>
+    <circle  cx="47"   cy="58" r="3" fill="white"/>
+    <circle  cx="42.5" cy="65" r="1.2" fill="rgba(255,255,255,.65)"/>
+    <ellipse cx="44" cy="60" rx="10" ry="11" id="ct-lid-l"
+             fill="url(#g-fur)" style="transform:scaleY(0)"
+             stroke="#451c08" stroke-width="1.3"/>
 
-    <!-- ══ MEJILLAS ══ -->
-    <ellipse cx="33" cy="70" rx="10" ry="7" fill="url(#g-cheek)"/>
-    <ellipse cx="87" cy="70" rx="10" ry="7" fill="url(#g-cheek)"/>
+    <!-- ─── OJO DERECHO (cx=76 cy=60 — coincide con CSS lid origin) ─── -->
+    <ellipse cx="76" cy="60" rx="9.5" ry="11" fill="white"
+             stroke="#451c08" stroke-width="1.6"/>
+    <ellipse cx="76.5" cy="61.5" rx="7" ry="8.5" fill="url(#g-eye)"/>
+    <circle  cx="76.5" cy="62" r="4" fill="#0a0402"/>
+    <circle  cx="79"   cy="58" r="3" fill="white"/>
+    <circle  cx="74.5" cy="65" r="1.2" fill="rgba(255,255,255,.65)"/>
+    <ellipse cx="76" cy="60" rx="10" ry="11" id="ct-lid-r"
+             fill="url(#g-fur)" style="transform:scaleY(0)"
+             stroke="#451c08" stroke-width="1.3"/>
 
-    <!-- ══ HOCICO ══ -->
-    <ellipse cx="60" cy="75" rx="17" ry="13" fill="url(#g-muzzle)" stroke="#2c1000" stroke-width="2" filter="url(#f-drop-sm)"/>
-    <!-- Brillo hocico -->
-    <ellipse cx="55" cy="70" rx="5" ry="3" fill="rgba(255,255,255,.35)" transform="rotate(-15,55,70)"/>
+    <!-- ─── HOCICO (más amplio, borde suave) ─── -->
+    <ellipse cx="60" cy="80" rx="18" ry="14" fill="url(#g-muzzle)"
+             stroke="#a06030" stroke-width="1.4" filter="url(#f-soft-sm)"/>
+    <ellipse cx="54" cy="74" rx="6" ry="3.5" fill="rgba(255,255,255,.4)"
+             transform="rotate(-15 54 74)"/>
 
-    <!-- ══ NARIZ ══ -->
-    <path d="M52,64 Q60,60 68,64 Q68,70 60,72 Q52,70 52,64 Z" fill="#1a0a04" stroke="#0a0500" stroke-width="1"/>
-    <ellipse cx="56" cy="65" rx="3" ry="1.8" fill="rgba(255,255,255,.5)"/>
+    <!-- ─── NARIZ (forma de gota redondeada) ─── -->
+    <path d="M53,68 Q60,64 67,68 Q70,72 65,76 Q60,78 55,76 Q50,72 53,68 Z"
+          fill="url(#g-nose)" stroke="#0a0402" stroke-width=".7"/>
+    <ellipse cx="57" cy="69" rx="2.5" ry="1.4" fill="rgba(255,255,255,.55)"/>
 
-    <!-- ══ BOCA ══ -->
-    <path id="ct-mouth-happy" d="M49,77 Q60,86 71,77" stroke="#2c1000" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <path d="M51,78 Q60,84 69,78" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".5"/>
-    <path id="ct-mouth-sad" d="M49,83 Q60,75 71,83" stroke="#2c1000" stroke-width="3" fill="none" stroke-linecap="round" opacity="0"/>
+    <!-- ─── BOCA (sonrisa amplia con highlight blanco) ─── -->
+    <path id="ct-mouth-happy" d="M48,82 Q60,92 72,82"
+          stroke="#3a1808" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <path d="M51,84 Q60,90 69,84" stroke="white" stroke-width="1.8"
+          fill="none" stroke-linecap="round" opacity=".45"/>
+    <path id="ct-mouth-sad" d="M48,88 Q60,80 72,88"
+          stroke="#3a1808" stroke-width="2.6" fill="none" stroke-linecap="round" opacity="0"/>
 
-    <!-- ══ LENGUA ══ -->
+    <!-- ─── LENGUA (pivot: 60,75 — coincide con CSS) ─── -->
     <g id="ct-tongue" style="transform:scaleY(0);opacity:0">
-      <ellipse cx="60" cy="84" rx="7" ry="9" fill="#e84060" stroke="#c02040" stroke-width="1.5"/>
-      <ellipse cx="60" cy="90" rx="6.5" ry="5.5" fill="#c02040"/>
-      <line x1="60" y1="78" x2="60" y2="91" stroke="#aa1830" stroke-width="1.5" opacity=".6"/>
+      <ellipse cx="60" cy="88" rx="6.5" ry="8" fill="#ee5070"
+               stroke="#c02858" stroke-width="1.2"/>
+      <ellipse cx="60" cy="93" rx="6" ry="4.5" fill="#c02858"/>
+      <line x1="60" y1="83" x2="60" y2="95" stroke="#a01840"
+            stroke-width="1.1" opacity=".55"/>
     </g>
-  </svg>
-
-    <!-- SOMBRA SUELO -->
-    <ellipse cx="50" cy="146" rx="22" ry="4" fill="rgba(0,0,0,.13)"/>
-
-    <!-- COLA (menea con .jump) -->
-    <g id="ct-tail">
-      <path d="M73,100 Q90,86 86,72 Q82,62 74,68 Q70,72 75,78 Q80,84 72,94 Z"
-            fill="url(#g-fur-dark)"/>
-      <!-- punta blanca de la cola -->
-      <ellipse cx="82" cy="70" rx="5" ry="7" fill="#fce8cc" transform="rotate(-30,82,70)"/>
-    </g>
-
-    <!-- PIERNAS -->
-    <rect x="32" y="112" width="14" height="24" rx="7" fill="#1a3560"/>
-    <rect x="54" y="112" width="14" height="24" rx="7" fill="#1a3560"/>
-    <!-- patas (pies de perro, no zapatos) -->
-    <ellipse cx="39" cy="136" rx="11" ry="6.5" fill="#8b4e1e"/>
-    <ellipse cx="61" cy="136" rx="11" ry="6.5" fill="#8b4e1e"/>
-    <!-- dedos pata izquierda -->
-    <circle cx="32" cy="138" r="3.5" fill="#7a4218"/>
-    <circle cx="38" cy="140" r="3.5" fill="#7a4218"/>
-    <circle cx="44" cy="139" r="3.5" fill="#7a4218"/>
-    <!-- dedos pata derecha -->
-    <circle cx="54" cy="139" r="3.5" fill="#7a4218"/>
-    <circle cx="60" cy="140" r="3.5" fill="#7a4218"/>
-    <circle cx="66" cy="138" r="3.5" fill="#7a4218"/>
-
-    <!-- BRAZO/PATA IZQUIERDA -->
-    <g transform="rotate(14,18,86)">
-      <rect x="9" y="82" width="17" height="28" rx="8.5" fill="url(#g-jacket)"/>
-      <!-- pata delantera -->
-      <ellipse cx="17.5" cy="111" rx="9.5" ry="7" fill="url(#g-fur)"/>
-      <circle cx="12" cy="113" r="3" fill="#c87941"/>
-      <circle cx="17" cy="115" r="3" fill="#c87941"/>
-      <circle cx="23" cy="113" r="3" fill="#c87941"/>
-    </g>
-
-    <!-- BRAZO/PATA DERECHA (saluda) -->
-    <g id="ct-arm-r">
-      <rect x="74" y="82" width="17" height="28" rx="8.5" fill="url(#g-jacket)" transform="rotate(-14,82,86)"/>
-      <g transform="rotate(-14,82,86)">
-        <ellipse cx="82.5" cy="111" rx="9.5" ry="7" fill="url(#g-fur)"/>
-        <circle cx="77" cy="113" r="3" fill="#c87941"/>
-        <circle cx="83" cy="115" r="3" fill="#c87941"/>
-        <circle cx="89" cy="113" r="3" fill="#c87941"/>
-      </g>
-    </g>
-
-    <!-- CUERPO / UNIFORME -->
-    <rect x="26" y="78" width="48" height="40" rx="14" fill="url(#g-jacket)"/>
-    <!-- camisa -->
-    <rect x="42" y="79" width="16" height="39" rx="5" fill="#eef2ff"/>
-    <!-- corbata amarilla -->
-    <polygon points="50,81 45.5,94 50,106 54.5,94" fill="#FFCD00"/>
-    <polygon points="47,105 50,110 53,105" fill="#e6b800"/>
-    <!-- botones -->
-    <circle cx="50" cy="92" r="2.2" fill="#FFCD00"/>
-    <circle cx="50" cy="100" r="2.2" fill="#FFCD00"/>
-    <!-- solapas -->
-    <path d="M42,79 C37,86 35,97 37,106" stroke="rgba(255,255,255,.15)" stroke-width="1.3" fill="none"/>
-    <path d="M58,79 C63,86 65,97 63,106" stroke="rgba(255,255,255,.15)" stroke-width="1.3" fill="none"/>
-
-    <!-- BOLSA DE CORREOS -->
-    <g transform="translate(71,86)">
-      <path d="M3,-1 Q-4,-10 0,-18" stroke="#cc8800" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <rect x="0" y="0" width="25" height="23" rx="6" fill="#FFCD00"/>
-      <path d="M0,12 Q12.5,8 25,12 L25,0 Q12.5,-4 0,0 Z" fill="#e6b800"/>
-      <circle cx="12.5" cy="6" r="3.8" fill="#cc8800"/>
-      <circle cx="12.5" cy="6" r="2.2" fill="#aa7000"/>
-      <!-- carta asomando -->
-      <rect x="4" y="14" width="17" height="10" rx="1.5" fill="white" opacity=".95"/>
-      <path d="M4,14 L12.5,20 L21,14" stroke="#c9d4e0" stroke-width="1.3" fill="none"/>
-    </g>
-
-    <!-- COLLAR con placa -->
-    <rect x="38" y="76" width="24" height="8" rx="4" fill="#cc0000"/>
-    <rect x="46" y="78" width="8" height="6" rx="2" fill="#FFCD00"/>
-    <text x="50" y="83.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="4.5" font-weight="900" fill="#003366">CT</text>
-
-    <!-- OREJAS CAÍDAS -->
-    <g id="ct-ear-l">
-      <path d="M27,36 Q12,44 15,66 Q18,76 30,74 Q36,72 34,62 Q32,52 28,44 Z"
-            fill="url(#g-fur-dark)"/>
-      <!-- interior oreja -->
-      <path d="M28,40 Q17,48 20,64 Q22,71 28,70 Q32,68 31,60 Q30,52 28,44 Z"
-            fill="#e8906a" opacity=".5"/>
-    </g>
-    <g id="ct-ear-r">
-      <path d="M73,36 Q88,44 85,66 Q82,76 70,74 Q64,72 66,62 Q68,52 72,44 Z"
-            fill="url(#g-fur-dark)"/>
-      <path d="M72,40 Q83,48 80,64 Q78,71 72,70 Q68,68 69,60 Q70,52 72,44 Z"
-            fill="#e8906a" opacity=".5"/>
-    </g>
-
-    <!-- CABEZA -->
-    <circle cx="50" cy="50" r="26" fill="url(#g-fur)"/>
-    <!-- brillo frente -->
-    <ellipse cx="44" cy="36" rx="9" ry="5.5" fill="rgba(255,255,255,.2)" transform="rotate(-20,44,36)"/>
-
-    <!-- GORRA POSTAL (entre las orejas) -->
-    <rect x="24" y="28" width="52" height="22" rx="8" fill="#003366"/>
-    <rect x="15" y="40" width="70" height="9" rx="4.5" fill="#001533"/>
-    <!-- franja dorada visera -->
-    <rect x="15" y="46" width="70" height="3" rx="1.5" fill="#FFCD00"/>
-    <!-- badge -->
-    <rect x="35" y="31" width="30" height="15" rx="4" fill="#FFCD00"/>
-    <text x="50" y="42" text-anchor="middle" font-family="Arial Black,Arial,sans-serif"
-          font-size="10" font-weight="900" fill="#003366">CT</text>
-
-    <!-- CEJAS NORMALES -->
-    <path id="ct-brow-l" d="M32,39 Q37,35.5 42,38.5" stroke="#7a4820" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    <path id="ct-brow-r" d="M58,38.5 Q63,35.5 68,39" stroke="#7a4820" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    <!-- CEJAS TRISTES (ocultas por defecto) -->
-    <path id="ct-brow-sad-l" d="M32,38 Q37,40 42,37" stroke="#7a4820" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0"/>
-    <path id="ct-brow-sad-r" d="M58,37 Q63,40 68,38" stroke="#7a4820" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0"/>
-
-    <!-- OJO IZQUIERDO -->
-    <ellipse cx="37" cy="49" rx="7.5" ry="8" fill="white"/>
-    <circle  cx="37" cy="50" r="5.5" fill="#1a1008"/>
-    <circle  cx="37" cy="50" r="3"   fill="#3a2010"/>
-    <circle  cx="38.8" cy="47.5" r="2.2" fill="white"/>
-    <!-- pupila extra brillante -->
-    <circle  cx="36" cy="52" r=".8" fill="rgba(255,255,255,.4)"/>
-    <ellipse cx="37" cy="49" rx="8" ry="8" id="ct-lid-l" fill="url(#g-fur)" style="transform:scaleY(0)"/>
-
-    <!-- OJO DERECHO -->
-    <ellipse cx="63" cy="49" rx="7.5" ry="8" fill="white"/>
-    <circle  cx="63" cy="50" r="5.5" fill="#1a1008"/>
-    <circle  cx="63" cy="50" r="3"   fill="#3a2010"/>
-    <circle  cx="64.8" cy="47.5" r="2.2" fill="white"/>
-    <circle  cx="62" cy="52" r=".8" fill="rgba(255,255,255,.4)"/>
-    <ellipse cx="63" cy="49" rx="8" ry="8" id="ct-lid-r" fill="url(#g-fur)" style="transform:scaleY(0)"/>
-
-    <!-- MEJILLAS -->
-    <ellipse cx="28" cy="57" rx="9" ry="6.5" fill="url(#g-cheek)"/>
-    <ellipse cx="72" cy="57" rx="9" ry="6.5" fill="url(#g-cheek)"/>
-
-    <!-- HOCICO (muzzle) -->
-    <ellipse cx="50" cy="60" rx="13" ry="10" fill="url(#g-muzzle)"/>
-
-    <!-- NARIZ DE PERRO -->
-    <path d="M44,54 Q50,51 56,54 Q56,59 50,60 Q44,59 44,54 Z" fill="#1a1008"/>
-    <ellipse cx="47" cy="55" rx="2" ry="1.2" fill="rgba(255,255,255,.45)"/>
-
-    <!-- BOCA SONRISA perro (con colmillos) -->
-    <path id="ct-mouth-happy" d="M41,61 Q50,69 59,61" stroke="#7a3a10" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-    <path d="M43,62 Q50,67 57,62" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" opacity=".5"/>
-
-    <!-- LENGUA (aparece al saltar) -->
-    <g id="ct-tongue" style="transform:scaleY(0);opacity:0">
-      <ellipse cx="50" cy="67" rx="5.5" ry="7" fill="#e05060"/>
-      <ellipse cx="50" cy="71" rx="5" ry="4" fill="#c03050"/>
-      <!-- línea central lengua -->
-      <line x1="50" y1="62" x2="50" y2="73" stroke="#b02040" stroke-width="1" opacity=".5"/>
-    </g>
-
-    <!-- BOCA TRISTE -->
-    <path id="ct-mouth-sad" d="M41,66 Q50,60 59,66" stroke="#7a3a10" stroke-width="2.8" fill="none" stroke-linecap="round" opacity="0"/>
   </svg>
 </div>
 
@@ -605,6 +499,7 @@
 <script src="js/stats.js"></script>
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
+<script src="js/tutor.js"></script>
 
 </body>
 </html>

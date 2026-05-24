@@ -1,0 +1,188 @@
+/* Tutor IA — panel chat lateral con FAB */
+
+.tutor-fab {
+  position: fixed;
+  /* Lado IZQUIERDO para no chocar con Cartito (bottom-right) */
+  left: 18px;
+  bottom: 78px; /* por encima de la bottom-nav móvil */
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #003366;
+  color: #FFCD00;
+  font-size: 24px;
+  border: 0;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  z-index: 80;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.tutor-fab:hover { transform: scale(1.05); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3); }
+.tutor-fab:active { transform: scale(0.97); }
+
+@media (min-width: 641px) {
+  .tutor-fab { bottom: 24px; left: 24px; }
+}
+
+/* Cuando el panel del tutor está abierto, Cartito se desplaza arriba
+   en escritorio para que no quede bajo el panel (que entra por la derecha) */
+@media (min-width: 641px) {
+  body.tutor-open #cartito { transform: translateX(-440px); transition: transform 0.22s ease-out; }
+}
+
+.tutor-panel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 420px;
+  max-width: 100vw;
+  background: #fff;
+  box-shadow: -8px 0 28px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  z-index: 95;
+  transition: transform 0.22s ease-out;
+  font-family: inherit;
+}
+.tutor-panel.hidden { transform: translateX(110%); pointer-events: none; }
+
+@media (max-width: 640px) {
+  .tutor-panel { width: 100%; }
+}
+
+.tutor-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 14px 16px;
+  background: #003366;
+  color: #fff;
+  gap: 12px;
+}
+.tutor-head strong { font-size: 15px; color: #FFCD00; }
+.tutor-sub {
+  font-size: 12px;
+  color: #cfd8e6;
+  margin-top: 2px;
+}
+.tutor-close {
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+}
+.tutor-close:hover { background: rgba(255, 255, 255, 0.12); }
+
+.tutor-msgs {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.tutor-msg {
+  max-width: 88%;
+  padding: 10px 13px;
+  border-radius: 12px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+.tutor-msg-user {
+  background: #003366;
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+.tutor-msg-assistant {
+  background: #fff;
+  color: #0f172a;
+  align-self: flex-start;
+  border: 1px solid #e2e8f0;
+  border-bottom-left-radius: 4px;
+}
+.tutor-msg code {
+  background: #f1f5f9;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+.tutor-msg.streaming::after {
+  content: "▍";
+  margin-left: 2px;
+  animation: tutor-blink 1s steps(2) infinite;
+  color: #94a3b8;
+}
+@keyframes tutor-blink { 50% { opacity: 0; } }
+
+.tutor-form {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  border-top: 1px solid #e2e8f0;
+  background: #fff;
+  align-items: flex-end;
+}
+.tutor-form textarea {
+  flex: 1;
+  resize: none;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 9px 11px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  max-height: 120px;
+  outline: none;
+}
+.tutor-form textarea:focus { border-color: #003366; box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.12); }
+.tutor-send {
+  background: #003366;
+  color: #FFCD00;
+  border: 0;
+  border-radius: 10px;
+  width: 42px;
+  height: 42px;
+  font-size: 18px;
+  cursor: pointer;
+}
+.tutor-send:hover { background: #002344; }
+.tutor-send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.tutor-footer {
+  font-size: 11px;
+  color: #64748b;
+  padding: 6px 14px 10px;
+  background: #fff;
+  text-align: center;
+}
+
+/* Botón "Preguntar al tutor" dentro del feedback de una pregunta */
+.btn-tutor-ask {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: #003366;
+  border: 1px solid #003366;
+  border-radius: 8px;
+  padding: 7px 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+  margin-top: 6px;
+}
+.btn-tutor-ask:hover { background: #002344; }
+.btn-tutor-ask::before { content: "💬"; }

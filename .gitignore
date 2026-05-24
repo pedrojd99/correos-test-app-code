@@ -14,3 +14,11 @@ make_explanations.py
 node_modules/
 .DS_Store
 Thumbs.db
+
+# Vercel
+.vercel/
+
+# Variables de entorno (API key de Anthropic)
+.env
+.env.local
+.env.*.local

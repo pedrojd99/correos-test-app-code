@@ -24,8 +24,7 @@
                            40%,60%{ transform:scaleY(1); opacity:1 } }
 @keyframes bubble-pop    { 0%  { transform:scale(.55) translateY(10px); opacity:0 }
                            100%{ transform:scale(1)   translateY(0);    opacity:1 } }
-@keyframes lid-blink     { 0%,85%,100%{ transform:scaleY(0) }
-                           92%         { transform:scaleY(1) } }
+/* lid-blink keyframes definidos abajo junto al uso */
 
 /* ── Contenedor principal ────────────────────────────────────── */
 #cartito {
@@ -39,8 +38,14 @@
   gap: 4px;
   cursor: pointer;
   user-select: none;
-  filter: drop-shadow(0 5px 10px rgba(0,0,0,.2));
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.22));
+  transition: transform 0.18s ease-out, filter 0.18s ease-out;
 }
+#cartito:hover {
+  transform: scale(1.04);
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.28));
+}
+#cartito:active { transform: scale(0.97); }
 @media (min-width: 641px) {
   #cartito { bottom: 16px; }
 }
@@ -84,7 +89,7 @@
 
 /* ── SVG del personaje ───────────────────────────────────────── */
 .cartito-char {
-  width: 100px;
+  width: 108px;
   display: block;
   animation: cartito-bob 2.5s ease-in-out infinite;
 }
@@ -94,6 +99,10 @@
 /* ── Parpadeo (transform-origin ajustado al viewBox 120×170) ─── */
 #ct-lid-l { transform-origin: 44px 60px; transform: scaleY(0); animation: lid-blink 5s   ease-in-out infinite; }
 #ct-lid-r { transform-origin: 76px 60px; transform: scaleY(0); animation: lid-blink 5s   ease-in-out infinite .09s; }
+@keyframes lid-blink {
+  0%, 88%, 100% { transform: scaleY(0); }
+  93%, 95%      { transform: scaleY(1); }
+}
 
 /* ── Cola ────────────────────────────────────────────────────── */
 #ct-tail { transform-origin: 85px 112px; }

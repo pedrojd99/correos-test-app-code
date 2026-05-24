@@ -1,0 +1,21 @@
+{
+  "name": "correostest",
+  "version": "1.0.0",
+  "description": "Preparación oposición Correos — PWA + tutor IA",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel deploy --prod",
+    "syntax-check": "node --check api/tutor.js && node --check js/tutor.js && node --check js/app.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  },
+  "devDependencies": {
+    "vercel": "^39.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

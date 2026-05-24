@@ -78,7 +78,6 @@ window.IIAPP = window.IIAPP || {};
     if (screen === 'study') await renderStudy();
     if (screen === 'history') await renderHistory();
     if (screen === 'temario') await renderTemario();
-    if (screen === 'tribunal' && typeof renderTribunal === 'function') await renderTribunal();
     if (screen === 'planes') await renderPlanes();
     if (screen === 'cuenta') await renderCuenta();
     if (screen === 'settings') await renderSettings();
@@ -580,11 +579,14 @@ window.IIAPP = window.IIAPP || {};
     }
 
     const mod = TEMARIO.modules.find(m => m.number === q.module);
+    const tutorBtn = `<button class="btn-tutor-ask" style="margin-top:8px;margin-left:6px" onclick="IIAPP.UI.askTutor('${q.id}')">Preguntar al tutor</button>`;
     const temarioBlock = mod ? `
       <div class="fb-card fb-temario">
         <div class="fb-tag">📖 Tema ${mod.number}: ${mod.shortName}</div>
         <button class="btn-tema-link" style="margin-top:8px" onclick="IIAPP.UI.showTema(${mod.number})">Abrir en el temario →</button>
-      </div>` : '';
+        ${tutorBtn}
+      </div>` : `
+      <div class="fb-card">${tutorBtn}</div>`;
 
     fb.classList.remove('hidden');
     fb.innerHTML = `
@@ -1801,7 +1803,9 @@ window.IIAPP = window.IIAPP || {};
               <li>Preferencias de la app y puesto seleccionado</li>
             </ul>
             <h4 style="margin:16px 0 6px;color:#003366">¿Dónde se guardan?</h4>
-            <p>Exclusivamente en <strong>tu dispositivo</strong> mediante IndexedDB. No se envían a ningún servidor externo. Si borras los datos del sitio en tu navegador, se eliminan permanentemente.</p>
+            <p>Exclusivamente en <strong>tu dispositivo</strong> mediante IndexedDB. Tus respuestas, racha, perfil y progreso <strong>nunca</strong> salen del navegador.</p>
+            <h4 style="margin:16px 0 6px;color:#003366">Tutor IA (servicio opcional)</h4>
+            <p>Si pulsas el botón <strong>💬 Tutor IA</strong> o "Preguntar al tutor" en una pregunta, el <em>texto que escribes</em> y un contexto mínimo (id de pregunta, módulo, % de aciertos por módulo) se envían cifrados a nuestro endpoint <code>/api/tutor</code>, que internamente llama a <strong>Anthropic</strong> (EE.UU.) o <strong>Mistral</strong> (UE) para generar la respuesta. No enviamos tu nombre, email ni IP completa (sólo un hash anónimo). Los proveedores pueden retener el texto del prompt el tiempo establecido en su política (Anthropic: 30 días; Mistral: 30 días). Si no usas el tutor, no se realiza ninguna llamada externa. <strong>Base legal: art. 6.1.b RGPD</strong> (prestación del servicio solicitado).</p>
             <h4 style="margin:16px 0 6px;color:#003366">Tus derechos (RGPD · LOPD-GDD)</h4>
             <ul>
               <li><strong>Acceso:</strong> exporta todos tus datos desde Ajustes → Exportar JSON</li>
@@ -1881,7 +1885,7 @@ window.IIAPP = window.IIAPP || {};
       });
     },
 
-    tribunalLookup(conv) {
+    _tribunalLookupLegacy_unused(conv) {
       const k = (window.IIAPP.OFFICIAL_KEYS || {})[conv];
       if (!k) { alert('Convocatoria no encontrada.'); return; }
       const label = conv.replace('OEP_', 'OEP ').replace('_', '–');
@@ -2042,6 +2046,18 @@ window.IIAPP = window.IIAPP || {};
     showTema(num) {
       _temaActivo = num;
       renderTemario();
+    },
+
+    askTutor(questionId) {
+      const t = App.test;
+      const q = (t && t.questions.find(x => x.id === questionId))
+                || (window.CORREOS && window.CORREOS.QUESTION_BY_ID && window.CORREOS.QUESTION_BY_ID[questionId]);
+      if (!q || !window.IIAPP.Tutor) return;
+      window.IIAPP.Tutor.askAboutQuestion(q);
+    },
+
+    openTutor() {
+      if (window.IIAPP.Tutor) window.IIAPP.Tutor.open();
     },
 
     async onboardingSelectPuesto(puestoId) {

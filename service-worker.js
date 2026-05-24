@@ -42,6 +42,9 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
+  // Nunca cachear el endpoint del tutor IA (es POST + SSE, pero por si acaso)
+  const url = new URL(event.request.url);
+  if (url.pathname.startsWith('/api/')) return;
   // Estrategia cache-first con fallback a red
   event.respondWith(
     caches.match(event.request).then(cached => {
