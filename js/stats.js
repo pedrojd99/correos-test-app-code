@@ -134,18 +134,24 @@ window.IIAPP.Stats = (function() {
     };
   }
 
-  // Racha de días consecutivos con actividad
+  // Racha de días consecutivos con actividad.
+  // Claves de día en horario LOCAL: toISOString() es UTC y desplazaba el día
+  // (en España, jugar antes de las 2:00 contaba para el día anterior).
+  function localDayKey(d) {
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  }
+
   async function streakDays() {
     const answers = await Storage.getAllAnswers();
     if (answers.length === 0) return 0;
     const dayKeys = new Set(
-      answers.map(a => new Date(a.answeredAt).toISOString().slice(0, 10))
+      answers.map(a => localDayKey(new Date(a.answeredAt)))
     );
     let streak = 0;
     let cursor = new Date();
     cursor.setHours(0, 0, 0, 0);
     while (true) {
-      const key = cursor.toISOString().slice(0, 10);
+      const key = localDayKey(cursor);
       if (dayKeys.has(key)) {
         streak += 1;
         cursor.setDate(cursor.getDate() - 1);

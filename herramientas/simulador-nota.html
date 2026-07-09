@@ -116,7 +116,7 @@
   }
   .control input::-webkit-outer-spin-button,
   .control input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-  .control input:focus { outline: none; }
+  .control input:focus { outline: 2px solid var(--azul, #003366); outline-offset: 2px; }
   .control.aciertos input { color: var(--verde); }
   .control.errores input { color: var(--rojo); }
   .totalbar {
@@ -214,8 +214,8 @@
   <p class="lead">Calcula tu nota del examen tipo test de Correos. Configurable con o sin penalización según la convocatoria (varía cada año).</p>
 
   <div class="penal-toggle">
-    <button id="btn-con" class="activo">Con penalización (−1/3 por error)</button>
-    <button id="btn-sin">Sin penalización</button>
+    <button id="btn-con">Con penalización (−1/3 por error)</button>
+    <button id="btn-sin" class="activo">Sin penalización</button>
   </div>
 
   <div class="controls">
@@ -265,7 +265,7 @@
 
 <script>
 const $ = id => document.getElementById(id);
-let conPenalizacion = true;
+let conPenalizacion = false; // el examen de Correos no penaliza por defecto
 
 function calcular() {
   const a = parseInt($('aciertos').value) || 0;

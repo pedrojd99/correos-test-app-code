@@ -162,21 +162,27 @@ function stripHtml(html) {
 }
 
 // ─── Helpers de contexto ─────────────────────────────────────────────────────
+// Ids alineados con data/temario.js (exam.puestos)
 const PUESTO_LABEL = {
-  reparto: "Reparto · Personal Laboral Indefinido",
-  agente: "Agente · Personal Laboral Indefinido",
-  atc: "Atención al Cliente · Personal Laboral Indefinido",
-  clasificacion: "Clasificación · Personal Laboral Indefinido",
+  reparto1: "Reparto motorizado · Personal Laboral Indefinido",
+  reparto2: "Reparto a pie · Personal Laboral Indefinido",
+  clasificacion: "Agente de Clasificación · Personal Laboral Indefinido",
+  atencion: "Atención al Cliente · Personal Laboral Indefinido",
 };
 const PUESTO_CORTE = {
-  reparto: 5.5,
-  agente: 6.0,
-  atc: 6.0,
+  reparto1: 5.5,
+  reparto2: 5.5,
   clasificacion: 5.5,
+  atencion: 6.0,
 };
+const PUESTO_DEFAULT = "reparto1";
 
-function fillPrompt(template, ctx, retrievedChunks, recentMessages) {
-  const puestoKey = ctx?.puesto && PUESTO_LABEL[ctx.puesto] ? ctx.puesto : "reparto";
+// Devuelve el system prompt en dos bloques: `staticPart` (rol + temario, estable
+// dentro de la sesión → cacheable) y `dynamicPart` (estado del alumno + RAG,
+// cambia en cada turno → nunca se cachea). Separar los bloques es lo que hace
+// que cache_control lea de verdad en vez de pagar la escritura en cada turno.
+function fillPrompt(template, ctx, retrievedChunks) {
+  const puestoKey = ctx?.puesto && PUESTO_LABEL[ctx.puesto] ? ctx.puesto : PUESTO_DEFAULT;
   const stats = ctx?.moduleStats
     ? Object.entries(ctx.moduleStats)
         .map(([k, v]) => `T${k} ${v}%`)
@@ -194,10 +200,8 @@ function fillPrompt(template, ctx, retrievedChunks, recentMessages) {
     "{current_topic_id}": ctx?.currentTopicId || "(libre)",
     "{current_question_id}": ctx?.currentQuestionId || "(ninguna)",
     "{retrieved_chunks}": retrievedChunks || "(sin fragmentos relevantes)",
-    "{recent_messages}":
-      recentMessages?.length
-        ? recentMessages.map((m) => `${m.role}: ${m.content}`).join("\n")
-        : "(inicio de conversación)",
+    // El historial real viaja en `messages`; el placeholder solo lo referencia.
+    "{recent_messages}": "(el historial de la conversación va en los mensajes)",
   };
   let out = template;
   for (const [k, v] of Object.entries(subs)) out = out.split(k).join(v);
@@ -211,7 +215,48 @@ function fillPrompt(template, ctx, retrievedChunks, recentMessages) {
       `\nRespuesta correcta: ${currentQ.correct}\n`;
     out = out.replace("=== FRAGMENTOS RELEVANTES DEL TEMARIO (RAG) ===", qBlock + "\n=== FRAGMENTOS RELEVANTES DEL TEMARIO (RAG) ===");
   }
-  return out;
+
+  const marker = '<context cache="false">';
+  const cut = out.indexOf(marker);
+  if (cut === -1) return { staticPart: out, dynamicPart: null };
+  return { staticPart: out.slice(0, cut).trimEnd(), dynamicPart: out.slice(cut) };
+}
+
+// ─── Protección de abuso ─────────────────────────────────────────────────────
+// El endpoint es público y cada petición consume tokens de Anthropic. Dos capas
+// baratas (sin dependencias): filtro de Origin/Referer + rate-limit en memoria.
+// El rate-limit es por contenedor warm de Vercel (no global), suficiente para
+// frenar bucles; para garantías reales haría falta un KV (Upstash/Vercel KV).
+function isAllowedOrigin(req) {
+  const raw = req.headers.origin || req.headers.referer || "";
+  if (!raw) return false; // fetch POST del navegador siempre manda Origin
+  let host;
+  try { host = new URL(raw).host; } catch { return false; }
+  const extra = (process.env.TUTOR_ALLOWED_ORIGINS || "")
+    .split(",").map((s) => s.trim()).filter(Boolean);
+  return host === req.headers.host || host.startsWith("localhost") || extra.includes(host);
+}
+
+const RATE = { perIp: 20, windowMs: 10 * 60 * 1000, globalPerHour: 300 };
+const ipHits = new Map(); // ip -> [timestamps]
+let globalHits = [];
+
+function isRateLimited(req) {
+  const now = Date.now();
+  const ip = (req.headers["x-forwarded-for"] || "").split(",")[0].trim()
+    || req.socket?.remoteAddress || "unknown";
+
+  globalHits = globalHits.filter((t) => now - t < 60 * 60 * 1000);
+  if (globalHits.length >= RATE.globalPerHour) return true;
+
+  const hits = (ipHits.get(ip) || []).filter((t) => now - t < RATE.windowMs);
+  if (hits.length >= RATE.perIp) { ipHits.set(ip, hits); return true; }
+
+  hits.push(now);
+  ipHits.set(ip, hits);
+  globalHits.push(now);
+  if (ipHits.size > 5000) ipHits.clear(); // evita crecer sin límite
+  return false;
 }
 
 // ─── Handler ─────────────────────────────────────────────────────────────────
@@ -228,6 +273,21 @@ export default async function handler(req, res) {
     res.statusCode = 503;
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify({ error: "anthropic_not_configured" }));
+    return;
+  }
+
+  if (!isAllowedOrigin(req)) {
+    res.statusCode = 403;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ error: "forbidden_origin" }));
+    return;
+  }
+
+  if (isRateLimited(req)) {
+    res.statusCode = 429;
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Retry-After", "600");
+    res.end(JSON.stringify({ error: "rate_limited" }));
     return;
   }
 
@@ -248,7 +308,7 @@ export default async function handler(req, res) {
     .slice(-12)
     .map((m) => ({ role: m.role, content: m.content.slice(0, 2000) }));
 
-  if (messages[messages.length - 1].role !== "user") {
+  if (messages.length === 0 || messages[messages.length - 1].role !== "user") {
     res.statusCode = 400;
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify({ error: "last_message_must_be_user" }));
@@ -257,17 +317,25 @@ export default async function handler(req, res) {
 
   const ctx = body.context || {};
   const lastUserMsg = messages[messages.length - 1].content;
-  const history = messages.slice(0, -1);
+  // El primer mensaje de la API debe ser 'user': descartamos assistants iniciales
+  // que puedan quedar tras el recorte del historial.
+  const firstUser = messages.findIndex((m) => m.role === "user");
+  const chatMessages = messages.slice(firstUser);
 
-  let systemPrompt;
+  let systemBlocks;
   try {
     const template = loadPrompt();
     const chunks = retrieveChunks(lastUserMsg, ctx);
-    systemPrompt = fillPrompt(template, ctx, chunks, history);
+    const { staticPart, dynamicPart } = fillPrompt(template, ctx, chunks);
+    systemBlocks = [
+      { type: "text", text: staticPart, cache_control: { type: "ephemeral" } },
+    ];
+    if (dynamicPart) systemBlocks.push({ type: "text", text: dynamicPart });
   } catch (e) {
+    console.error("prompt_assembly_failed:", e);
     res.statusCode = 500;
     res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify({ error: "prompt_assembly_failed", detail: String(e.message || e) }));
+    res.end(JSON.stringify({ error: "prompt_assembly_failed" }));
     return;
   }
 
@@ -289,21 +357,21 @@ export default async function handler(req, res) {
   const client = new Anthropic({ apiKey });
   const model = process.env.TUTOR_MODEL || "claude-sonnet-4-6";
   const maxTokens = Number(process.env.TUTOR_MAX_TOKENS || 600);
+  // Opus 4.7+ rechaza los sampling params con 400; solo Sonnet/Haiku los aceptan
+  const sampling = /claude-(sonnet|haiku)/.test(model) ? { temperature: 0.3 } : {};
 
+  let finished = false;
   try {
     const stream = await client.messages.stream({
       model,
       max_tokens: maxTokens,
-      temperature: 0.3,
-      system: [
-        {
-          type: "text",
-          text: systemPrompt,
-          cache_control: { type: "ephemeral" },
-        },
-      ],
-      messages: [{ role: "user", content: lastUserMsg }],
+      ...sampling,
+      system: systemBlocks,
+      messages: chatMessages,
     });
+
+    // Si el cliente se desconecta a mitad, abortamos para no pagar tokens de más
+    res.on("close", () => { if (!finished) stream.abort(); });
 
     for await (const chunk of stream) {
       if (chunk.type === "content_block_delta" && chunk.delta?.type === "text_delta") {
@@ -311,6 +379,7 @@ export default async function handler(req, res) {
       }
     }
     const final = await stream.finalMessage();
+    finished = true;
     send("done", {
       usage: final?.usage
         ? {
@@ -324,7 +393,10 @@ export default async function handler(req, res) {
     });
     res.end();
   } catch (e) {
-    send("error", { error: String(e?.message || e) });
+    finished = true;
+    if (e?.name === "AbortError") { res.end(); return; }
+    console.error("tutor_stream_error:", e);
+    send("error", { error: "tutor_unavailable" });
     res.end();
   }
 }

@@ -169,7 +169,7 @@ window.IIAPP.Tutor = (function () {
       if (v && v.accuracy != null) moduleStats[k] = Math.round(v.accuracy);
     });
     return {
-      puesto: profile.puesto || "reparto",
+      puesto: profile.puesto || "reparto1",
       alias: profile.alias || (profile.name ? profile.name.split(" ")[0] : null),
       moduleStats,
       ...(State.contextHint || {}),

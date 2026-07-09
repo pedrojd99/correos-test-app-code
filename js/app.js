@@ -84,8 +84,8 @@ window.IIAPP = window.IIAPP || {};
     if (screen === 'result') await renderResult(params.sessionId);
 
     // Actualizar nav activa (header + barra inferior móvil)
-    $$('.nav-item, .bn-item').forEach(n => n.classList.remove('active'));
-    $$(`[data-nav="${screen}"]`).forEach(n => n.classList.add('active'));
+    $$('.nav-item, .bn-item').forEach(n => { n.classList.remove('active'); n.removeAttribute('aria-current'); });
+    $$(`[data-nav="${screen}"]`).forEach(n => { n.classList.add('active'); n.setAttribute('aria-current', 'page'); });
 
     window.scrollTo(0, 0);
   }
@@ -105,7 +105,7 @@ window.IIAPP = window.IIAPP || {};
       qdq   = Stats.questionOfDay(window.IIAPP.QUESTIONS);
     } catch(e) {
       console.error('renderHome error:', e);
-      target.innerHTML = '<div class="container"><p style="padding:32px;text-align:center">Cargando... <button class="btn btn-primary" style="margin-top:16px" onclick="location.reload()">Recargar</button></p></div>';
+      target.innerHTML = '<div class="container"><div style="padding:32px;text-align:center"><p>No se pudieron cargar tus datos de progreso.</p><button class="btn btn-primary" style="margin-top:16px" onclick="location.reload()">Reintentar</button></div></div>';
       return;
     }
 
@@ -151,7 +151,8 @@ window.IIAPP = window.IIAPP || {};
             <span>${level.xp} puntos</span>
             ${level.nextXP ? `<span class="text-muted" style="font-size:12px">Siguiente nivel: ${level.nextXP} puntos</span>` : '<span style="color:#FFCD00;font-weight:700">¡Nivel máximo!</span>'}
           </div>
-          <div class="dl-xp-track">
+          <div class="dl-xp-track" role="progressbar" aria-label="Progreso hacia el siguiente nivel"
+               aria-valuenow="${Math.round(level.progress)}" aria-valuemin="0" aria-valuemax="100">
             <div class="dl-xp-fill" style="width:${level.progress}%;background:${level.color}"></div>
           </div>
         </div>
@@ -230,7 +231,7 @@ window.IIAPP = window.IIAPP || {};
         <!-- Foco del día (colapsado) -->
         <details class="card dl-details">
           <summary style="cursor:pointer;padding:4px 0;font-weight:600;color:#003366;list-style:none">
-            ▸ Temas prioritarios hoy (IA)
+            Temas prioritarios hoy (IA)
           </summary>
           <div class="foco-list" style="margin-top:12px">
             ${focoMods.map((m, i) => `
@@ -883,6 +884,7 @@ window.IIAPP = window.IIAPP || {};
         this.utterance = null;
         this.audio = null;
         this.currentNum = null;
+        this._updateBar(null, false);
         if (onEnd) onEnd();
       };
       a.onerror = () => console.warn('Audio no disponible:', src);
@@ -1805,7 +1807,7 @@ window.IIAPP = window.IIAPP || {};
             <h4 style="margin:16px 0 6px;color:#003366">¿Dónde se guardan?</h4>
             <p>Exclusivamente en <strong>tu dispositivo</strong> mediante IndexedDB. Tus respuestas, racha, perfil y progreso <strong>nunca</strong> salen del navegador.</p>
             <h4 style="margin:16px 0 6px;color:#003366">Tutor IA (servicio opcional)</h4>
-            <p>Si pulsas el botón <strong>💬 Tutor IA</strong> o "Preguntar al tutor" en una pregunta, el <em>texto que escribes</em> y un contexto mínimo (id de pregunta, módulo, % de aciertos por módulo) se envían cifrados a nuestro endpoint <code>/api/tutor</code>, que internamente llama a <strong>Anthropic</strong> (EE.UU.) o <strong>Mistral</strong> (UE) para generar la respuesta. No enviamos tu nombre, email ni IP completa (sólo un hash anónimo). Los proveedores pueden retener el texto del prompt el tiempo establecido en su política (Anthropic: 30 días; Mistral: 30 días). Si no usas el tutor, no se realiza ninguna llamada externa. <strong>Base legal: art. 6.1.b RGPD</strong> (prestación del servicio solicitado).</p>
+            <p>Si pulsas el botón <strong>💬 Tutor IA</strong> o "Preguntar al tutor" en una pregunta, el <em>texto que escribes</em> y un contexto mínimo (id de pregunta, módulo, % de aciertos por módulo, alias si lo has configurado) se envían cifrados a nuestro endpoint <code>/api/tutor</code>, que internamente llama a <strong>Anthropic</strong> (EE.UU.) para generar la respuesta. No enviamos tu nombre ni tu email. El proveedor puede retener el texto del prompt el tiempo establecido en su política (Anthropic: 30 días). Si no usas el tutor, no se realiza ninguna llamada externa. <strong>Base legal: art. 6.1.b RGPD</strong> (prestación del servicio solicitado).</p>
             <h4 style="margin:16px 0 6px;color:#003366">Tus derechos (RGPD · LOPD-GDD)</h4>
             <ul>
               <li><strong>Acceso:</strong> exporta todos tus datos desde Ajustes → Exportar JSON</li>
@@ -1885,83 +1887,6 @@ window.IIAPP = window.IIAPP || {};
       });
     },
 
-    _tribunalLookupLegacy_unused(conv) {
-      const k = (window.IIAPP.OFFICIAL_KEYS || {})[conv];
-      if (!k) { alert('Convocatoria no encontrada.'); return; }
-      const label = conv.replace('OEP_', 'OEP ').replace('_', '–');
-      const overlay = document.createElement('div');
-      overlay.className = 'tribunal-overlay';
-      overlay.innerHTML = `
-        <div class="tribunal-modal">
-          <div class="modal-head">
-            <h3>${label} — consulta de respuestas oficiales</h3>
-            <button class="btn-link" onclick="this.closest('.tribunal-overlay').remove()">✕ Cerrar</button>
-          </div>
-          <div class="modal-body">
-            <div class="lookup-tabs">
-              <button class="tab-btn active" data-tab="test">Test (${Object.keys(k.test_principales).length})</button>
-              <button class="tab-btn" data-tab="reserva">Reserva (${Object.keys(k.test_reserva).length})</button>
-              <button class="tab-btn" data-tab="supuestos">Supuestos</button>
-            </div>
-            <div id="lookup-content"></div>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(overlay);
-
-      const renderTab = (tab) => {
-        const c = overlay.querySelector('#lookup-content');
-        if (tab === 'test' || tab === 'reserva') {
-          const data = tab === 'test' ? k.test_principales : k.test_reserva;
-          c.innerHTML = `
-            <div class="answer-grid">
-              ${Object.entries(data).map(([n, l]) => `
-                <div class="answer-cell">
-                  <span class="answer-num">${n}</span>
-                  <span class="answer-letter answer-${l}">${l}</span>
-                </div>
-              `).join('')}
-            </div>
-            <p class="text-muted small">Plantilla oficial publicada por el Tribunal Cuerpo Ayudantes IIPP. ${Object.keys(data).length} preguntas.</p>
-          `;
-        } else {
-          c.innerHTML = Object.entries(k.supuestos).map(([s, preguntas]) => `
-            <div class="supuesto-block">
-              <h4>Supuesto práctico ${s}</h4>
-              <div class="answer-grid">
-                ${Object.entries(preguntas).map(([n, l]) => `
-                  <div class="answer-cell">
-                    <span class="answer-num">${n}</span>
-                    <span class="answer-letter answer-${l}">${l}</span>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          `).join('');
-        }
-      };
-
-      overlay.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.onclick = () => {
-          overlay.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          renderTab(btn.dataset.tab);
-        };
-      });
-      renderTab('test');
-    },
-
-    tribunalSimulacro(conv) {
-      const k = (window.IIAPP.OFFICIAL_KEYS || {})[conv];
-      const nTotal = k ? Object.keys(k.test_principales).length : 120;
-      if (!confirm(`Simulacro estilo ${conv}: ${nTotal} preguntas cronometradas con tu banco actual.\n\nAl terminar verás tu nota frente a la nota de corte histórica del Tribunal.\n\n¿Empezar?`)) return;
-      startTest({
-        mode: 'simulacro', num: nTotal,
-        penalty: true, instant: false, shuffle: true,
-        tribunalConv: conv
-      });
-    },
-
     startFailedReview() {
       startTest({
         mode: 'failed', num: 25,
@@ -2024,8 +1949,10 @@ window.IIAPP = window.IIAPP || {};
         examDate: $('#cuenta-exam-date')?.value || '',
         hoursDay: parseInt($('#cuenta-hours')?.value || '') || null,
       };
+      // Se guarda también el valor vacío: permite al usuario borrar sus datos
+      // (rectificación RGPD) dejando el campo en blanco.
       for (const [k, v] of Object.entries(fields)) {
-        if (v !== '' && v !== null) await Storage.setProfile(k, v);
+        await Storage.setProfile(k, v === null ? '' : v);
       }
       if (wasNew && fields.email) {
         await Storage.setProfile('registeredAt', Date.now());
@@ -2105,115 +2032,32 @@ window.IIAPP = window.IIAPP || {};
     },
 
     async cancelPlan() {
-      if (!confirm('¿Cancelar suscripción? Mantendrás el acceso hasta la fecha de renovación. En producción esta acción la gestionaría el portal de Stripe.')) return;
+      if (!confirm('¿Desactivar tu plan en este dispositivo? Tu código de activación seguirá siendo válido y podrás reactivarlo cuando quieras.')) return;
       await Storage.setProfile('plan', 'free');
       await Storage.setProfile('planExpires', null);
-      alert('Suscripción cancelada (simulado).');
+      alert('Plan desactivado.');
       show('cuenta');
     },
 
     // -------- Reproductor temario --------
     playTema(num) {
-      const content = window.IIAPP.TEMARIO_CONTENT[num];
-      const tema = TEMARIO.modules.flatMap(m => m.topics).find(t => t.number === num);
-      if (!content || !tema) return;
-      const trackName = $('#ap-track-name');
-      if (trackName) trackName.textContent = `Tema ${num} · ${tema.name}`;
-      $$('.tema-row').forEach(r => r.classList.remove('tema-playing'));
-      const row = document.querySelector(`.tema-row[data-topic="${num}"]`);
-      if (row) row.classList.add('tema-playing');
-      const toggle = $('#ap-toggle');
-      if (toggle) toggle.textContent = '⏸';
-      TTS.play(num, content, () => {
-        if (row) row.classList.remove('tema-playing');
-        if (toggle) toggle.textContent = '▶';
-      });
+      const content = (window.CORREOS.TEMARIO_CONTENT || {})[num];
+      if (!content) return;
+      TTS.play(num, content);
     },
 
     toggleTema() {
-      if (!TTS.utterance) {
-        // Sin tema seleccionado, arrancar el primero del primer módulo
-        const first = TEMARIO.modules[0].topics[0].number;
-        if (window.IIAPP.TEMARIO_CONTENT[first]) UI.playTema(first);
+      if (!TTS.audio) {
+        // Sin tema sonando, arrancar el tema activo en pantalla
+        UI.playTema(_temaActivo);
         return;
       }
-      if (window.speechSynthesis.paused) {
-        TTS.resume();
-        const t = $('#ap-toggle'); if (t) t.textContent = '⏸';
-      } else if (window.speechSynthesis.speaking) {
-        TTS.pause();
-        const t = $('#ap-toggle'); if (t) t.textContent = '▶';
-      }
+      if (TTS.audio.paused) TTS.resume();
+      else TTS.pause();
     },
 
     stopTema() {
       TTS.stop();
-      $$('.tema-row').forEach(r => r.classList.remove('tema-playing'));
-      const t = $('#ap-toggle'); if (t) t.textContent = '▶';
-      const tn = $('#ap-track-name'); if (tn) tn.textContent = 'Selecciona un tema';
-    },
-
-    nextTema() {
-      const current = TTS.currentTopic;
-      const allTopics = TEMARIO.modules.flatMap(m => m.topics).map(t => t.number);
-      const i = current ? allTopics.indexOf(current) : -1;
-      const next = allTopics[i + 1];
-      if (next && window.IIAPP.TEMARIO_CONTENT[next]) UI.playTema(next);
-    },
-
-    prevTema() {
-      const current = TTS.currentTopic;
-      const allTopics = TEMARIO.modules.flatMap(m => m.topics).map(t => t.number);
-      const i = current ? allTopics.indexOf(current) : 0;
-      const prev = allTopics[i - 1] || allTopics[0];
-      if (prev && window.IIAPP.TEMARIO_CONTENT[prev]) UI.playTema(prev);
-    },
-
-    setSpeed(rate) {
-      TTS.setRate(rate);
-      $$('.speed-btn').forEach(b => b.classList.remove('active'));
-      $$('.speed-btn').forEach(b => {
-        if (parseFloat(b.textContent) === rate) b.classList.add('active');
-      });
-    },
-
-    downloadTemaPdf(num) {
-      const tema = TEMARIO.modules.flatMap(m => m.topics.map(t => ({ ...t, mod: m }))).find(t => t.number === num);
-      const content = window.IIAPP.TEMARIO_CONTENT[num];
-      if (!tema || !content) return;
-      _openPrintWindow(`Tema ${num} — ${tema.name}`, _renderTemaHtml(tema, content));
-    },
-
-    downloadAllTemarioPdf() {
-      const CONTENT = window.IIAPP.TEMARIO_CONTENT || {};
-      const sections = TEMARIO.modules.map(m => {
-        const temas = m.topics.filter(t => CONTENT[t.number]).map(t => _renderTemaHtml({ ...t, mod: m }, CONTENT[t.number])).join('<div class="page-break"></div>');
-        return `
-          <div class="pdf-module">
-            <h2 class="pdf-module-title" style="border-color: ${m.color}; color: ${m.color}">Módulo ${m.number} · ${m.name}</h2>
-            <p class="pdf-module-desc">${m.topics.length} temas · ${(m.weight * 100).toFixed(0)}% del temario</p>
-          </div>
-          <div class="page-break"></div>
-          ${temas}
-        `;
-      }).join('<div class="page-break"></div>');
-      const cover = `
-        <div class="pdf-cover">
-          <div class="pdf-logo">IIAPP</div>
-          <h1>Temario completo</h1>
-          <h2>Cuerpo de Ayudantes de Instituciones Penitenciarias</h2>
-          <p class="pdf-cover-meta">${TEMARIO.modules.length} módulos · 50 temas · Generado el ${new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-          <div class="pdf-cover-modules">
-            ${TEMARIO.modules.map(m => `
-              <div class="pdf-cover-mod" style="border-left-color: ${m.color}">
-                <b>Módulo ${m.number}</b> · ${m.name}<br>
-                <span class="text-muted small">${m.topics.length} temas · ${(m.weight * 100).toFixed(0)}%</span>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      `;
-      _openPrintWindow('Temario completo IIPP', cover + '<div class="page-break"></div>' + sections);
     },
 
     async toggleDarkMode(checked) {
@@ -2334,10 +2178,10 @@ window.IIAPP = window.IIAPP || {};
           con el banco completo, activa el acceso al concurso.
         </p>
         <div style="background: #f8fafc; border-radius: 12px; padding: 20px; margin-bottom: 24px; text-align: left;">
-          <div style="font-weight: 700; font-size: 28px; color: #003366; margin-bottom: 4px;">49 €</div>
+          <div style="font-weight: 700; font-size: 28px; color: #003366; margin-bottom: 4px;">${PLAN_CATALOG.completo.priceLabel}</div>
           <div style="color: #64748b; font-size: 13px; margin-bottom: 14px;">pago único · acceso completo hasta el examen</div>
           <ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: #334155;">
-            <li style="padding: 4px 0;">✓ Las 13.000+ preguntas oficiales</li>
+            <li style="padding: 4px 0;">✓ Banco completo de preguntas de exámenes oficiales</li>
             <li style="padding: 4px 0;">✓ Simulacros ilimitados cronometrados</li>
             <li style="padding: 4px 0;">✓ Predicción de aprobado</li>
             <li style="padding: 4px 0;">✓ Sin renovación automática</li>
@@ -2347,7 +2191,7 @@ window.IIAPP = window.IIAPP || {};
           style="width: 100%; padding: 15px; background: #003366; color: #FFCD00; border: 0;
                  border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer;
                  font-family: inherit; margin-bottom: 10px;">
-          Activar acceso completo — 49 €
+          Activar acceso completo — ${PLAN_CATALOG.completo.priceLabel}
         </button>
         <button onclick="document.getElementById('paywall-overlay').remove();"
           style="background: none; border: 0; color: #94a3b8; font-size: 14px;
