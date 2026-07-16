@@ -1,0 +1,11 @@
+{
+  "appId": "com.correostest.app",
+  "appName": "CorreosTest",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}

@@ -13,7 +13,7 @@ window.CORREOS.TEMARIO = {
       shortName: 'Marco normativo',
       weight: 0.10,
       color: '#003366',
-      legislacion: ['Ley 43/2010 del Servicio Postal Universal', 'RD 1829/1999', 'Directiva 2008/6/CE'],
+      legislacion: ['Ley 43/2010 del Servicio Postal Universal', 'RD 437/2024 Reglamento postal', 'Directiva 2008/6/CE'],
       topics: [
         { number: 1, name: 'Marco normativo postal y naturaleza jurídica de Correos' },
         { number: 2, name: 'Organismos reguladores nacionales (CNMC, Ministerio de Transportes) e internacionales' },
@@ -44,7 +44,7 @@ window.CORREOS.TEMARIO = {
       shortName: 'Productos postales',
       weight: 0.10,
       color: '#0077C0',
-      legislacion: ['Ley 43/2010', 'RD 1829/1999'],
+      legislacion: ['Ley 43/2010', 'RD 437/2024 Reglamento postal'],
       topics: [
         { number: 12, name: 'Carta ordinaria y certificada. Pesos, medidas y tarifas' },
         { number: 13, name: 'Correo urgente, burofax y notificaciones' },
@@ -104,7 +104,7 @@ window.CORREOS.TEMARIO = {
       shortName: 'Admisión',
       weight: 0.10,
       color: '#0F8060',
-      legislacion: ['Ley 43/2010', 'RD 1829/1999 art. sobre admisión'],
+      legislacion: ['Ley 43/2010', 'RD 437/2024 arts. 16 y 24 (admisión y prohibiciones)'],
       topics: [
         { number: 32, name: 'Admisión en ventanilla: documentación, identificación, pesaje' },
         { number: 33, name: 'Admisión masiva y preregistrada: contratos, franqueos' },
@@ -134,7 +134,7 @@ window.CORREOS.TEMARIO = {
       shortName: 'Distribución',
       weight: 0.10,
       color: '#C03030',
-      legislacion: ['Ley 43/2010 art. 22 distribución', 'RD 1829/1999'],
+      legislacion: ['Ley 43/2010 art. 22 distribución', 'RD 437/2024 arts. 20 y 25 (entrega y buzones)'],
       topics: [
         { number: 42, name: 'Unidades de reparto: urbano, rural, mixto' },
         { number: 43, name: 'Itinerarios y rutas. Liquidación de la ruta' },

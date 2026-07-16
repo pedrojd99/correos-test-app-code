@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#FFCD00">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://correostest.com; img-src 'self' data:; object-src 'none'; base-uri 'self'">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
 <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
@@ -13,19 +13,12 @@
 <link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="css/cartito.css">
 <link rel="stylesheet" href="css/tutor.css">
 <style>
-  :root { --brand-primary: #003366; --brand-accent: #FFCD00; }
-  .app-header { background: #003366 !important; color: #FFCD00 !important; }
-  .app-header .brand-logo { background: #FFCD00 !important; color: #003366 !important; }
-  .app-header .brand { color: #FFCD00 !important; }
-  .app-header .nav-item { color: #fff !important; }
-  .app-header .nav-item.active { color: #FFCD00 !important; }
-  .btn-primary { background: #003366 !important; color: #FFCD00 !important; }
-  .btn-primary:hover { background: #002344 !important; }
+  /* Cabecera y botón primario → css/styles.css (tokens --brand / --accent) */
 
   /* Selector de puesto */
   .puesto-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
@@ -44,6 +37,10 @@
 
   /* Pantalla de temario */
   .temario-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .vista-toggle { display: inline-flex; background: #f1f5f9; border: 1px solid #e5e7eb; border-radius: 10px; padding: 4px; gap: 4px; margin-bottom: 16px; }
+  .vista-btn { padding: 8px 16px; border: 0; border-radius: 7px; background: transparent; cursor: pointer; font-size: 13px; font-weight: 600; font-family: inherit; color: #64748b; transition: all 0.15s; }
+  .vista-btn:hover { color: #003366; }
+  .vista-btn.active { background: #003366; color: #FFCD00; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
   .tema-btn { padding: 8px 14px; border: 2px solid #e5e7eb; border-radius: 8px; background: #fff; cursor: pointer; font-size: 13px; font-weight: 500; font-family: inherit; transition: all 0.15s; }
   .tema-btn:hover { border-color: #003366; color: #003366; }
   .tema-btn.active { background: #003366; color: #FFCD00; border-color: #003366; }
@@ -142,13 +139,13 @@
       <span>CorreosTest</span>
     </button>
     <nav class="app-nav">
-      <button class="nav-item" data-nav="home" onclick="IIAPP.UI.show('home')">🏠 Inicio</button>
-      <button class="nav-item" data-nav="study" onclick="IIAPP.UI.show('study')">🎯 Jugar</button>
-      <button class="nav-item" data-nav="temario" onclick="IIAPP.UI.show('temario')">📖 Temario</button>
-      <button class="nav-item" data-nav="history" onclick="IIAPP.UI.show('history')">📊 Mi progreso</button>
-      <button class="nav-item" data-nav="planes" onclick="IIAPP.UI.show('planes')">⭐ Planes</button>
-      <button class="nav-item" data-nav="cuenta" onclick="IIAPP.UI.show('cuenta')">👤 Cuenta</button>
-      <button class="nav-item" data-nav="settings" onclick="IIAPP.UI.show('settings')">⚙️ Ajustes</button>
+      <button class="nav-item" data-nav="home" onclick="IIAPP.UI.show('home')"><span aria-hidden="true">🏠</span> Inicio</button>
+      <button class="nav-item" data-nav="study" onclick="IIAPP.UI.show('study')"><span aria-hidden="true">🎯</span> Practicar</button>
+      <button class="nav-item" data-nav="temario" onclick="IIAPP.UI.show('temario')"><span aria-hidden="true">📖</span> Temario</button>
+      <button class="nav-item" data-nav="history" onclick="IIAPP.UI.show('history')"><span aria-hidden="true">📊</span> Mi progreso</button>
+      <button class="nav-item" data-nav="planes" onclick="IIAPP.UI.show('planes')"><span aria-hidden="true">⭐</span> Planes</button>
+      <button class="nav-item" data-nav="cuenta" onclick="IIAPP.UI.show('cuenta')"><span aria-hidden="true">👤</span> Cuenta</button>
+      <button class="nav-item" data-nav="settings" onclick="IIAPP.UI.show('settings')"><span aria-hidden="true">⚙️</span> Ajustes</button>
     </nav>
   </div>
 </header>
@@ -156,19 +153,19 @@
 <!-- Barra de navegación inferior (solo móvil ≤640px) -->
 <nav class="bottom-nav">
   <button class="bn-item active" data-nav="home" onclick="IIAPP.UI.show('home')">
-    <span class="bn-icon">🏠</span><span>Inicio</span>
+    <span class="bn-icon" aria-hidden="true">🏠</span><span>Inicio</span>
   </button>
   <button class="bn-item" data-nav="study" onclick="IIAPP.UI.show('study')">
-    <span class="bn-icon">🎯</span><span>Jugar</span>
+    <span class="bn-icon" aria-hidden="true">🎯</span><span>Practicar</span>
   </button>
   <button class="bn-item" data-nav="temario" onclick="IIAPP.UI.show('temario')">
-    <span class="bn-icon">📖</span><span>Temario</span>
+    <span class="bn-icon" aria-hidden="true">📖</span><span>Temario</span>
   </button>
   <button class="bn-item" data-nav="history" onclick="IIAPP.UI.show('history')">
-    <span class="bn-icon">📊</span><span>Mi progreso</span>
+    <span class="bn-icon" aria-hidden="true">📊</span><span>Mi progreso</span>
   </button>
   <button class="bn-item" data-nav="planes" onclick="IIAPP.UI.show('planes')">
-    <span class="bn-icon">⭐</span><span>Planes</span>
+    <span class="bn-icon" aria-hidden="true">⭐</span><span>Planes</span>
   </button>
 </nav>
 
@@ -187,6 +184,7 @@
 <!-- Datos -->
 <script src="data/temario.js"></script>
 <script src="data/temario_content.js"></script>
+<script src="data/temario_resumen.js"></script>
 <script src="data/questions.js"></script>
 <script src="data/extra_questions.js"></script>
 <script src="data/explanations.js"></script>
@@ -196,8 +194,9 @@
   CARTITO — Integración Lottie (cuando tengas el archivo):
   1. Descarga un JSON de lottiefiles.com (perro/mascota de tu elección)
   2. Guárdalo como: audio/cartito-idle.json
-  3. Añade estos scripts justo antes del cierre </body>:
-     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  3. Descarga lottie-player.js y sírvelo EN LOCAL (p. ej. js/vendor/lottie-player.js):
+     la CSP de esta página (script-src 'self') bloquea cargarlo desde unpkg u otro CDN.
+     <script src="js/vendor/lottie-player.js"></script> justo antes del cierre </body>.
   4. Llama: IIAPP.Mascot.loadLottie('audio/cartito-idle.json')
   Los estados (jump, shake) se controlan con loadLottie('audio/cartito-happy.json') etc.
 -->

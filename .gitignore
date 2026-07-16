@@ -10,6 +10,9 @@ make_codes.py
 make_icons.py
 make_explanations.py
 
+# Capacitor: www/ se regenera con scripts/build-www.mjs
+www/
+
 # Node / sistema
 node_modules/
 .DS_Store

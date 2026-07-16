@@ -797,6 +797,7 @@ window.IIAPP = window.IIAPP || {};
         <div class="actions-row">
           <button class="btn btn-secondary" onclick="IIAPP.UI.show('home')">Volver al inicio</button>
           <button class="btn btn-primary" onclick="IIAPP.UI.startFailedReview()">Repasar fallos</button>
+          <button class="btn btn-secondary" onclick="IIAPP.UI.shareResult(this, ${session.score})">Compartir mi nota</button>
         </div>
       </div>
     `;
@@ -930,10 +931,12 @@ window.IIAPP = window.IIAPP || {};
   // ========== PANTALLA: TEMARIO ==========
 
   let _temaActivo = 1;
+  let _temaVista = 'completo'; // 'completo' | 'resumen'
 
   async function renderTemario() {
     const target = $('#screen-temario');
     const CONTENT = window.CORREOS.TEMARIO_CONTENT || {};
+    const RESUMEN = window.CORREOS.TEMARIO_RESUMEN || {};
     const modulos = TEMARIO.modules;
 
     const navBtns = modulos.map(m => `
@@ -944,7 +947,8 @@ window.IIAPP = window.IIAPP || {};
     `).join('');
 
     const modulo = modulos.find(m => m.number === _temaActivo);
-    const contenido = CONTENT[_temaActivo] || '<p class="text-muted">Contenido pendiente de cargar.</p>';
+    const fuente = _temaVista === 'resumen' ? RESUMEN : CONTENT;
+    const contenido = fuente[_temaActivo] || '<p class="text-muted">Contenido pendiente de cargar.</p>';
 
     const legislacionBadges = (modulo?.legislacion || []).map(l =>
       `<span class="legislacion-badge">📋 ${l}</span>`
@@ -955,13 +959,18 @@ window.IIAPP = window.IIAPP || {};
         <div class="page-head-row no-print">
           <div>
             <h1 class="page-title">Temario oficial</h1>
-            <p class="page-subtitle">12 temas · Basado en la convocatoria oficial y la legislación vigente</p>
+            <p class="page-subtitle">12 temas desarrollados en profundidad + resumen de repaso · Legislación vigente (RD 437/2024)</p>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
             <button class="btn btn-secondary no-print" onclick="IIAPP.UI.playTema(${_temaActivo})">▶ Escuchar</button>
-            <button class="btn btn-secondary no-print" onclick="window.print()">Imprimir tema</button>
+            <button class="btn btn-secondary no-print" onclick="window.print()">Imprimir ${_temaVista === 'resumen' ? 'resumen' : 'tema'}</button>
             <button class="btn btn-secondary no-print" onclick="IIAPP.UI.printTemarioCompleto()">PDF completo</button>
           </div>
+        </div>
+
+        <div class="vista-toggle no-print">
+          <button class="vista-btn ${_temaVista === 'completo' ? 'active' : ''}" onclick="IIAPP.UI.setTemaVista('completo')">📖 Tema completo</button>
+          <button class="vista-btn ${_temaVista === 'resumen' ? 'active' : ''}" onclick="IIAPP.UI.setTemaVista('resumen')">⚡ Resumen (repaso rápido)</button>
         </div>
 
         <!-- Barra de audio (oculta hasta que se pulse Escuchar) -->
@@ -1833,6 +1842,23 @@ window.IIAPP = window.IIAPP || {};
       show('home');
     },
 
+    async shareResult(btn, score) {
+      const text = `He sacado un ${fmt(score, 1)}/10 en un simulacro del examen de Correos 2026. ¿Aprobarías tú? Practica gratis y sin registro: https://correostest.com`;
+      if (navigator.share) {
+        try { await navigator.share({ text }); return; }
+        catch (e) { if (e && e.name === 'AbortError') return; }
+      }
+      try {
+        await navigator.clipboard.writeText(text);
+        const orig = btn.textContent;
+        btn.textContent = 'Copiado, pégalo en tu grupo';
+        btn.disabled = true;
+        setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 2500);
+      } catch {
+        window.prompt('Copia el texto para compartirlo:', text);
+      }
+    },
+
     nextQuestion,
 
     skipNoFeedback() {
@@ -1972,6 +1998,11 @@ window.IIAPP = window.IIAPP || {};
 
     showTema(num) {
       _temaActivo = num;
+      renderTemario();
+    },
+
+    setTemaVista(vista) {
+      _temaVista = vista === 'resumen' ? 'resumen' : 'completo';
       renderTemario();
     },
 

@@ -7,12 +7,18 @@
   "scripts": {
     "dev": "vercel dev",
     "deploy": "vercel deploy --prod",
-    "syntax-check": "node --check api/tutor.js && node --check js/tutor.js && node --check js/app.js"
+    "syntax-check": "node --check api/tutor.js && node --check js/tutor.js && node --check js/app.js",
+    "build:www": "node scripts/build-www.mjs",
+    "android:sync": "node scripts/build-www.mjs && cap sync android"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0"
   },
   "devDependencies": {
+    "@capacitor/android": "7",
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "7",
+    "@capacitor/core": "7",
     "vercel": "^39.0.0"
   },
   "engines": {

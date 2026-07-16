@@ -8,7 +8,7 @@
 //   - Estáticos pesados e inmutables (iconos, audio, fuentes): cache-first.
 //   - /api/*: nunca se cachea.
 
-const CACHE_NAME = 'correostest-v5';
+const CACHE_NAME = 'correostest-v6';
 const URLS_TO_CACHE = [
   './',
   './index.html',
@@ -18,6 +18,7 @@ const URLS_TO_CACHE = [
   './css/tutor.css',
   './data/temario.js',
   './data/temario_content.js',
+  './data/temario_resumen.js',
   './data/questions.js',
   './data/extra_questions.js',
   './data/explanations.js',
