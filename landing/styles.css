@@ -338,7 +338,8 @@ a:hover { text-decoration: underline; }
   background: var(--c-bg-alt);
 }
 .item input[type="number"]:focus {
-  outline: none;
+  outline: 2px solid var(--c-azul);
+  outline-offset: 1px;
   border-color: var(--c-azul);
 }
 .item .puntos {
@@ -478,7 +479,7 @@ a:hover { text-decoration: underline; }
   -webkit-appearance: none;
   margin: 0;
 }
-.control input:focus { outline: none; }
+.control input:focus { outline: 2px solid var(--c-azul); outline-offset: 2px; }
 .control.aciertos input { color: var(--c-success); }
 .control.errores input { color: var(--c-error); }
 .control-config {

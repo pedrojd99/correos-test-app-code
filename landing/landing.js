@@ -105,11 +105,57 @@ const $ = id => document.getElementById(id);
   const form = document.getElementById('email-form');
   if (!form) return;
 
-  form.addEventListener('submit', function(e) {
+  const status = document.getElementById('email-status');
+  const btn = form.querySelector('button[type="submit"]');
+  const btnLabel = btn.textContent;
+
+  function showStatus(msg, isError) {
+    if (!status) return;
+    status.textContent = msg;
+    status.style.display = 'block';
+    status.style.color = isError ? '#c43e3e' : '';
+  }
+
+  form.addEventListener('submit', async function(e) {
     e.preventDefault();
-    const email = form.querySelector('input[type="email"]').value;
-    // Pendiente conectar con Formspree, Resend o backend propio
-    alert('Apuntado: ' + email + '\n\nTe enviaremos la guía y avisos de convocatoria. (Pendiente conectar con el servicio de email.)');
-    form.reset();
+    const email = form.querySelector('input[type="email"]').value.trim();
+    const website = form.querySelector('input[name="website"]').value;
+
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    try {
+      const r = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, website: website })
+      });
+      const data = await r.json().catch(function() { return {}; });
+
+      if (r.ok && data.ok) {
+        const done = document.createElement('p');
+        done.className = 'email-done';
+        done.textContent = 'Hecho. Te avisaremos el día que salga la convocatoria en el BOE.';
+        done.style.cssText = 'font-weight:600;padding:12px 0';
+        form.replaceWith(done);
+        if (status) status.style.display = 'none';
+        return;
+      }
+
+      if (r.status === 400) {
+        showStatus('Ese email no parece válido. Revísalo e inténtalo de nuevo.', true);
+      } else if (r.status === 429) {
+        showStatus('Demasiados intentos seguidos. Espera un minuto y vuelve a probar.', true);
+      } else {
+        showStatus('No hemos podido apuntarte ahora mismo. Inténtalo de nuevo en unos minutos.', true);
+      }
+    } catch (err) {
+      showStatus('Sin conexión con el servidor. Comprueba tu red e inténtalo de nuevo.', true);
+    } finally {
+      if (document.body.contains(btn)) {
+        btn.disabled = false;
+        btn.textContent = btnLabel;
+      }
+    }
   });
 })();

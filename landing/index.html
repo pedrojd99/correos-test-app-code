@@ -407,8 +407,10 @@
       <p>Te enviamos el PDF con el calendario completo de la oposición, plazos clave, baremo de méritos detallado y errores frecuentes que dejan fuera. Sin spam. Y te avisamos cuando salga la próxima convocatoria.</p>
       <form id="email-form" class="email-form" action="#" method="POST">
         <input type="email" name="email" placeholder="tu@email.com" required>
+        <input type="text" name="website" value="" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <button type="submit" class="btn btn-primary">Enviármelo gratis</button>
       </form>
+      <p id="email-status" class="text-muted small" role="status" style="display:none"></p>
       <p class="text-muted small">Solo te escribimos cuando tenemos algo que decir. Cancelas en un clic.</p>
     </div>
   </div>
@@ -469,6 +471,9 @@
       <div>
         <h4>Recursos</h4>
         <a href="#email">Guía del proceso</a>
+        <a href="/convocatoria-correos-2026.html">Convocatoria 2026: fechas y plazas</a>
+        <a href="/herramientas/calculadora-baremo.html">Calculadora de baremo</a>
+        <a href="/herramientas/simulador-nota.html">Simulador de nota</a>
         <a href="#faq">FAQ</a>
         <a href="mailto:hola@correostest.com">Contacto</a>
       </div>
