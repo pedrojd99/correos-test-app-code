@@ -12,7 +12,8 @@
     "android:sync": "node scripts/build-www.mjs && cap sync android"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.39.0"
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@capacitor-community/text-to-speech": "6.1.0"
   },
   "devDependencies": {
     "@capacitor/android": "7",

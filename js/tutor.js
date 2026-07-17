@@ -197,9 +197,10 @@ window.IIAPP.Tutor = (function () {
     let acc = "";
 
     try {
-      // En la app nativa (Capacitor) no hay funciones serverless locales:
-      // el tutor llama al backend desplegado en producción.
-      const apiBase = window.Capacitor ? "https://correostest.com" : "";
+      // En la app nativa (Capacitor) no hay funciones serverless locales.
+      // Cuando la API esté desplegada, poner aquí su URL (dominio PROPIO,
+      // verificado: correostest.com pertenece a un tercero).
+      const apiBase = "";
       const res = await fetch(apiBase + "/api/tutor", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "text/event-stream" },

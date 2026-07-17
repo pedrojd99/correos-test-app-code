@@ -876,35 +876,100 @@ window.IIAPP = window.IIAPP || {};
     audio: null,
     utterance: null, // alias para compatibilidad con comprobaciones existentes
     currentNum: null,
+    speaking: false, // true cuando suena TTS (nativo o speechSynthesis) en vez de mp3
 
-    play(num, _html, onEnd) {
+    play(num, html, onEnd) {
       this.stop();
       const src = `audio/tema-${String(num).padStart(2, '0')}.mp3`;
       const a = new Audio(src);
       a.onended = () => {
+        // mp3 de 0 bytes o corrupto: algunos navegadores disparan ended sin error
+        if (!a.duration || a.duration < 5) { this._speak(num, html, onEnd); return; }
         this.utterance = null;
         this.audio = null;
         this.currentNum = null;
         this._updateBar(null, false);
         if (onEnd) onEnd();
       };
-      a.onerror = () => console.warn('Audio no disponible:', src);
-      a.play().catch(() => {});
+      a.onerror = () => {
+        console.warn('Audio no disponible, usando voz del dispositivo:', src);
+        this._speak(num, html, onEnd);
+      };
+      a.play().catch(() => this._speak(num, html, onEnd));
       this.audio = a;
       this.utterance = a; // para que los checks de !TTS.utterance funcionen
       this.currentNum = num;
       this._updateBar(num, false);
     },
 
+    // Fallback sin mp3: TTS nativo (app Android) o speechSynthesis (navegador)
+    async _speak(num, html, onEnd) {
+      if (this.audio) { try { this.audio.pause(); } catch {} this.audio = null; }
+      const div = document.createElement('div');
+      div.innerHTML = html || '';
+      const text = (div.textContent || '').replace(/\s+/g, ' ').trim();
+      if (!text) { this.stop(); return; }
+
+      const native = window.Capacitor?.Plugins?.TextToSpeech;
+      this.speaking = true;
+      this.utterance = true;
+      this.currentNum = num;
+      this._updateBar(num, false);
+
+      if (native) {
+        try {
+          await native.speak({ text, lang: 'es-ES', rate: 1.05 });
+        } catch (e) {
+          console.warn('TTS nativo falló:', e);
+        }
+        if (this.speaking && this.currentNum === num) { this.stop(); if (onEnd) onEnd(); }
+        return;
+      }
+
+      if ('speechSynthesis' in window) {
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'es-ES';
+        u.rate = 1.05;
+        u.onend = () => { if (this.speaking) { this.stop(); if (onEnd) onEnd(); } };
+        this.utterance = u;
+        speechSynthesis.speak(u);
+        return;
+      }
+
+      this.stop();
+    },
+
     pause() {
+      if (this.speaking) {
+        if ('speechSynthesis' in window && !window.Capacitor) {
+          speechSynthesis.pause();
+          this._updateBar(this.currentNum, true);
+        } else {
+          this.stop(); // el TTS nativo no soporta pausa: parar
+        }
+        return;
+      }
       if (this.audio) { this.audio.pause(); this._updateBar(this.currentNum, true); }
     },
 
     resume() {
+      if (this.speaking) {
+        if ('speechSynthesis' in window && !window.Capacitor) {
+          speechSynthesis.resume();
+          this._updateBar(this.currentNum, false);
+        }
+        return;
+      }
       if (this.audio) { this.audio.play().catch(() => {}); this._updateBar(this.currentNum, false); }
     },
 
     stop() {
+      if (this.speaking) {
+        this.speaking = false;
+        const native = window.Capacitor?.Plugins?.TextToSpeech;
+        if (native) { try { native.stop(); } catch {} }
+        if ('speechSynthesis' in window) { try { speechSynthesis.cancel(); } catch {} }
+      }
       if (this.audio) {
         this.audio.pause();
         this.audio.currentTime = 0;
@@ -2072,7 +2137,10 @@ window.IIAPP = window.IIAPP || {};
 
     // -------- Reproductor temario --------
     playTema(num) {
-      const content = (window.CORREOS.TEMARIO_CONTENT || {})[num];
+      const fuente = _temaVista === 'resumen'
+        ? (window.CORREOS.TEMARIO_RESUMEN || {})
+        : (window.CORREOS.TEMARIO_CONTENT || {});
+      const content = fuente[num] || (window.CORREOS.TEMARIO_CONTENT || {})[num];
       if (!content) return;
       TTS.play(num, content);
     },
